@@ -182,17 +182,6 @@ class VCPopover: NSViewController {
         }
     }
     
-    //Refresh data
-    @IBAction func clickRefresh(_ sender: NSButton) {
-        updateState()
-    }
-    
-    //Terminate App
-    @IBAction func clickQuit(_ sender: NSButton) {
-        AppDelegate.timer.invalidate()
-        NSApp.terminate(self)
-    }
-    
     //Change my coin
     @IBAction func changeMyCoin(_ sender: NSPopUpButton) {
         UserDefaults.standard.set(Const.arrCoinName[sender.indexOfSelectedItem], forKey: Const.UserDefaultKey.MY_COIN)
@@ -207,5 +196,16 @@ class VCPopover: NSViewController {
         UserDefaults.standard.synchronize()
         
         (NSApplication.shared().delegate as! AppDelegate).setTimerSec()
+    }
+    
+    //Refresh data
+    @IBAction func clickRefresh(_ sender: NSButton) {
+        updateState()
+    }
+    
+    //Terminate App
+    @IBAction func clickQuit(_ sender: NSButton) {
+        AppDelegate.timer.invalidate()
+        NSApp.terminate(self)
     }
 }

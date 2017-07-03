@@ -8,7 +8,7 @@
         <capability name="system font weights other than Regular or Bold" minToolsVersion="7.0"/>
     </dependencies>
     <objects>
-        <customObject id="-2" userLabel="File's Owner" customClass="VCPopover" customModule="CoinState" customModuleProvider="target">
+        <customObject id="-2" userLabel="File's Owner" customClass="VCPopover" customModule="CoinNow" customModuleProvider="target">
             <connections>
                 <outlet property="btPopupMyCoin" destination="YrL-Kk-0p8" id="jmE-8V-P8r"/>
                 <outlet property="btPopupUpdatePer" destination="lU9-Gp-3Ts" id="Ox7-YE-6uH"/>

@@ -16,7 +16,6 @@
 		755E39391F08208000CA6BBC /* Api.swift in Sources */ = {isa = PBXBuildFile; fileRef = 755E39351F08208000CA6BBC /* Api.swift */; };
 		755E393A1F08208000CA6BBC /* Const.swift in Sources */ = {isa = PBXBuildFile; fileRef = 755E39361F08208000CA6BBC /* Const.swift */; };
 		755E393B1F08208000CA6BBC /* Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 755E39371F08208000CA6BBC /* Extension.swift */; };
-		755E393C1F08208000CA6BBC /* EventMonitor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 755E39381F08208000CA6BBC /* EventMonitor.swift */; };
 		755E393F1F08208600CA6BBC /* InfoCoinBithum.swift in Sources */ = {isa = PBXBuildFile; fileRef = 755E393D1F08208600CA6BBC /* InfoCoinBithum.swift */; };
 		755E39401F08208600CA6BBC /* InfoCoin.swift in Sources */ = {isa = PBXBuildFile; fileRef = 755E393E1F08208600CA6BBC /* InfoCoin.swift */; };
 /* End PBXBuildFile section */
@@ -32,9 +31,9 @@
 		755E39351F08208000CA6BBC /* Api.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Api.swift; sourceTree = "<group>"; };
 		755E39361F08208000CA6BBC /* Const.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Const.swift; sourceTree = "<group>"; };
 		755E39371F08208000CA6BBC /* Extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Extension.swift; sourceTree = "<group>"; };
-		755E39381F08208000CA6BBC /* EventMonitor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EventMonitor.swift; sourceTree = "<group>"; };
 		755E393D1F08208600CA6BBC /* InfoCoinBithum.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InfoCoinBithum.swift; sourceTree = "<group>"; };
 		755E393E1F08208600CA6BBC /* InfoCoin.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InfoCoin.swift; sourceTree = "<group>"; };
+		75E654581F0A4E5300230402 /* CoinNow.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = CoinNow.entitlements; sourceTree = "<group>"; };
 		F212CE6EE9DF95734B9FD749 /* Pods-CoinNow.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CoinNow.debug.xcconfig"; path = "Pods/Target Support Files/Pods-CoinNow/Pods-CoinNow.debug.xcconfig"; sourceTree = "<group>"; };
 		F3BC805D8FF828DC94118A9A /* Pods-CoinNow.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CoinNow.release.xcconfig"; path = "Pods/Target Support Files/Pods-CoinNow/Pods-CoinNow.release.xcconfig"; sourceTree = "<group>"; };
 		FC71B95B1EFD5F5A565D27C8 /* Pods_CoinNow.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_CoinNow.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -82,6 +81,7 @@
 		755E391F1F081FA400CA6BBC /* CoinNow */ = {
 			isa = PBXGroup;
 			children = (
+				75E654581F0A4E5300230402 /* CoinNow.entitlements */,
 				755E39201F081FA400CA6BBC /* AppDelegate.swift */,
 				755E392F1F08206E00CA6BBC /* VCPopover.swift */,
 				755E39301F08206E00CA6BBC /* VCPopover.xib */,
@@ -109,7 +109,6 @@
 				755E39351F08208000CA6BBC /* Api.swift */,
 				755E39361F08208000CA6BBC /* Const.swift */,
 				755E39371F08208000CA6BBC /* Extension.swift */,
-				755E39381F08208000CA6BBC /* EventMonitor.swift */,
 			);
 			name = Util;
 			sourceTree = "<group>";
@@ -157,8 +156,13 @@
 				TargetAttributes = {
 					755E391C1F081FA400CA6BBC = {
 						CreatedOnToolsVersion = 8.3.3;
-						DevelopmentTeam = 6653G6TME6;
+						DevelopmentTeam = G27DY99B8F;
 						ProvisioningStyle = Automatic;
+						SystemCapabilities = {
+							com.apple.Sandbox = {
+								enabled = 1;
+							};
+						};
 					};
 				};
 			};
@@ -249,7 +253,6 @@
 				755E393B1F08208000CA6BBC /* Extension.swift in Sources */,
 				755E39391F08208000CA6BBC /* Api.swift in Sources */,
 				755E393A1F08208000CA6BBC /* Const.swift in Sources */,
-				755E393C1F08208000CA6BBC /* EventMonitor.swift in Sources */,
 				755E393F1F08208600CA6BBC /* InfoCoinBithum.swift in Sources */,
 				755E39311F08206E00CA6BBC /* VCPopover.swift in Sources */,
 				755E39401F08208600CA6BBC /* InfoCoin.swift in Sources */,
@@ -368,12 +371,15 @@
 			baseConfigurationReference = F212CE6EE9DF95734B9FD749 /* Pods-CoinNow.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = CoinNow/CoinNow.entitlements;
+				CODE_SIGN_IDENTITY = "Mac Developer";
 				COMBINE_HIDPI_IMAGES = YES;
-				DEVELOPMENT_TEAM = 6653G6TME6;
+				DEVELOPMENT_TEAM = G27DY99B8F;
 				INFOPLIST_FILE = CoinNow/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.dingding.CoinNow;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_VERSION = 3.0;
 			};
 			name = Debug;
@@ -383,12 +389,15 @@
 			baseConfigurationReference = F3BC805D8FF828DC94118A9A /* Pods-CoinNow.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = CoinNow/CoinNow.entitlements;
+				CODE_SIGN_IDENTITY = "Mac Developer";
 				COMBINE_HIDPI_IMAGES = YES;
-				DEVELOPMENT_TEAM = 6653G6TME6;
+				DEVELOPMENT_TEAM = G27DY99B8F;
 				INFOPLIST_FILE = CoinNow/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.dingding.CoinNow;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_VERSION = 3.0;
 			};
 			name = Release;

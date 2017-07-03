@@ -10,27 +10,31 @@ import Cocoa
 
 @NSApplicationMain
 class AppDelegate: NSObject, NSApplicationDelegate {
+    
     public let statusItem = NSStatusBar.system().statusItem(withLength: -1)
     let popover = NSPopover()
-    var eventMonitor: EventMonitor?
     
     public static var timer = Timer()
     
+    func applicationDidFinishLaunching(_ notification: Notification) {
+        setStatusButton()
+        
+        updateStatusLabel(willShowLoadingText: true)
+        
+        setTimerSec()
+    }
+    
+    func applicationWillTerminate(_ aNotification: Notification) {
+        //terminate timer
+        AppDelegate.timer.invalidate()
+    }
+    
     //Set button at status bar(toggle popover)
     func setStatusButton() {
-        if let button = statusItem.button {
-            button.image = NSImage(named: "icon")
-            button.action = #selector(AppDelegate.togglePopover(_:))
-        }
-        
+        self.statusItem.image = NSImage(named: "icon")
+        self.statusItem.button?.action = #selector(AppDelegate.togglePopover(_:))
         popover.contentViewController = VCPopover(nibName: "VCPopover", bundle: nil)
-        
-        eventMonitor = EventMonitor(mask: [.leftMouseDown, .rightMouseDown]) { [unowned self] event in
-            if self.popover.isShown {
-                self.closePopover(event)
-            }
-        }
-        eventMonitor?.start()
+        popover.behavior = .applicationDefined;
     }
     
     //Set label that show my coin state at status bar
@@ -39,6 +43,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
             self.statusItem.title = "Loading.."
         }
         
+        //get coin state from bithum api and set title of statusbar.
         Api.getCoinsState_Bithum(arrSelectedCoins: Const.arrCoinName, complete: {isSuccess, arrResult in
             
             for infoCoin in arrResult {
@@ -55,14 +60,6 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         self.statusItem.title = title
     }
     
-    func applicationDidFinishLaunching(_ notification: Notification) {
-        setStatusButton()
-        
-        updateStatusLabel(willShowLoadingText: true)
-        
-        setTimerSec()
-    }
-    
     //set timer sec that for update status bar title
     func setTimerSec() {
         AppDelegate.timer.invalidate()
@@ -73,29 +70,14 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         AppDelegate.timer = Timer.scheduledTimer(timeInterval: repearSecInt, target: self, selector: #selector(updateStatusLabel), userInfo: nil, repeats: true)
     }
     
-    func applicationWillTerminate(_ aNotification: Notification) {
-        //terminate timer
-        AppDelegate.timer.invalidate()
-    }
-    
     func togglePopover(_ sender: AnyObject?) {
         if popover.isShown {
-            closePopover(sender)
+            popover.performClose(sender)
         } else {
-            showPopover(sender)
+            if let button = statusItem.button {
+                popover.show(relativeTo: button.bounds, of: button, preferredEdge: NSRectEdge.minY)
+            }
         }
-    }
-    
-    func showPopover(_ sender: AnyObject?) {
-        if let button = statusItem.button {
-            popover.show(relativeTo: button.bounds, of: button, preferredEdge: NSRectEdge.minY)
-        }
-        eventMonitor?.start()
-    }
-    
-    func closePopover(_ sender: AnyObject?) {
-        popover.performClose(sender)
-        eventMonitor?.stop()
     }
 }
 
