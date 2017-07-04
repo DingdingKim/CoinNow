@@ -3,61 +3,61 @@
     {
       "size" : "16x16",
       "idiom" : "mac",
-      "filename" : "appicon_coinnow_16.png",
+      "filename" : "appicon_coinnow_16_circle.png",
       "scale" : "1x"
     },
     {
       "size" : "16x16",
       "idiom" : "mac",
-      "filename" : "appicon_coinnow_32.png",
+      "filename" : "appicon_coinnow_32_circle.png",
       "scale" : "2x"
     },
     {
       "size" : "32x32",
       "idiom" : "mac",
-      "filename" : "appicon_coinnow_32-1.png",
+      "filename" : "appicon_coinnow_32_circle-1.png",
       "scale" : "1x"
     },
     {
       "size" : "32x32",
       "idiom" : "mac",
-      "filename" : "appicon_coinnow_64.png",
+      "filename" : "appicon_coinnow_64_circle.png",
       "scale" : "2x"
     },
     {
       "size" : "128x128",
       "idiom" : "mac",
-      "filename" : "appicon_coinnow_128.png",
+      "filename" : "appicon_coinnow_128_circle.png",
       "scale" : "1x"
     },
     {
       "size" : "128x128",
       "idiom" : "mac",
-      "filename" : "appicon_coinnow_256.png",
+      "filename" : "appicon_coinnow_256_circle.png",
       "scale" : "2x"
     },
     {
       "size" : "256x256",
       "idiom" : "mac",
-      "filename" : "appicon_coinnow_256-1.png",
+      "filename" : "appicon_coinnow_256_circle-1.png",
       "scale" : "1x"
     },
     {
       "size" : "256x256",
       "idiom" : "mac",
-      "filename" : "appicon_coinnow_512.png",
+      "filename" : "appicon_coinnow_512_circle.png",
       "scale" : "2x"
     },
     {
       "size" : "512x512",
       "idiom" : "mac",
-      "filename" : "appicon_coinnow_512-1.png",
+      "filename" : "appicon_coinnow_512_circle-1.png",
       "scale" : "1x"
     },
     {
       "size" : "512x512",
       "idiom" : "mac",
-      "filename" : "appicon_coinnow_1024.png",
+      "filename" : "appicon_coinnow_1024_circle.png",
       "scale" : "2x"
     }
   ],
