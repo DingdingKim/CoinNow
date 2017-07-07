@@ -3,7 +3,7 @@ CoinNow (For OSX)
 
 ## Introduction
 
-Provide current quotes of coins(BTC, ETH, DASH, LTC, ETC, XRP) in real time from Bithumb and Poloniex.
+Provide current price of coins(BTC, ETH, DASH, LTC, ETC, XRP) in real time from Bithumb and Poloniex.
 
 
 ## 🔔🌟 Notice 🌟🔔
