@@ -1,4 +1,4 @@
-CoinNow (For OSX)
+CoinNow (For macOS)
 ===================
 
 ## Introduction
