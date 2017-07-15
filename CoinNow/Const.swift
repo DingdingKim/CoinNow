@@ -11,9 +11,6 @@ import Foundation
 struct Const {
     static var dicUpdatePerSec: [String : Double] = ["10sec": 10, "20sec": 20, "30sec": 30, "1min": 60, "5min": 300, "10min": 600, "20min": 1200, "30min": 1800, "40min": 2400, "50min": 3000, "1hour": 3600]
     
-    static var exchangeRateLastUpdateTime: Date? = nil
-    static var exchangeRate: Double = 1.0
-    
     //Default values
     static let DEFAULT_UPDATE_PER: (stirng: String, double: Double) = ("1min", 60)
     static let DEFAULT_MY_COIN = Coin.btc.rawValue
@@ -31,5 +28,7 @@ struct Const {
         //will update site and coin
         static let SELECTED_SITES = "SELECTED_SITES"
         static let SELECTED_COINS = "SELECTED_COINS"
+        
+        static let IS_SIMPLE_MODE = "IS_SIMPLE_MODE"
     }
 }

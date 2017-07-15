@@ -53,33 +53,8 @@ extension Dictionary where Value: Equatable {
     }
 }
 
-//Get https://stackoverflow.com/questions/27890144/setting-backgroundcolor-of-custom-nsview
-extension NSView {
-    
-    var backgroundColor: NSColor? {
-        
-        get {
-            if let colorRef = self.layer?.backgroundColor {
-                return NSColor(cgColor: colorRef)
-            } else {
-                return nil
-            }
-        }
-        
-        set {
-            self.wantsLayer = true
-            self.layer?.backgroundColor = newValue?.cgColor
-        }
-    }
-    
-    func setBackgroundColorByMode() {
-        self.wantsLayer = true
-        
-        if(UserDefaults.standard.string(forKey: "AppleInterfaceStyle") ?? "Light" == "Dark") {
-            self.layer?.backgroundColor = NSColor.white.withAlphaComponent(0.4).cgColor
-        }
-        else {
-            self.layer?.backgroundColor = NSColor.darkGray.withAlphaComponent(0.4).cgColor
-        }
+extension NSViewController {
+    func isDarkMode() -> Bool{
+        return UserDefaults.standard.string(forKey: "AppleInterfaceStyle") ?? "Light" == "Dark"
     }
 }

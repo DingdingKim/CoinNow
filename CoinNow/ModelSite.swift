@@ -49,7 +49,6 @@ class ModelSite: NSView {
     }
     
     required init?(coder: NSCoder) {
-        // 뷰가 XIB에 의해 생성될 때 사용되는 생성자
         super.init(coder: coder)
         
         Bundle.main.loadNibNamed("ModelSite", owner: self, topLevelObjects: nil)

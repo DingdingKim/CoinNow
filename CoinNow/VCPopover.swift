@@ -9,15 +9,25 @@
 import Cocoa
 
 class VCPopover: NSViewController {
+    @IBOutlet weak var stackViewRoot: NSStackView!
+    
+    @IBOutlet weak var btMinimode: NSButton!
+    @IBOutlet weak var viewStatusSetting: NSView!
+    @IBOutlet weak var viewStateTable: NSView!
+    
     @IBOutlet weak var btStatusUpdatePer: NSPopUpButton!
     @IBOutlet weak var btStatusCoin: NSPopUpButton!
     @IBOutlet weak var btStatusSite: NSPopUpButton!
     
     @IBOutlet weak var lbLine: NSTextField!
     
+    @IBOutlet weak var lbBaseCurrency: NSTextField!
     @IBOutlet weak var btBaseCurrency: NSPopUpButton!
     @IBOutlet weak var lbUpdateTime: NSTextField!
     @IBOutlet weak var btRefresh: NSButton!
+    
+    @IBOutlet weak var stackViewCoinCheck: NSStackView!
+    @IBOutlet weak var stackViewSiteCheck: NSStackView!
     
     @IBOutlet weak var cbBtc: NSButton!
     @IBOutlet weak var cbEth: NSButton!
@@ -40,6 +50,8 @@ class VCPopover: NSViewController {
     
     @IBOutlet weak var stackViewSites: NSStackView!
     @IBOutlet weak var stackViewCoinName: NSStackView!
+    @IBOutlet weak var btDonate: NSButton!
+    @IBOutlet weak var viewDonate: NSView!
     
     var arrCbCoin = [NSButton]()
     var arrCbSite = [NSButton]()
@@ -57,9 +69,11 @@ class VCPopover: NSViewController {
         
         initView()
         
-        //다른데서 뷰 업데이트가 필요할 경우
+        //Need to update in outside
         NotificationCenter.default.addObserver(self, selector: #selector(VCPopover.updateCoinState), name: NSNotification.Name(rawValue: "VCPopover.updateCoinState"), object: nil)
         NSRunningApplication.current().activate(options: NSApplicationActivationOptions.activateIgnoringOtherApps)
+        
+        viewDonate.isHidden = true
     }
     
     override func viewWillAppear() {
@@ -67,24 +81,20 @@ class VCPopover: NSViewController {
         
         updateCoinState()
         
-        if self.view.acceptsFirstResponder {
-            NSRunningApplication.current().activate(options: NSApplicationActivationOptions.activateIgnoringOtherApps)
-            self.view.window?.makeFirstResponder(self.view)
-        }
-        
-        if(UserDefaults.standard.string(forKey: "AppleInterfaceStyle") ?? "Light" == "Dark") {
+        if(self.isDarkMode()) {
             (NSApplication.shared().delegate as! AppDelegate).statusItem.image = NSImage(named: "icon_white")
+            btDonate.image = NSImage.init(named: "ic_expand_more_white")
             btRefresh.image = NSImage(named: "ic_autorenew_white")
             lbLine.backgroundColor = NSColor.white.withAlphaComponent(0.3)
+            btMinimode.image = NSImage.init(named: "ic_fullscreen_white")
         }
         else {
             (NSApplication.shared().delegate as! AppDelegate).statusItem.image = NSImage(named: "icon_black")
+            btDonate.image = NSImage.init(named: "ic_expand_more_black")
             btRefresh.image = NSImage(named: "ic_autorenew_black")
             lbLine.backgroundColor = NSColor.darkGray.withAlphaComponent(0.3)
+            btMinimode.image = NSImage.init(named: "ic_fullscreen_black")
         }
-    }
-    
-    override func viewDidAppear() {
         NSRunningApplication.current().activate(options: NSApplicationActivationOptions.activateIgnoringOtherApps)
     }
     
@@ -195,7 +205,6 @@ class VCPopover: NSViewController {
         }
     }
     
-    //업데이트 시킬 코인 체크박스 변경
     //change coin(will update) check state
     @IBAction func changeCheckCoin(_ sender: NSButton) {
         let isChecked = sender.state == NSOnState
@@ -217,7 +226,6 @@ class VCPopover: NSViewController {
         MyValue.arrSelectedCoin = arrSelected
     }
     
-    //거래소 사이트 체크박스 변경
     //change site check state
     @IBAction func changeCheckSite(_ sender: NSButton) {
         let isChecked = sender.state == NSOnState
@@ -247,7 +255,7 @@ class VCPopover: NSViewController {
     @IBAction func changeMySite(_ sender: NSPopUpButton) {
         MyValue.mySite = Site.valueOf(name: sender.titleOfSelectedItem!)
         
-        //거래소를 변경하면 해당 거래소에서 거래가능한 코인들만 넣어줘야한다
+        //Update coin list for selected site
         btStatusCoin.removeAllItems()
         btStatusCoin.addItems(withTitles: Site.valueOf(name: sender.title).arrTradableCoin())
         
@@ -269,6 +277,47 @@ class VCPopover: NSViewController {
     @IBAction func clickRefresh(_ sender: NSButton) {
         updateCoinState()
     }
+    
+    @IBAction func clickMinimode(_ sender: Any) {
+        MyValue.isSimpleMode = !MyValue.isSimpleMode
+
+        if(MyValue.isSimpleMode) {
+            viewStatusSetting.isHidden = true
+            stackViewCoinCheck.isHidden = true
+            stackViewSiteCheck.isHidden = true
+            lbLine.isHidden = true
+            lbBaseCurrency.isHidden = true
+            btBaseCurrency.isHidden = true
+            
+            btMinimode.image = NSImage.init(named: self.isDarkMode() ? "ic_fullscreen_white" : "ic_fullscreen_black")
+        }
+        else {
+            for view in stackViewRoot.arrangedSubviews {
+                if(view != viewDonate){
+                    view.isHidden = false
+                }
+            }
+            lbBaseCurrency.isHidden = false
+            btBaseCurrency.isHidden = false
+            
+            btMinimode.image = NSImage.init(named: self.isDarkMode() ? "ic_fullscreen_exit_white" : "ic_fullscreen_exit_black")
+        }
+    }
+    
+    @IBAction func clickDonate(_ sender: NSButton) {
+        //close
+        if(sender.tag == 0){
+            btDonate.image = NSImage.init(named: self.isDarkMode() ? "ic_expand_less_white" : "ic_expand_less_black")
+            viewDonate.isHidden = false
+            sender.tag = 1
+        }
+        else {
+            btDonate.image = NSImage.init(named: self.isDarkMode() ? "ic_expand_more_white" : "ic_expand_more_black")
+            viewDonate.isHidden = true
+            sender.tag = 0
+        }
+    }
+    
     
     //Terminate App
     @IBAction func clickQuit(_ sender: NSButton) {

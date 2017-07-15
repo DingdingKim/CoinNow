@@ -19,6 +19,8 @@ class Api {
         //After get exchange rate then get price and exchange the price to base currency
         Api.getExchangeRate(from: .krw, complete: {isSuccess, exchangeRate in
             if(isSuccess){
+                
+                print("환율가져온거 Bithum : \(exchangeRate)")
                 Alamofire.request("https://api.bithumb.com/public/ticker/ALL", method: .get).responseJSON { (responseData) -> Void in
                     if((responseData.result.value) != nil) {
                         let swiftyJsonVar = JSON(responseData.result.value!)
@@ -56,6 +58,8 @@ class Api {
         //After get exchange rate then get price and exchange the price to base currency
         Api.getExchangeRate(from: .krw, complete: {isSuccess, exchangeRate in
             if(isSuccess){
+                print("환율가져온거 Coinone : \(exchangeRate)")
+                
                 Alamofire.request("https://api.coinone.co.kr/ticker/?currency=all", method: .get).responseJSON { (responseData) -> Void in
                     if((responseData.result.value) != nil) {
                         let swiftyJsonVar = JSON(responseData.result.value!)
@@ -99,6 +103,7 @@ class Api {
         //After get exchange rate then get price and exchange the price to base currency
         Api.getExchangeRate(from: .usd, complete: {isSuccess, exchangeRate in
             if(isSuccess){
+                print("환율가져온거 Poloniex : \(exchangeRate)")
                 
                 Alamofire.request("https://poloniex.com/public?command=returnTicker", method: .get).responseJSON { (responseData) -> Void in
                     if((responseData.result.value) != nil) {
@@ -129,6 +134,9 @@ class Api {
         //After get exchange rate then get price and exchange the price to base currency
         Api.getExchangeRate(from: .cny, complete: {isSuccess, exchangeRate in
             if(isSuccess){
+                print("환율가져온거 Okcoin : \(exchangeRate)")
+                
+                //Add empty coins that not tradable in this site.
                 var arrResult = addEmptyCoin(arrSelectedCoins: arrSelectedCoins)
                 
                 for coinName in arrSelectedCoins {
@@ -168,34 +176,13 @@ class Api {
     
     //From yahoo api
     static func getExchangeRate(from: BaseCurrency, complete:@escaping (_ isSuccess: Bool, _ result: Double) -> Void){
-        
-        //In case of base currency is same to from currency, ignore. Return 1.0
-        if(MyValue.myBaseCurrency == from) {
-            complete(true, 1.0)
-        }
-        else{
-            //Update exchange rate when after 1 hour from last update.
-            if(Const.exchangeRateLastUpdateTime == nil || Const.exchangeRateLastUpdateTime!.isTimeToUpdateExchangeRate()) {
-                print("1시간 지나서 업뎃한다")
+        Alamofire.request("http://query.yahooapis.com/v1/public/yql?q=select%20*%20from%20yahoo.finance.xchange%20where%20pair%3D%22\(from.rawValue + MyValue.myBaseCurrency.rawValue)%22&format=json&diagnostics=true&env=store%3A%2F%2Fdatatables.org%2Falltableswithkeys", method: .get).responseJSON { (responseData) -> Void in
+            if((responseData.result.value) != nil) {
+                let swiftyJsonVar = JSON(responseData.result.value!)
                 
-                Const.exchangeRateLastUpdateTime = Date()
+                let rate = swiftyJsonVar["query"]["results"]["rate"]["Rate"].stringValue
                 
-                Alamofire.request("http://query.yahooapis.com/v1/public/yql?q=select%20*%20from%20yahoo.finance.xchange%20where%20pair%3D%22\(from.rawValue + MyValue.myBaseCurrency.rawValue)%22&format=json&diagnostics=true&env=store%3A%2F%2Fdatatables.org%2Falltableswithkeys", method: .get).responseJSON { (responseData) -> Void in
-                    if((responseData.result.value) != nil) {
-                        let swiftyJsonVar = JSON(responseData.result.value!)
-                        
-                        let rate = swiftyJsonVar["query"]["results"]["rate"]["Rate"].stringValue
-                        
-                        //debugPrint("getExchangeRate >> \(from + baseCurrency) : \(rate)")
-                        Const.exchangeRate = Double(rate)!
-                        
-                        complete(true, Double(rate)!)
-                    }
-                }
-            }
-            else {
-                print("1시간 안지나서 업뎃안한다")
-                complete(true, Const.exchangeRate)
+                complete(true, Double(rate)!)
             }
         }
     }

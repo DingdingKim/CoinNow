@@ -47,12 +47,11 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     
     //Set label that show my coin state at status bar
     public func updateStatusLabel(willShowLoadingText: Bool) {
-        //업데이트 할때 상태바에 있는애는 로딩으로 바뀌면 정신없어서
         if(willShowLoadingText) {
             self.statusItem.title = Const.DEFAULT_LOADING_TEXT
         }
         
-        print("Update Status Label : \(MyValue.mySite) / \(MyValue.myCoin.rawValue) / \(MyValue.myBaseCurrency.rawValue)")
+        //print("Update Status Label : \(MyValue.mySite) / \(MyValue.myCoin.rawValue) / \(MyValue.myBaseCurrency.rawValue)")
         
         if(MyValue.mySite == .bithumb){
             Api.getCoinsStateBithum(arrSelectedCoins: [MyValue.myCoin.rawValue], complete: {isSuccess, arrResult in
@@ -103,7 +102,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     //set timer sec that for update status bar title
     func setTimerSec(updatePer: String) {
         terminateTimer()
-        debugPrint("setTimerSec : \(updatePer)")
+        //debugPrint("setTimerSec : \(updatePer)")
         
         AppDelegate.timer = Timer.scheduledTimer(timeInterval: Const.dicUpdatePerSec[updatePer] ?? Const.DEFAULT_UPDATE_PER.double, target: self, selector: #selector(updateStatusLabel), userInfo: nil, repeats: true)
     }
