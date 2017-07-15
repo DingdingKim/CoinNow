@@ -3,20 +3,23 @@ CoinNow (For macOS)
 
 ## Introduction
 
-Provide current price of coins(BTC, ETH, DASH, LTC, ETC, XRP) in real time from Bithumb and Poloniex.
+Provide current price of cryptocurrency(BTC, ETH, DASH, LTC, ETC, XRP) in real time from Bithumb, Coinone, Poloniex, OKCoin_CNY.
 
 
-## 🔔🌟 Notice 🌟🔔
+## 🔔🌟 Update 🌟🔔
 
-Now, This app is made for Korean user. So the exhange site is only provided with Bithumb(Korea) and poloniex(USA).
-But, The number of users in other countries is increasing.
-So the next version will add exchange site in various contries.
-I will update it as soon as  possible. Thank you ! ❤ 😊
+- Add trading Stie : Coinone OKCoin(CNY)
+- Add base currency selelct option(KRW, USD, CNY)
+- Code refactoring to swift style
+- Add minimode (Show only realtime coin state)
+- Auto close popover when click outside
 
 
 ## Demo
 
-![Screenshot](https://github.com/DingdingKim/CoinNow/blob/master/ScreenShot/screenshot.png)
+![Screenshot](https://github.com/DingdingKim/CoinNow/blob/master/ScreenShot/screenshot1.jpg)
+![Screenshot](https://github.com/DingdingKim/CoinNow/blob/master/ScreenShot/screenshot1_1.jpg)
+![Screenshot](https://github.com/DingdingKim/CoinNow/blob/master/ScreenShot/screenshot2.jpg)
 
 ## In AppStore
 You can install this app in AppStore! Search 'CoinNow'
