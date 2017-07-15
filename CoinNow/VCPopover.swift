@@ -9,6 +9,16 @@
 import Cocoa
 
 class VCPopover: NSViewController {
+    @IBOutlet weak var btStatusUpdatePer: NSPopUpButton!
+    @IBOutlet weak var btStatusCoin: NSPopUpButton!
+    @IBOutlet weak var btStatusSite: NSPopUpButton!
+    
+    @IBOutlet weak var lbLine: NSTextField!
+    
+    @IBOutlet weak var btBaseCurrency: NSPopUpButton!
+    @IBOutlet weak var lbUpdateTime: NSTextField!
+    @IBOutlet weak var btRefresh: NSButton!
+    
     @IBOutlet weak var cbBtc: NSButton!
     @IBOutlet weak var cbEth: NSButton!
     @IBOutlet weak var cbDash: NSButton!
@@ -16,24 +26,10 @@ class VCPopover: NSViewController {
     @IBOutlet weak var cbEtc: NSButton!
     @IBOutlet weak var cbXrp: NSButton!
     
-    @IBOutlet weak var lbUpdateTime: NSTextField!
-    
-    @IBOutlet weak var btPopupUpdatePer: NSPopUpButton!
-    @IBOutlet weak var btPopupMyCoin: NSPopUpButton!
-    
-    @IBOutlet var lbBtcBithumb: NSTextField!
-    @IBOutlet var lbEthBithumb: NSTextField!
-    @IBOutlet var lbDashBithumb: NSTextField!
-    @IBOutlet var lbLtcBithumb: NSTextField!
-    @IBOutlet var lbEtcBithumb: NSTextField!
-    @IBOutlet var lbXrpBithumb: NSTextField!
-    
-    @IBOutlet var lbBtcPoloniex: NSTextField!
-    @IBOutlet var lbEthPoloniex: NSTextField!
-    @IBOutlet var lbDashPoloniex: NSTextField!
-    @IBOutlet var lbLtcPoloniex: NSTextField!
-    @IBOutlet var lbEtcPoloniex: NSTextField!
-    @IBOutlet var lbXrpPoloniex: NSTextField!
+    @IBOutlet weak var cbBithumb: NSButton!
+    @IBOutlet weak var cbCoinone: NSButton!
+    @IBOutlet weak var cbPoloniex: NSButton!
+    @IBOutlet weak var cbOkcoin: NSButton!
     
     @IBOutlet var lbBtcTitle: NSTextField!
     @IBOutlet var lbEthTitle: NSTextField!
@@ -42,170 +38,241 @@ class VCPopover: NSViewController {
     @IBOutlet var lbEtcTitle: NSTextField!
     @IBOutlet var lbXrpTitle: NSTextField!
     
-    var arrCb = [NSButton]()
-    var arrlbTitle = [NSTextField]()
-    var arrlbBithumb = [NSTextField]()
-    var arrlbPoloniex = [NSTextField]()
-    var arrlbCoinone = [NSTextField]()
+    @IBOutlet weak var stackViewSites: NSStackView!
+    @IBOutlet weak var stackViewCoinName: NSStackView!
     
-    var arrSelectedCoins = [String]()
+    var arrCbCoin = [NSButton]()
+    var arrCbSite = [NSButton]()
     
-    //Dollar -> KRW
-    var exchangeRate:Double = 0.0
+    var arrlbCoinTitle = [NSTextField]()
+    
+    var arrSiteView = [ModelSite]()
     
     override func viewDidLoad() {
-        arrCb = [cbBtc, cbEth, cbDash, cbLtc, cbEtc, cbXrp]
-        arrCb = [cbBtc, cbEth, cbDash, cbLtc, cbEtc, cbXrp]
-        arrlbTitle = [lbBtcTitle, lbEthTitle, lbDashTitle, lbLtcTitle, lbEtcTitle, lbXrpTitle]
-        arrlbBithumb = [lbBtcBithumb, lbEthBithumb, lbDashBithumb, lbLtcBithumb, lbEtcBithumb, lbXrpBithumb]
-        arrlbPoloniex = [lbBtcPoloniex, lbEthPoloniex, lbDashPoloniex, lbLtcPoloniex, lbEtcPoloniex, lbXrpPoloniex]
+        arrCbCoin = [cbBtc, cbEth, cbDash, cbLtc, cbEtc, cbXrp]
+        arrCbSite = [cbBithumb, cbCoinone, cbPoloniex, cbOkcoin]
+        arrlbCoinTitle = [lbBtcTitle, lbEthTitle, lbDashTitle, lbLtcTitle, lbEtcTitle, lbXrpTitle]
         
-        setPopupButtons()
+        addSiteView()
+        
+        initView()
+        
+        //다른데서 뷰 업데이트가 필요할 경우
+        NotificationCenter.default.addObserver(self, selector: #selector(VCPopover.updateCoinState), name: NSNotification.Name(rawValue: "VCPopover.updateCoinState"), object: nil)
+        NSRunningApplication.current().activate(options: NSApplicationActivationOptions.activateIgnoringOtherApps)
     }
     
     override func viewWillAppear() {
         super.viewWillAppear()
         
-        updateState()
+        updateCoinState()
+        
+        if self.view.acceptsFirstResponder {
+            NSRunningApplication.current().activate(options: NSApplicationActivationOptions.activateIgnoringOtherApps)
+            self.view.window?.makeFirstResponder(self.view)
+        }
+        
+        if(UserDefaults.standard.string(forKey: "AppleInterfaceStyle") ?? "Light" == "Dark") {
+            (NSApplication.shared().delegate as! AppDelegate).statusItem.image = NSImage(named: "icon_white")
+            btRefresh.image = NSImage(named: "ic_autorenew_white")
+            lbLine.backgroundColor = NSColor.white.withAlphaComponent(0.3)
+        }
+        else {
+            (NSApplication.shared().delegate as! AppDelegate).statusItem.image = NSImage(named: "icon_black")
+            btRefresh.image = NSImage(named: "ic_autorenew_black")
+            lbLine.backgroundColor = NSColor.darkGray.withAlphaComponent(0.3)
+        }
     }
     
-    func setPopupButtons() {
-        btPopupUpdatePer.addItems(withTitles: Const.arrUpdatePerString)
-        btPopupMyCoin.addItems(withTitles: Const.arrCoinName)
+    override func viewDidAppear() {
+        NSRunningApplication.current().activate(options: NSApplicationActivationOptions.activateIgnoringOtherApps)
+    }
+    
+    //Setup popup buttons
+    func initView() {
         
-        let updatePer = UserDefaults.standard.string(forKey: Const.UserDefaultKey.UPDATE_PER) ?? "1min"
-        let myCoin = UserDefaults.standard.string(forKey: Const.UserDefaultKey.MY_COIN) ?? "BTC"
+        //Popup Button
+        btStatusUpdatePer.addItems(withTitles: Array(Const.dicUpdatePerSec.keys))
+        btStatusCoin.addItems(withTitles: Coin.allValues)
+        btStatusSite.addItems(withTitles: Site.allValues)
+        btBaseCurrency.addItems(withTitles: BaseCurrency.allValues)
         
-        btPopupUpdatePer.selectItem(at: Const.arrUpdatePerString.index(of: updatePer) ?? 0)
-        btPopupMyCoin.selectItem(at: Const.arrCoinName.index(of: myCoin) ?? 0)
+        btStatusUpdatePer.selectItem(withTitle: MyValue.updatePer)
+        btStatusCoin.selectItem(withTitle: MyValue.myCoin.rawValue)
+        btStatusSite.selectItem(withTitle: MyValue.mySite.rawValue)
+        btBaseCurrency.selectItem(withTitle: MyValue.myBaseCurrency.rawValue)
+        
+        //Check Button
+        for cb in arrCbCoin {
+            cb.state = MyValue.arrSelectedCoin.contains(cb.title) ? NSOnState : NSOffState
+            
+            //Hide not selected coin view
+            if(!MyValue.arrSelectedCoin.contains(cb.title)) {
+                arrlbCoinTitle[cb.tag].isHidden = true
+                
+                for index in 0...arrSiteView.count-1 {
+                    arrSiteView[index].setVisibilityLabel(position: cb.tag, isHidden: true)
+                }
+            }
+        }
+        for cb in arrCbSite {
+            cb.state = MyValue.arrSelectedSite.contains(cb.title) ? NSOnState : NSOffState
+            
+            //Hide not selected site view
+            if(!MyValue.arrSelectedSite.contains(cb.title)) {
+                stackViewSites.subviews[cb.tag].isHidden = true
+            }
+        }
+    }
+    
+    //Add exchange site view
+    func addSiteView() {
+        for siteName in Site.allValues {
+            let view = ModelSite(frame: NSRect(x: 0, y: 0, width: 0, height: 0), title: siteName)
+            self.stackViewSites.addArrangedSubview(view.view)
+            
+            arrSiteView.append(view)
+            
+            //Hide not selected site view
+            if(!MyValue.arrSelectedSite.contains(siteName)) {
+                view.isHidden = true
+            }
+        }
+        
+        arrSiteView[0].hideSeparator()
     }
     
     //Update coins sate in popover view
-    func updateState() {
-        lbUpdateTime.stringValue = "Loading..."
+    func updateCoinState() {
+        lbUpdateTime.stringValue = Const.DEFAULT_LOADING_TEXT
         
-        for lb in arrlbBithumb {
-            lb.stringValue = "Loading..."
+        //Set all label to Loading..
+        for view in arrSiteView {
+            view.setLoadingState()
         }
         
-        for lb in arrlbPoloniex {
-            lb.stringValue = "Loading..."
-        }
-        
-        for cb in arrCb {
-            if(cb.state == NSOnState){
-                arrSelectedCoins.append(Const.arrCoinName[cb.tag])
-                
-                arrlbBithumb[cb.tag].isHidden = false
-                arrlbPoloniex[cb.tag].isHidden = false
-                arrlbTitle[cb.tag].isHidden = false
-            }
-            else {
-                arrlbBithumb[cb.tag].isHidden = true
-                arrlbPoloniex[cb.tag].isHidden = true
-                arrlbTitle[cb.tag].isHidden = true
+        //Update only selected site
+        for cb in arrCbSite {
+            if(cb.state == NSOnState) {
+                getCoinStateFromApi(indexOfSite: arrCbSite.index(of: cb)!)
             }
         }
-        
-        self.getBithumb()
-        
-        self.getExchangeRateAndPoloniex()
     }
     
-    func getBithumb(){
-        Api.getCoinsState_Bithum(arrSelectedCoins: arrSelectedCoins, complete: {isSuccess, arrResult in
-            if(isSuccess){
-                for infoCoin in arrResult {
-                    
-                    for index in 0...Const.arrCoinName.count-1 {
-                        if(infoCoin.coinName! == Const.arrCoinName[index]) {
-                            self.arrlbBithumb[index].stringValue = infoCoin.current_price!.withCommas()
-                        }
-                        
-                        //update my coin state in status bar
-                        if(infoCoin.coinName! == (UserDefaults.standard.string(forKey: Const.UserDefaultKey.MY_COIN) ?? "BTC")) {
-                            (NSApplication.shared().delegate as! AppDelegate).setStatusLabelTitle(title: "\(infoCoin.coinName!) \(Double(infoCoin.current_price!).withCommas())")
-                        }
-                    }
-                }
-                self.lbUpdateTime.stringValue = Date().todayString(format: "yyyy.MM.dd HH:mm:ss")
-            }
-            else{
-                self.lbUpdateTime.stringValue = Date().todayString(format: "yyyy.MM.dd HH:mm:ss") + "last update is failed"
-            }
-        })
+    func getCoinStateFromApi(indexOfSite: Int) {
+        if(indexOfSite == 0){
+            Api.getCoinsStateBithum(arrSelectedCoins: MyValue.arrSelectedCoin, complete: {isSuccess, arrResult in
+                self.updateStateViewAfterGetDataFromApi(isSuccess: isSuccess, indexOfView: indexOfSite, arrData: arrResult)
+            })
+        }
+        else if(indexOfSite == 1) {
+            Api.getCoinsStateCoinone(arrSelectedCoins: MyValue.arrSelectedCoin, complete: {isSuccess, arrResult in
+                self.updateStateViewAfterGetDataFromApi(isSuccess: isSuccess, indexOfView: indexOfSite, arrData: arrResult)
+            })
+        }
+        else if(indexOfSite == 2) {
+            Api.getCoinsStatePoloniex(arrSelectedCoins: MyValue.arrSelectedCoin, complete: {isSuccess, arrResult in
+                self.updateStateViewAfterGetDataFromApi(isSuccess: isSuccess, indexOfView: indexOfSite, arrData: arrResult)
+            })
+        }
+        else if(indexOfSite == 3) {
+            Api.getCoinsStateOkcoin(arrSelectedCoins: MyValue.arrSelectedCoin, complete: {isSuccess, arrResult in
+                self.updateStateViewAfterGetDataFromApi(isSuccess: isSuccess, indexOfView: indexOfSite, arrData: arrResult)
+            })
+        }
     }
     
-    func getPoloniex() {
-        Api.getCoinsState_Poliniex(arrSelectedCoins: arrSelectedCoins, complete: {isSuccess, arrResult in
-            for infoCoin in arrResult {
-                
-                for index in 0...Const.arrCoinName.count-1 {
-                    if(infoCoin.coinName! == Const.arrCoinName[index]) {
-                        self.arrlbPoloniex[index].stringValue = Int(self.exchangeRate * infoCoin.current_price!).withCommas()
-                    }
-                }
-            }
-        })
-    }
-    
-    //get exchange rate(Dollar to KRW) -> get poloniex data -> USDT * exchange rate
-    func getExchangeRateAndPoloniex() {
-        Api.getExchangeRate(complete: {isSuccess, result in
-            if(isSuccess) {
-                self.exchangeRate = result
-
-                self.getPoloniex()
-            }
-            else {
-                self.exchangeRate = 0
-            }
-        })
-    }
-    
-    //change coin(will update) check state
-    @IBAction func changeCheckState(_ sender: NSButton) {
-        
-        if(sender.state == NSOnState) {
-            arrlbBithumb[sender.tag].isHidden = false
-            arrlbPoloniex[sender.tag].isHidden = false
-            arrlbTitle[sender.tag].isHidden = false
+    func updateStateViewAfterGetDataFromApi(isSuccess: Bool, indexOfView: Int, arrData: [InfoCoin]) {
+        if(isSuccess){
+            self.arrSiteView[indexOfView].updateCoinState(arrData: arrData)
             
-            if(arrlbBithumb[sender.tag].stringValue == "Loading...") {
-                updateState()
+            //Set update time
+            self.lbUpdateTime.stringValue = Date().todayString(format: "yyyy.MM.dd HH:mm:ss")
+        }
+        else{
+            //Set update fail time
+            self.lbUpdateTime.stringValue = Date().todayString(format: "yyyy.MM.dd HH:mm:ss") + "last update is failed"
+        }
+    }
+    
+    //업데이트 시킬 코인 체크박스 변경
+    //change coin(will update) check state
+    @IBAction func changeCheckCoin(_ sender: NSButton) {
+        let isChecked = sender.state == NSOnState
+        
+        //Hide coin name label
+        arrlbCoinTitle[sender.tag].isHidden = !isChecked
+        
+        //Hide price label in model view
+        for index in 0...arrSiteView.count-1 {
+            arrSiteView[index].setVisibilityLabel(position: sender.tag, isHidden: !isChecked)
+        }
+        
+        var arrSelected = [String]()
+        for cb in arrCbCoin {
+            if(cb.state == NSOnState){
+                arrSelected.append(Coin.allValues[cb.tag])
             }
         }
-        else {
-            arrlbBithumb[sender.tag].isHidden = true
-            arrlbPoloniex[sender.tag].isHidden = true
-            arrlbTitle[sender.tag].isHidden = true
+        MyValue.arrSelectedCoin = arrSelected
+    }
+    
+    //거래소 사이트 체크박스 변경
+    //change site check state
+    @IBAction func changeCheckSite(_ sender: NSButton) {
+        let isChecked = sender.state == NSOnState
+        
+        stackViewSites.subviews[sender.tag].isHidden = !isChecked
+        
+        var arrSelected = [String]()
+        for cb in arrCbSite {
+            if(cb.state == NSOnState){
+                arrSelected.append(Site.allValues[cb.tag])
+            }
         }
+        MyValue.arrSelectedSite = arrSelected
+    }
+    
+    //Change Update per sec
+    @IBAction func changeUpdatePer(_ sender: NSPopUpButton) {
+        MyValue.updatePer = sender.titleOfSelectedItem ?? Const.DEFAULT_UPDATE_PER.stirng
     }
     
     //Change my coin
     @IBAction func changeMyCoin(_ sender: NSPopUpButton) {
-        UserDefaults.standard.set(Const.arrCoinName[sender.indexOfSelectedItem], forKey: Const.UserDefaultKey.MY_COIN)
-        UserDefaults.standard.synchronize()
-        
-        (NSApplication.shared().delegate as! AppDelegate).updateStatusLabel(willShowLoadingText: false)
+        MyValue.myCoin = Coin.valueOf(name: sender.titleOfSelectedItem!)
     }
     
-    //Change Update per time
-    @IBAction func changUpdatePer(_ sender: NSPopUpButton) {
-        UserDefaults.standard.set(Const.arrUpdatePerString[sender.indexOfSelectedItem], forKey: Const.UserDefaultKey.UPDATE_PER)
-        UserDefaults.standard.synchronize()
+    //Change trading site
+    @IBAction func changeMySite(_ sender: NSPopUpButton) {
+        MyValue.mySite = Site.valueOf(name: sender.titleOfSelectedItem!)
         
-        (NSApplication.shared().delegate as! AppDelegate).setTimerSec()
+        //거래소를 변경하면 해당 거래소에서 거래가능한 코인들만 넣어줘야한다
+        btStatusCoin.removeAllItems()
+        btStatusCoin.addItems(withTitles: Site.valueOf(name: sender.title).arrTradableCoin())
+        
+        
+        //Current my coin is not tradable in changed site. So change my coin to first coin of tradable coins in my site.
+        if(!Site.valueOf(name: sender.title).arrTradableCoin().contains(MyValue.myCoin.rawValue)) {
+            btStatusCoin.selectItem(at: 0)
+            
+            MyValue.myCoin = Coin.valueOf(name: btStatusCoin.titleOfSelectedItem!)
+        }
+    }
+    
+    //Change Base Currency
+    @IBAction func changeBaseCurrency(_ sender: NSPopUpButton) {
+        MyValue.myBaseCurrency = BaseCurrency.valueOf(name: sender.titleOfSelectedItem!)
     }
     
     //Refresh data
     @IBAction func clickRefresh(_ sender: NSButton) {
-        updateState()
+        updateCoinState()
     }
     
     //Terminate App
     @IBAction func clickQuit(_ sender: NSButton) {
-        AppDelegate.timer.invalidate()
+        (NSApplication.shared().delegate as! AppDelegate).terminateTimer()
         NSApp.terminate(self)
     }
 }

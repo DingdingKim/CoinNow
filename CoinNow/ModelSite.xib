@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="12121" systemVersion="16F73" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
+    <dependencies>
+        <deployment identifier="macosx"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="12121"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+        <capability name="stacking Non-gravity area distributions on NSStackView" minToolsVersion="7.0" minSystemVersion="10.11"/>
+        <capability name="system font weights other than Regular or Bold" minToolsVersion="7.0"/>
+    </dependencies>
+    <objects>
+        <customObject id="-2" userLabel="File's Owner" customClass="ModelSite" customModule="CoinNow" customModuleProvider="target">
+            <connections>
+                <outlet property="lbBtc" destination="ilY-28-inW" id="OsE-Nl-KVq"/>
+                <outlet property="lbDash" destination="cdB-N7-BEH" id="dFg-As-vj7"/>
+                <outlet property="lbEtc" destination="jN3-dM-f0u" id="YIB-8b-pUK"/>
+                <outlet property="lbEth" destination="8dY-u8-Swx" id="9FB-Ma-2Gm"/>
+                <outlet property="lbLine" destination="FJm-OZ-MfM" id="sWB-pI-BiO"/>
+                <outlet property="lbLtc" destination="wlk-A3-ez5" id="hlP-aQ-GaY"/>
+                <outlet property="lbTitle" destination="BMm-kL-8WK" id="Qtt-6h-0Qn"/>
+                <outlet property="lbXrp" destination="9on-vw-pi6" id="e7v-Ch-3jR"/>
+                <outlet property="stackView" destination="SB2-on-nzU" id="E3Z-e5-hIZ"/>
+                <outlet property="view" destination="Icn-dd-YXH" id="1VH-ej-Tu6"/>
+            </connections>
+        </customObject>
+        <customObject id="-1" userLabel="First Responder" customClass="FirstResponder"/>
+        <customObject id="-3" userLabel="Application" customClass="NSObject"/>
+        <customView id="Icn-dd-YXH">
+            <rect key="frame" x="0.0" y="0.0" width="221" height="173"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+            <subviews>
+                <textField allowsCharacterPickerTouchBarItem="NO" translatesAutoresizingMaskIntoConstraints="NO" id="FJm-OZ-MfM">
+                    <rect key="frame" x="0.0" y="0.0" width="1" height="143"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="1" id="WpE-dz-d8t"/>
+                    </constraints>
+                    <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Label" drawsBackground="YES" id="ndK-WX-WKQ">
+                        <font key="font" metaFont="system"/>
+                        <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                        <color key="backgroundColor" white="1" alpha="0.1992455051369863" colorSpace="calibratedWhite"/>
+                    </textFieldCell>
+                </textField>
+                <stackView distribution="fillEqually" orientation="vertical" alignment="leading" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="SB2-on-nzU" userLabel="Stack View_Bithumb">
+                    <rect key="frame" x="11" y="0.0" width="200" height="173"/>
+                    <subviews>
+                        <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" allowsCharacterPickerTouchBarItem="YES" translatesAutoresizingMaskIntoConstraints="NO" id="BMm-kL-8WK">
+                            <rect key="frame" x="-2" y="156" width="204" height="17"/>
+                            <textFieldCell key="cell" lineBreakMode="truncatingTail" sendsActionOnEndEditing="YES" alignment="right" title="Site name" usesSingleLineMode="YES" id="pUJ-DM-nJA">
+                                <font key="font" metaFont="systemSemibold" size="13"/>
+                                <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                <color key="backgroundColor" red="0.97647058819999999" green="0.38823529410000002" blue="0.67843137249999996" alpha="1" colorSpace="deviceRGB"/>
+                            </textFieldCell>
+                        </textField>
+                        <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" allowsCharacterPickerTouchBarItem="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ilY-28-inW">
+                            <rect key="frame" x="-2" y="130" width="204" height="18"/>
+                            <textFieldCell key="cell" lineBreakMode="truncatingTail" sendsActionOnEndEditing="YES" alignment="right" title="Loading ..." usesSingleLineMode="YES" id="D76-AT-Fgx">
+                                <font key="font" metaFont="system" size="14"/>
+                                <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                <color key="backgroundColor" red="0.97647058819999999" green="0.38823529410000002" blue="0.67843137249999996" alpha="1" colorSpace="deviceRGB"/>
+                            </textFieldCell>
+                        </textField>
+                        <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" tag="1" setsMaxLayoutWidthAtFirstLayout="YES" allowsCharacterPickerTouchBarItem="YES" translatesAutoresizingMaskIntoConstraints="NO" id="8dY-u8-Swx">
+                            <rect key="frame" x="-2" y="104" width="204" height="18"/>
+                            <textFieldCell key="cell" lineBreakMode="truncatingTail" sendsActionOnEndEditing="YES" alignment="right" title="Loading ..." usesSingleLineMode="YES" id="9CB-v0-pAa">
+                                <font key="font" metaFont="system" size="14"/>
+                                <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                <color key="backgroundColor" red="0.97647058819999999" green="0.38823529410000002" blue="0.67843137249999996" alpha="1" colorSpace="deviceRGB"/>
+                            </textFieldCell>
+                        </textField>
+                        <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" tag="2" setsMaxLayoutWidthAtFirstLayout="YES" allowsCharacterPickerTouchBarItem="YES" translatesAutoresizingMaskIntoConstraints="NO" id="cdB-N7-BEH">
+                            <rect key="frame" x="-2" y="78" width="204" height="18"/>
+                            <textFieldCell key="cell" lineBreakMode="truncatingTail" sendsActionOnEndEditing="YES" alignment="right" title="Loading ..." usesSingleLineMode="YES" id="qTf-8b-Kd3">
+                                <font key="font" metaFont="system" size="14"/>
+                                <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                <color key="backgroundColor" red="0.97647058819999999" green="0.38823529410000002" blue="0.67843137249999996" alpha="1" colorSpace="deviceRGB"/>
+                            </textFieldCell>
+                        </textField>
+                        <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" tag="3" setsMaxLayoutWidthAtFirstLayout="YES" allowsCharacterPickerTouchBarItem="YES" translatesAutoresizingMaskIntoConstraints="NO" id="wlk-A3-ez5">
+                            <rect key="frame" x="-2" y="52" width="204" height="18"/>
+                            <textFieldCell key="cell" lineBreakMode="truncatingTail" sendsActionOnEndEditing="YES" alignment="right" title="Loading ..." usesSingleLineMode="YES" id="iSH-N4-RHH">
+                                <font key="font" metaFont="system" size="14"/>
+                                <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                <color key="backgroundColor" red="0.97647058819999999" green="0.38823529410000002" blue="0.67843137249999996" alpha="1" colorSpace="deviceRGB"/>
+                            </textFieldCell>
+                        </textField>
+                        <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" tag="4" setsMaxLayoutWidthAtFirstLayout="YES" allowsCharacterPickerTouchBarItem="YES" translatesAutoresizingMaskIntoConstraints="NO" id="jN3-dM-f0u">
+                            <rect key="frame" x="-2" y="26" width="204" height="18"/>
+                            <textFieldCell key="cell" lineBreakMode="truncatingTail" sendsActionOnEndEditing="YES" alignment="right" title="Loading ..." usesSingleLineMode="YES" id="j22-O1-SlP">
+                                <font key="font" metaFont="system" size="14"/>
+                                <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                <color key="backgroundColor" red="0.97647058819999999" green="0.38823529410000002" blue="0.67843137249999996" alpha="1" colorSpace="deviceRGB"/>
+                            </textFieldCell>
+                        </textField>
+                        <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" tag="5" setsMaxLayoutWidthAtFirstLayout="YES" allowsCharacterPickerTouchBarItem="YES" translatesAutoresizingMaskIntoConstraints="NO" id="9on-vw-pi6">
+                            <rect key="frame" x="-2" y="0.0" width="204" height="18"/>
+                            <textFieldCell key="cell" lineBreakMode="truncatingTail" sendsActionOnEndEditing="YES" alignment="right" title="Loading ..." usesSingleLineMode="YES" id="Wvi-sX-U5p">
+                                <font key="font" metaFont="system" size="14"/>
+                                <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                <color key="backgroundColor" red="0.97647058819999999" green="0.38823529410000002" blue="0.67843137249999996" alpha="1" colorSpace="deviceRGB"/>
+                            </textFieldCell>
+                        </textField>
+                    </subviews>
+                    <constraints>
+                        <constraint firstAttribute="trailing" secondItem="wlk-A3-ez5" secondAttribute="trailing" id="17u-Io-yrS"/>
+                        <constraint firstAttribute="trailing" secondItem="ilY-28-inW" secondAttribute="trailing" id="Ik9-zC-00c"/>
+                        <constraint firstAttribute="trailing" secondItem="8dY-u8-Swx" secondAttribute="trailing" id="JPt-St-CYw"/>
+                        <constraint firstAttribute="trailing" secondItem="9on-vw-pi6" secondAttribute="trailing" id="LBd-fD-zCF"/>
+                        <constraint firstAttribute="trailing" secondItem="BMm-kL-8WK" secondAttribute="trailing" id="MBI-xU-QNf"/>
+                        <constraint firstAttribute="trailing" secondItem="jN3-dM-f0u" secondAttribute="trailing" id="jeb-sI-0xw"/>
+                        <constraint firstAttribute="trailing" secondItem="cdB-N7-BEH" secondAttribute="trailing" id="wBD-c6-Y0B"/>
+                    </constraints>
+                    <visibilityPriorities>
+                        <integer value="1000"/>
+                        <integer value="1000"/>
+                        <integer value="1000"/>
+                        <integer value="1000"/>
+                        <integer value="1000"/>
+                        <integer value="1000"/>
+                        <integer value="1000"/>
+                    </visibilityPriorities>
+                    <customSpacing>
+                        <real value="3.4028234663852886e+38"/>
+                        <real value="3.4028234663852886e+38"/>
+                        <real value="3.4028234663852886e+38"/>
+                        <real value="3.4028234663852886e+38"/>
+                        <real value="3.4028234663852886e+38"/>
+                        <real value="3.4028234663852886e+38"/>
+                        <real value="3.4028234663852886e+38"/>
+                    </customSpacing>
+                </stackView>
+            </subviews>
+            <constraints>
+                <constraint firstAttribute="trailing" secondItem="SB2-on-nzU" secondAttribute="trailing" constant="10" id="E7c-2e-cfd"/>
+                <constraint firstAttribute="bottom" secondItem="FJm-OZ-MfM" secondAttribute="bottom" id="Fo6-Hv-cwl"/>
+                <constraint firstItem="SB2-on-nzU" firstAttribute="top" secondItem="Icn-dd-YXH" secondAttribute="top" id="UDb-qU-fJN"/>
+                <constraint firstItem="FJm-OZ-MfM" firstAttribute="top" secondItem="SB2-on-nzU" secondAttribute="top" constant="30" id="VoG-nO-t8u"/>
+                <constraint firstItem="FJm-OZ-MfM" firstAttribute="leading" secondItem="Icn-dd-YXH" secondAttribute="leading" id="k6P-oZ-YwQ"/>
+                <constraint firstItem="SB2-on-nzU" firstAttribute="leading" secondItem="Icn-dd-YXH" secondAttribute="leading" constant="11" id="oa6-Fb-35A"/>
+                <constraint firstAttribute="bottom" secondItem="SB2-on-nzU" secondAttribute="bottom" id="xDB-us-1Nb"/>
+            </constraints>
+            <point key="canvasLocation" x="-899.5" y="16"/>
+        </customView>
+    </objects>
+</document>

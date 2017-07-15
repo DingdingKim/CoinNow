@@ -11,49 +11,89 @@ import Cocoa
 @NSApplicationMain
 class AppDelegate: NSObject, NSApplicationDelegate {
     
-    public let statusItem = NSStatusBar.system().statusItem(withLength: -1)
-    let popover = NSPopover()
+    let statusItem = NSStatusBar.system().statusItem(withLength: -1)
+    private let popover = NSPopover()
     
-    public static var timer = Timer()
+    private static var timer = Timer()
     
     func applicationDidFinishLaunching(_ notification: Notification) {
+        
         setStatusButton()
         
         updateStatusLabel(willShowLoadingText: true)
         
-        setTimerSec()
+        setTimerSec(updatePer: MyValue.updatePer)
     }
     
     func applicationWillTerminate(_ aNotification: Notification) {
         //terminate timer
-        AppDelegate.timer.invalidate()
+        terminateTimer()
     }
     
     //Set button at status bar(toggle popover)
     func setStatusButton() {
-        self.statusItem.image = NSImage(named: "icon")
+        popover.behavior = .transient//close popover when click outside
+        
+        //For os is dark mode
+        if(UserDefaults.standard.string(forKey: "AppleInterfaceStyle") ?? "Light" == "Dark") {
+            self.statusItem.image = NSImage(named: "icon_white")
+        }
+        else {
+            self.statusItem.image = NSImage(named: "icon_black")
+        }
         self.statusItem.button?.action = #selector(AppDelegate.togglePopover(_:))
         popover.contentViewController = VCPopover(nibName: "VCPopover", bundle: nil)
-        popover.behavior = .applicationDefined;
     }
     
     //Set label that show my coin state at status bar
     public func updateStatusLabel(willShowLoadingText: Bool) {
+        //업데이트 할때 상태바에 있는애는 로딩으로 바뀌면 정신없어서
         if(willShowLoadingText) {
-            self.statusItem.title = "Loading.."
+            self.statusItem.title = Const.DEFAULT_LOADING_TEXT
         }
         
-        //get coin state from bithum api and set title of statusbar.
-        Api.getCoinsState_Bithum(arrSelectedCoins: Const.arrCoinName, complete: {isSuccess, arrResult in
-            
-            for infoCoin in arrResult {
-                if(infoCoin.coinName! == (UserDefaults.standard.string(forKey: Const.UserDefaultKey.MY_COIN) ?? "BTC")) {
-                    self.setStatusLabelTitle(title: "\(infoCoin.coinName!) \(Double(infoCoin.current_price!).withCommas()) ")
-                    break
+        print("Update Status Label : \(MyValue.mySite) / \(MyValue.myCoin.rawValue) / \(MyValue.myBaseCurrency.rawValue)")
+        
+        if(MyValue.mySite == .bithumb){
+            Api.getCoinsStateBithum(arrSelectedCoins: [MyValue.myCoin.rawValue], complete: {isSuccess, arrResult in
+                for infoCoin in arrResult {
+                    if(infoCoin.coin == MyValue.myCoin) {
+                        self.setStatusLabelTitle(title: "\(infoCoin.coin.rawValue) \(Double(infoCoin.currentPrice).withCommas()) ")
+                        break
+                    }
                 }
-            }
-            debugPrint("updateStatusLabel : \(Date().todayString(format: "yyyy.MM.dd HH:mm:ss"))")
-        })
+            })
+        }
+        else if(MyValue.mySite == .coinone) {
+            Api.getCoinsStateCoinone(arrSelectedCoins: [MyValue.myCoin.rawValue], complete: {isSuccess, arrResult in
+                for infoCoin in arrResult {
+                    if(infoCoin.coin == MyValue.myCoin) {
+                        self.setStatusLabelTitle(title: "\(infoCoin.coin.rawValue) \(Double(infoCoin.currentPrice).withCommas()) ")
+                        break
+                    }
+                }
+            })
+        }
+        else if(MyValue.mySite == .poloniex) {
+            Api.getCoinsStatePoloniex(arrSelectedCoins: [MyValue.myCoin.rawValue], complete: {isSuccess, arrResult in
+                for infoCoin in arrResult {
+                    if(infoCoin.coin == MyValue.myCoin) {
+                        self.setStatusLabelTitle(title: "\(infoCoin.coin.rawValue) \(Double(infoCoin.currentPrice).withCommas()) ")
+                        break
+                    }
+                }
+            })
+        }
+        else if(MyValue.mySite == .okcoin) {
+            Api.getCoinsStateOkcoin(arrSelectedCoins: [MyValue.myCoin.rawValue], complete: {isSuccess, arrResult in
+                for infoCoin in arrResult {
+                    if(infoCoin.coin == MyValue.myCoin) {
+                        self.setStatusLabelTitle(title: "\(infoCoin.coin.rawValue) \(Double(infoCoin.currentPrice).withCommas()) ")
+                        break
+                    }
+                }
+            })
+        }
     }
     
     public func setStatusLabelTitle(title: String) {
@@ -61,23 +101,26 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     }
     
     //set timer sec that for update status bar title
-    func setTimerSec() {
-        AppDelegate.timer.invalidate()
+    func setTimerSec(updatePer: String) {
+        terminateTimer()
+        debugPrint("setTimerSec : \(updatePer)")
         
-        let repeatSecString = UserDefaults.standard.string(forKey: Const.UserDefaultKey.UPDATE_PER) ?? "1min"
-        let repearSecInt: Double = Const.arrUpdatePerInt[Const.arrUpdatePerString.index(of: repeatSecString)!]
-        
-        AppDelegate.timer = Timer.scheduledTimer(timeInterval: repearSecInt, target: self, selector: #selector(updateStatusLabel), userInfo: nil, repeats: true)
+        AppDelegate.timer = Timer.scheduledTimer(timeInterval: Const.dicUpdatePerSec[updatePer] ?? Const.DEFAULT_UPDATE_PER.double, target: self, selector: #selector(updateStatusLabel), userInfo: nil, repeats: true)
     }
     
     func togglePopover(_ sender: AnyObject?) {
         if popover.isShown {
             popover.performClose(sender)
-        } else {
+        }
+        else {
             if let button = statusItem.button {
                 popover.show(relativeTo: button.bounds, of: button, preferredEdge: NSRectEdge.minY)
             }
         }
+    }
+    
+    func terminateTimer() {
+        AppDelegate.timer.invalidate()
     }
 }
 

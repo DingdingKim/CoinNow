@@ -8,34 +8,28 @@
 
 import Foundation
 
-class Const {
-    static var arrCoinName = ["BTC", "ETH", "DASH", "LTC", "ETC", "XRP"]
-    static var arrUpdatePerString = ["10sec", "20sec", "30sec", "1min", "5min", "10min", "20min", "30min", "40min", "50min", "1hour"]
-    static var arrUpdatePerInt: [Double] = [10, 20, 30, 60, 300, 600, 1200, 1800, 2400, 3000, 3600]
+struct Const {
+    static var dicUpdatePerSec: [String : Double] = ["10sec": 10, "20sec": 20, "30sec": 30, "1min": 60, "5min": 300, "10min": 600, "20min": 1200, "30min": 1800, "40min": 2400, "50min": 3000, "1hour": 3600]
+    
+    static var exchangeRateLastUpdateTime: Date? = nil
+    static var exchangeRate: Double = 1.0
+    
+    //Default values
+    static let DEFAULT_UPDATE_PER: (stirng: String, double: Double) = ("1min", 60)
+    static let DEFAULT_MY_COIN = Coin.btc.rawValue
+    static let DEFAULT_MY_SITE = Site.bithumb.rawValue
+    static let DEFAULT_MY_BASE_CURRENCY = BaseCurrency.krw.rawValue
+    static let DEFAULT_LOADING_TEXT = "Loading.."
+    static let USDT_RATE: Double = 1.01 //poloniex is used usdt.
     
     struct UserDefaultKey {
-        //Coin that show in status bar
-        static let MY_COIN="MY_COIN"
-        //Trading site that show in status bar
-        static let MY_SITE="MY_SITE"
-        static let UPDATE_PER="UPDATE_PER"
-    }
-    
-    struct Coin {
-        static let BTC = "BTC"
-        static let ETH = "ETH"
-        static let DASH = "DASH"
-        static let LTC = "LTC"
-        static let ETC = "ETC"
-        static let XRP = "XRP"
-    }
-    
-    struct CoinIndex {
-        static let BTC = 0
-        static let ETH = 1
-        static let DASH = 2
-        static let LTC = 3
-        static let ETC = 4
-        static let XRP = 5
+        static let MY_COIN = "MY_COIN" //Coin that show in status bar
+        static let MY_SITE = "MY_SITE" //Trading site that show in status bar
+        static let MY_BASE_CURRENCY = "MY_BASE_CURRENCY"
+        static let UPDATE_PER = "UPDATE_PER" //type is String(keys of dicUpdatePerSec)
+        
+        //will update site and coin
+        static let SELECTED_SITES = "SELECTED_SITES"
+        static let SELECTED_COINS = "SELECTED_COINS"
     }
 }
