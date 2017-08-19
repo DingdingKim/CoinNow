@@ -35,11 +35,13 @@ class VCPopover: NSViewController {
     @IBOutlet weak var cbLtc: NSButton!
     @IBOutlet weak var cbEtc: NSButton!
     @IBOutlet weak var cbXrp: NSButton!
+    @IBOutlet weak var cbBch: NSButton!
     
     @IBOutlet weak var cbBithumb: NSButton!
     @IBOutlet weak var cbCoinone: NSButton!
     @IBOutlet weak var cbPoloniex: NSButton!
     @IBOutlet weak var cbOkcoin: NSButton!
+    @IBOutlet weak var cbHuobi: NSButton!
     
     @IBOutlet var lbBtcTitle: NSTextField!
     @IBOutlet var lbEthTitle: NSTextField!
@@ -47,9 +49,11 @@ class VCPopover: NSViewController {
     @IBOutlet var lbLtcTitle: NSTextField!
     @IBOutlet var lbEtcTitle: NSTextField!
     @IBOutlet var lbXrpTitle: NSTextField!
+    @IBOutlet var lbBchTitle: NSTextField!
     
     @IBOutlet weak var stackViewSites: NSStackView!
     @IBOutlet weak var stackViewCoinName: NSStackView!
+    
     @IBOutlet weak var btDonate: NSButton!
     @IBOutlet weak var viewDonate: NSView!
     
@@ -60,10 +64,12 @@ class VCPopover: NSViewController {
     
     var arrSiteView = [ModelSite]()
     
+    var countUpdatedSite: Int = 0
+    
     override func viewDidLoad() {
-        arrCbCoin = [cbBtc, cbEth, cbDash, cbLtc, cbEtc, cbXrp]
-        arrCbSite = [cbBithumb, cbCoinone, cbPoloniex, cbOkcoin]
-        arrlbCoinTitle = [lbBtcTitle, lbEthTitle, lbDashTitle, lbLtcTitle, lbEtcTitle, lbXrpTitle]
+        arrCbCoin = [cbBtc, cbEth, cbDash, cbLtc, cbEtc, cbXrp, cbBch]
+        arrCbSite = [cbBithumb, cbCoinone, cbPoloniex, cbOkcoin, cbHuobi]
+        arrlbCoinTitle = [lbBtcTitle, lbEthTitle, lbDashTitle, lbLtcTitle, lbEtcTitle, lbXrpTitle, lbBchTitle]
         
         addSiteView()
         
@@ -87,6 +93,7 @@ class VCPopover: NSViewController {
             btRefresh.image = NSImage(named: "ic_autorenew_white")
             lbLine.backgroundColor = NSColor.white.withAlphaComponent(0.3)
             btMinimode.image = NSImage.init(named: "ic_fullscreen_white")
+            btMinimode.image = NSImage.init(named: self.isDarkMode() ? "ic_fullscreen_exit_white" : "ic_fullscreen_exit_black")
         }
         else {
             (NSApplication.shared().delegate as! AppDelegate).statusItem.image = NSImage(named: "icon_black")
@@ -100,6 +107,8 @@ class VCPopover: NSViewController {
     
     //Setup popup buttons
     func initView() {
+        
+        btRefresh.wantsLayer = true
         
         //Popup Button
         btStatusUpdatePer.addItems(withTitles: Array(Const.dicUpdatePerSec.keys))
@@ -154,11 +163,24 @@ class VCPopover: NSViewController {
     
     //Update coins sate in popover view
     func updateCoinState() {
+        //Set all label to Loading..
+        //*remove this code becase it does not feel smooth.. ㅜ(From github issue)
+
+//        lbUpdateTime.stringValue = Const.DEFAULT_LOADING_TEXT
+//        for view in arrSiteView {
+//            view.setLoadingState()
+//        }
+        
+        //refresh animation
+        //toggleRefreshButtonAnimation(isRotate: true)
+        
         lbUpdateTime.stringValue = Const.DEFAULT_LOADING_TEXT
         
-        //Set all label to Loading..
-        for view in arrSiteView {
-            view.setLoadingState()
+        //Calculate count of selected site
+        for cb in arrCbSite {
+            if(cb.state == NSOnState) {
+                countUpdatedSite += 1
+            }
         }
         
         //Update only selected site
@@ -190,6 +212,11 @@ class VCPopover: NSViewController {
                 self.updateStateViewAfterGetDataFromApi(isSuccess: isSuccess, indexOfView: indexOfSite, arrData: arrResult)
             })
         }
+        else if(indexOfSite == 4) {
+            Api.getCoinsStateHuobiByCryptowatch(arrSelectedCoins: MyValue.arrSelectedCoin, complete: {isSuccess, arrResult in
+                self.updateStateViewAfterGetDataFromApi(isSuccess: isSuccess, indexOfView: indexOfSite, arrData: arrResult)
+            })
+        }
     }
     
     func updateStateViewAfterGetDataFromApi(isSuccess: Bool, indexOfView: Int, arrData: [InfoCoin]) {
@@ -197,11 +224,20 @@ class VCPopover: NSViewController {
             self.arrSiteView[indexOfView].updateCoinState(arrData: arrData)
             
             //Set update time
-            self.lbUpdateTime.stringValue = Date().todayString(format: "yyyy.MM.dd HH:mm:ss")
+            //self.lbUpdateTime.stringValue = Date().todayString(format: "yyyy.MM.dd HH:mm:ss")
         }
         else{
             //Set update fail time
-            self.lbUpdateTime.stringValue = Date().todayString(format: "yyyy.MM.dd HH:mm:ss") + "last update is failed"
+            //self.lbUpdateTime.stringValue = Date().todayString(format: "yyyy.MM.dd HH:mm:ss") + "last update is failed"
+        }
+        countUpdatedSite -= 1
+        
+        print("로딩 끝 : \(countUpdatedSite)")
+        
+        if(countUpdatedSite <= 0){
+            //toggleRefreshButtonAnimation(isRotate: false)
+            lbUpdateTime.stringValue = Date().todayString(format: "yyyy.MM.dd HH:mm:ss")
+            print("로딩 전부 끝 : \(countUpdatedSite)")
         }
     }
     
@@ -258,7 +294,6 @@ class VCPopover: NSViewController {
         //Update coin list for selected site
         btStatusCoin.removeAllItems()
         btStatusCoin.addItems(withTitles: Site.valueOf(name: sender.title).arrTradableCoin())
-        
         
         //Current my coin is not tradable in changed site. So change my coin to first coin of tradable coins in my site.
         if(!Site.valueOf(name: sender.title).arrTradableCoin().contains(MyValue.myCoin.rawValue)) {
@@ -318,10 +353,41 @@ class VCPopover: NSViewController {
         }
     }
     
+    //Click to copy donate address
+    @IBAction func clickCopyDonateAddress(_ sender: NSButton) {
+        let address = Coin.donateAddress(index: sender.tag)
+        
+        let pasteboard = NSPasteboard.general()
+        pasteboard.declareTypes([NSPasteboardTypeString], owner: nil)
+        pasteboard.setString(address, forType: NSPasteboardTypeString)
+    }
     
     //Terminate App
     @IBAction func clickQuit(_ sender: NSButton) {
         (NSApplication.shared().delegate as! AppDelegate).terminateTimer()
         NSApp.terminate(self)
+    }
+    
+    //Animate refresh icon. When update data
+    func toggleRefreshButtonAnimation(isRotate: Bool) {
+        if isRotate {
+            let spinAnimation = CABasicAnimation()
+            spinAnimation.fromValue = 0
+            spinAnimation.toValue = Double.pi
+            spinAnimation.duration = 2
+            spinAnimation.repeatCount = Float.infinity
+            spinAnimation.isRemovedOnCompletion = false
+            //spinAnimation.fillMode = kCAFillModeForwards
+            spinAnimation.timingFunction = CAMediaTimingFunction (name: kCAMediaTimingFunctionLinear)
+            
+            btRefresh.layer?.anchorPoint = CGPoint(x: btRefresh.bounds.width/2, y: btRefresh.bounds.height/2)
+            btRefresh.layer?.add(spinAnimation, forKey: "transform.rotation.z")
+            
+            print("야 : \(btRefresh.bounds.width/2) : \(btRefresh.bounds.height/2)")
+
+//            btRefresh.rotate360Degrees()
+        } else {
+            btRefresh.layer?.removeAllAnimations()
+        }
     }
 }

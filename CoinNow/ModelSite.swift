@@ -23,6 +23,7 @@ class ModelSite: NSView {
     @IBOutlet weak var lbLtc: NSTextField!
     @IBOutlet weak var lbEtc: NSTextField!
     @IBOutlet weak var lbXrp: NSTextField!
+    @IBOutlet weak var lbBch: NSTextField!
     
     @IBOutlet weak var lbLine: NSTextField!
     
@@ -36,7 +37,7 @@ class ModelSite: NSView {
         self.view.frame = self.bounds
         self.addSubview(self.view)
 
-        arrLbCoin = [lbBtc, lbEth, lbDash, lbLtc, lbEtc, lbXrp]
+        arrLbCoin = [lbBtc, lbEth, lbDash, lbLtc, lbEtc, lbXrp, lbBch]
         
         lbTitle.stringValue = title
         
@@ -73,6 +74,7 @@ class ModelSite: NSView {
         lbLtc.stringValue = Const.DEFAULT_LOADING_TEXT
         lbEtc.stringValue = Const.DEFAULT_LOADING_TEXT
         lbXrp.stringValue = Const.DEFAULT_LOADING_TEXT
+        lbBch.stringValue = Const.DEFAULT_LOADING_TEXT
     }
     
     //체크박스 상태가 바뀔때마다 호출

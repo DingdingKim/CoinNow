@@ -11,13 +11,15 @@ import Foundation
 struct Const {
     static var dicUpdatePerSec: [String : Double] = ["10sec": 10, "20sec": 20, "30sec": 30, "1min": 60, "5min": 300, "10min": 600, "20min": 1200, "30min": 1800, "40min": 2400, "50min": 3000, "1hour": 3600]
     
+    static let HOST_CRYPTOWATCH = "https://api.cryptowat.ch"
+    
     //Default values
     static let DEFAULT_UPDATE_PER: (stirng: String, double: Double) = ("1min", 60)
     static let DEFAULT_MY_COIN = Coin.btc.rawValue
     static let DEFAULT_MY_SITE = Site.bithumb.rawValue
     static let DEFAULT_MY_BASE_CURRENCY = BaseCurrency.krw.rawValue
     static let DEFAULT_LOADING_TEXT = "Loading.."
-    static let USDT_RATE: Double = 1.01 //poloniex is used usdt.
+    //static let USDT_RATE: Double = 1.01 //poloniex is used usdt.
     
     struct UserDefaultKey {
         static let MY_COIN = "MY_COIN" //Coin that show in status bar

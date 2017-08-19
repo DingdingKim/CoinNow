@@ -47,9 +47,9 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     
     //Set label that show my coin state at status bar
     public func updateStatusLabel(willShowLoadingText: Bool) {
-        if(willShowLoadingText) {
-            self.statusItem.title = Const.DEFAULT_LOADING_TEXT
-        }
+//        if(willShowLoadingText) {
+//            self.statusItem.title = Const.DEFAULT_LOADING_TEXT
+//        }
         
         //print("Update Status Label : \(MyValue.mySite) / \(MyValue.myCoin.rawValue) / \(MyValue.myBaseCurrency.rawValue)")
         
@@ -85,6 +85,16 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         }
         else if(MyValue.mySite == .okcoin) {
             Api.getCoinsStateOkcoin(arrSelectedCoins: [MyValue.myCoin.rawValue], complete: {isSuccess, arrResult in
+                for infoCoin in arrResult {
+                    if(infoCoin.coin == MyValue.myCoin) {
+                        self.setStatusLabelTitle(title: "\(infoCoin.coin.rawValue) \(Double(infoCoin.currentPrice).withCommas()) ")
+                        break
+                    }
+                }
+            })
+        }
+        else if(MyValue.mySite == .huobi) {
+            Api.getCoinsStateHuobiByCryptowatch(arrSelectedCoins: [MyValue.myCoin.rawValue], complete: {isSuccess, arrResult in
                 for infoCoin in arrResult {
                     if(infoCoin.coin == MyValue.myCoin) {
                         self.setStatusLabelTitle(title: "\(infoCoin.coin.rawValue) \(Double(infoCoin.currentPrice).withCommas()) ")

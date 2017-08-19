@@ -10,6 +10,7 @@ import Foundation
 import Cocoa
 
 struct MyValue {
+    //상태바 코인 업데이트 주기
     static var updatePer = UserDefaults.standard.string(forKey: Const.UserDefaultKey.UPDATE_PER) ?? Const.DEFAULT_UPDATE_PER.stirng {
         didSet {
             UserDefaults.standard.set(updatePer, forKey: Const.UserDefaultKey.UPDATE_PER)
@@ -20,6 +21,7 @@ struct MyValue {
         }
     }
     
+    //상태바 코인
     static var myCoin: Coin = Coin.valueOf(name: UserDefaults.standard.string(forKey: Const.UserDefaultKey.MY_COIN) ?? Const.DEFAULT_MY_COIN) {
         didSet {
             UserDefaults.standard.set(myCoin.rawValue, forKey: Const.UserDefaultKey.MY_COIN)
@@ -30,6 +32,7 @@ struct MyValue {
         }
     }
     
+    //상태바 코인의 사이트
     static var mySite: Site = Site.valueOf(name: UserDefaults.standard.string(forKey: Const.UserDefaultKey.MY_SITE) ?? Const.DEFAULT_MY_SITE) {
         didSet {
             UserDefaults.standard.set(mySite.rawValue, forKey: Const.UserDefaultKey.MY_SITE)
@@ -40,6 +43,7 @@ struct MyValue {
         }
     }
     
+    //기준 통화
     static var myBaseCurrency: BaseCurrency = BaseCurrency.valueOf(name: UserDefaults.standard.string(forKey: Const.UserDefaultKey.MY_BASE_CURRENCY) ?? Const.DEFAULT_MY_BASE_CURRENCY) {
         didSet {
             UserDefaults.standard.set(myBaseCurrency.rawValue, forKey: Const.UserDefaultKey.MY_BASE_CURRENCY)
@@ -52,6 +56,7 @@ struct MyValue {
         }
     }
     
+    //선택된 코인들
     static var arrSelectedCoin: [String] = UserDefaults.standard.stringArray(forKey: Const.UserDefaultKey.SELECTED_COINS) ?? Coin.allValues {
         didSet {
             UserDefaults.standard.set(arrSelectedCoin, forKey: Const.UserDefaultKey.SELECTED_COINS)
@@ -63,6 +68,7 @@ struct MyValue {
         }
     }
     
+    //선택된 사이트들
     static var arrSelectedSite: [String] = UserDefaults.standard.stringArray(forKey: Const.UserDefaultKey.SELECTED_SITES) ?? Site.allValues {
         didSet {
             UserDefaults.standard.set(arrSelectedSite, forKey: Const.UserDefaultKey.SELECTED_SITES)
@@ -74,6 +80,7 @@ struct MyValue {
         }
     }
     
+    //미니모드 활성화 여부
     static var isSimpleMode: Bool = UserDefaults.standard.bool(forKey: Const.UserDefaultKey.IS_SIMPLE_MODE) {
         didSet {
             UserDefaults.standard.set(isSimpleMode, forKey: Const.UserDefaultKey.IS_SIMPLE_MODE)

@@ -26,11 +26,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "CoinNow/Api.swift"
-            timestampString = "521832887.065201"
+            timestampString = "524766772.795688"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "179"
-            endingLineNumber = "179"
+            startingLineNumber = "255"
+            endingLineNumber = "255"
             landmarkName = "getExchangeRate(from:complete:)"
             landmarkType = "7">
             <Locations>

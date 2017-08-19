@@ -33,10 +33,10 @@ class Api {
                             
                             for coinName in arrSelectedCoins {
                                 let dataCurrency = swiftyJsonVar["data"][coinName]
-                                let current_price = dataCurrency["closing_price"].stringValue
-                                let exchangedPrice = (Double(current_price) ?? 0.0) * exchangeRate
+                                let currentPrice = dataCurrency["closing_price"].stringValue
+                                let exchangedPrice = (Double(currentPrice) ?? 0.0) * exchangeRate
                                 
-                                //debugPrint("getCoinsStateBithum >> \(current_price) / \(exchangeRate) : \(exchangedPrice)")
+                                //debugPrint("getCoinsStateBithum >> \(currentPrice) / \(exchangeRate) : \(exchangedPrice)")
                                 
                                 let infoCoin = InfoCoin(coin: Coin.valueOf(name: coinName), currentPrice: exchangedPrice)
                                 
@@ -73,10 +73,10 @@ class Api {
                             for coinName in arrSelectedCoins {
                                 if(swiftyJsonVar[coinName.lowercased()].exists()) {
                                     let dataCurrency = swiftyJsonVar[coinName.lowercased()]
-                                    let current_price = dataCurrency["last"].stringValue
-                                    let exchangedPrice = (Double(current_price) ?? 0.0) * exchangeRate
+                                    let currentPrice = dataCurrency["last"].stringValue
+                                    let exchangedPrice = (Double(currentPrice) ?? 0.0) * exchangeRate
                                     
-                                    //debugPrint("getCoinsStateCoinone >> \(current_price) / \(exchangeRate) : \(exchangedPrice)")
+                                    //debugPrint("getCoinsStateCoinone >> \(currentPrice) / \(exchangeRate) : \(exchangedPrice)")
                                     
                                     let infoCoin = InfoCoin(coin: Coin.valueOf(name: coinName), currentPrice: exchangedPrice)
                                     arrResult.append(infoCoin)
@@ -113,10 +113,10 @@ class Api {
                         
                         for coinName in arrSelectedCoins {
                             let dataCurrency = swiftyJsonVar["USDT_\(coinName)"]
-                            let current_price = dataCurrency["last"].stringValue
-                            let exchangedPrice = (Double(current_price) ?? 0.0) * (exchangeRate) * Const.USDT_RATE
+                            let currentPrice = dataCurrency["last"].stringValue
+                            let exchangedPrice = (Double(currentPrice) ?? 0.0) * (exchangeRate)// * Const.USDT_RATE
                             
-                            //debugPrint("getCoinsStatePoloniex >> \(current_price) / \(exchangeRate) : \(exchangedPrice)")
+                            //debugPrint("getCoinsStatePoloniex >> \(currentPrice) / \(exchangeRate) : \(exchangedPrice)")
                             
                             let infoCoin = InfoCoin(coin: Coin.valueOf(name: coinName), currentPrice: exchangedPrice)
                             
@@ -128,6 +128,41 @@ class Api {
             }
         })
     }
+    
+    /*
+    static func getCoinsStatePoloniexByCryptowatch(arrSelectedCoins: [String], complete:@escaping (_ isSuccess: Bool, _ arrResult: [InfoCoin]) -> Void){
+        
+        //After get exchange rate then get price and exchange the price to base currency
+        Api.getExchangeRate(from: .usd, complete: {isSuccess, exchangeRate in
+            if(isSuccess){
+                //Add empty coins that not tradable in this site.
+                var arrResult = addEmptyCoin(arrSelectedCoins: arrSelectedCoins)
+                
+                for coinName in arrSelectedCoins {
+                    Alamofire.request("https://api.cryptowat.ch/markets/poloniex/\(coinName)usd/price", method: .get).responseJSON { (responseData) -> Void in
+                        if((responseData.result.value) != nil) {
+                            let swiftyJsonVar = JSON(responseData.result.value!)
+                            
+                            let currentPrice = swiftyJsonVar["result"]["price"].stringValue
+                            let exchangedPrice = (Double(currentPrice) ?? 0.0) * exchangeRate
+                            
+                            //debugPrint("getCoinsStateOkcoin >> \(currentPrice) / \(exchangeRate) : \(exchangedPrice)")
+                            
+                            let infoCoin = InfoCoin(coin: Coin.valueOf(name: coinName), currentPrice: exchangedPrice)
+                            arrResult.append(infoCoin)
+                            
+                            //callback when finish last item request
+                            if(arrResult.count == Coin.allValues.count) {
+                                //After all request is finished
+                                complete(true, arrResult)
+                            }
+                        }
+                    }
+                }
+            }
+        })
+    }
+     */
     
     static func getCoinsStateOkcoin(arrSelectedCoins: [String], complete:@escaping (_ isSuccess: Bool, _ arrResult: [InfoCoin]) -> Void){
         
@@ -141,18 +176,59 @@ class Api {
                 
                 for coinName in arrSelectedCoins {
                     
-                    //Okcoin offers only btc, eth, ltc
-                    if(coinName == "BTC" || coinName == "ETH" || coinName == "LTC") {
+                    //Okcoin offers only BTC, ETH, LTC
+                    if(Site.okcoin.arrTradableCoin().contains(coinName)) {
                         
                         Alamofire.request("https://www.okcoin.cn/api/v1/ticker.do?symbol=\(coinName)_cny", method: .get).responseJSON { (responseData) -> Void in
                             if((responseData.result.value) != nil) {
                                 let swiftyJsonVar = JSON(responseData.result.value!)
                                 
                                 let dataCurrency = swiftyJsonVar["ticker"]
-                                let current_price = dataCurrency["last"].stringValue
-                                let exchangedPrice = (Double(current_price) ?? 0.0) * exchangeRate
+                                let currentPrice = dataCurrency["last"].stringValue
+                                let exchangedPrice = (Double(currentPrice) ?? 0.0) * exchangeRate
                                 
-                                //debugPrint("getCoinsStateOkcoin >> \(current_price) / \(exchangeRate) : \(exchangedPrice)")
+                                //debugPrint("getCoinsStateOkcoin >> \(currentPrice) / \(exchangeRate) : \(exchangedPrice)")
+                                
+                                let infoCoin = InfoCoin(coin: Coin.valueOf(name: coinName), currentPrice: exchangedPrice)
+                                arrResult.append(infoCoin)
+                                
+                                //callback when finish last item request
+                                if(arrResult.count == Coin.allValues.count) {
+                                    //After all request is finished
+                                    complete(true, arrResult)
+                                }
+                            }
+                        }
+                    }
+                    else{
+                        let infoCoin = InfoCoin(coin: Coin.valueOf(name: coinName), currentPrice: 0.0)
+                        arrResult.append(infoCoin)
+                    }
+                }
+            }
+        })
+    }
+    
+    static func getCoinsStateHuobiByCryptowatch(arrSelectedCoins: [String], complete:@escaping (_ isSuccess: Bool, _ arrResult: [InfoCoin]) -> Void){
+        
+        //After get exchange rate then get price and exchange the price to base currency
+        Api.getExchangeRate(from: .cny, complete: {isSuccess, exchangeRate in
+            if(isSuccess){
+                //Add empty coins that not tradable in this site.
+                var arrResult = addEmptyCoin(arrSelectedCoins: arrSelectedCoins)
+                
+                for coinName in arrSelectedCoins {
+                    
+                    //Okcoin offers only BTC, ETH, LTC, ETC
+                    if(Site.okcoin.arrTradableCoin().contains(coinName)) {
+                        Alamofire.request("https://api.cryptowat.ch/markets/huobi/\(coinName)cny/price", method: .get).responseJSON { (responseData) -> Void in
+                            if((responseData.result.value) != nil) {
+                                let swiftyJsonVar = JSON(responseData.result.value!)
+                                
+                                let currentPrice = swiftyJsonVar["result"]["price"].stringValue
+                                let exchangedPrice = (Double(currentPrice) ?? 0.0) * exchangeRate
+                                
+                                //debugPrint("getCoinsStateOkcoin >> \(currentPrice) / \(exchangeRate) : \(exchangedPrice)")
                                 
                                 let infoCoin = InfoCoin(coin: Coin.valueOf(name: coinName), currentPrice: exchangedPrice)
                                 arrResult.append(infoCoin)

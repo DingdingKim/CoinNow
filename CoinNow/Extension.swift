@@ -13,7 +13,14 @@ extension Double {
     func withCommas() -> String {
         let numberFormatter = NumberFormatter()
         numberFormatter.numberStyle = NumberFormatter.Style.decimal
-        return numberFormatter.string(from: NSNumber(value:self.roundTo(places: 2)))!
+        
+        //large price(>100) no need to show floating point.
+        if(self > 100){
+            return numberFormatter.string(from: NSNumber(value:self.roundTo(places: 0)))!
+        }
+        else{
+            return numberFormatter.string(from: NSNumber(value:self.roundTo(places: 2)))!
+        }
     }
     //Get https://stackoverflow.com/questions/27338573/rounding-a-double-value-to-x-number-of-decimal-places-in-swift
     func roundTo(places:Int) -> Double {
@@ -56,5 +63,21 @@ extension Dictionary where Value: Equatable {
 extension NSViewController {
     func isDarkMode() -> Bool{
         return UserDefaults.standard.string(forKey: "AppleInterfaceStyle") ?? "Light" == "Dark"
+    }
+}
+
+extension NSView {
+    func rotate360Degrees(duration: CFTimeInterval = 1.0, completionDelegate: AnyObject? = nil) {
+        self.layer?.anchorPoint = CGPoint(x: 1, y: 1)
+        
+        let rotateAnimation = CABasicAnimation(keyPath: "transform.rotation")
+        rotateAnimation.fromValue = 0.0
+        rotateAnimation.toValue = CGFloat(Double.pi)
+        rotateAnimation.duration = duration
+        
+//        if let delegate: AnyObject = completionDelegate {
+//            rotateAnimation.delegate = delegate as! CAAnimationDelegate
+//        }
+        self.layer?.add(rotateAnimation, forKey: nil)
     }
 }
