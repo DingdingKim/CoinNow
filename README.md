@@ -3,17 +3,15 @@ CoinNow (For macOS)
 
 ## Introduction
 
-Provide current price of cryptocurrency(BTC, ETH, DASH, LTC, ETC, XRP) in real time from Bithumb, Coinone, Poloniex, OKCoin_CNY.
+Provide current price of cryptocurrency(BTC, ETH, DASH, LTC, ETC, XRP, BCH) in real time from Bithumb, Coinone, Poloniex, OKCoin, Huobi.
 
 
-## 🔔🌟 Update 🌟🔔
+## 🔔🌟 Update 1.3.0 🌟🔔
 
-- Add trading Stie : Coinone OKCoin(CNY)
-- Add base currency selelct option(KRW, USD, CNY)
-- Code refactoring to swift style
-- Add minimode (Show only realtime coin state)
-- Auto close popover when click outside
-
+- Appstore update. 1.3.0
+- Support coin BCH coin and trading site Huobi.
+- Removed 'Loading...' text when price was updated.
+- Add copy button for copy donate addresss to clipboard.
 
 ## Demo
 
@@ -45,6 +43,7 @@ If you :heart: this, you could send me a bit coin :D
 | LTC | LbknpNGdpnDW6NRc4sbkFeu8yhvoFdo4yn |
 | ETC | 0x68d3e549bfe631ec4f4916070d8fdb6c9bed669c |
 | XRP | rsG1sNifXJxGS2nDQ9zHyoe1S5APrtwpjV (DT 1000581537) |
+| BCH | 16QPpstvKgGAY6Gfcfao2DeFfSyWLWtM5L |
 
 ## Author
 
