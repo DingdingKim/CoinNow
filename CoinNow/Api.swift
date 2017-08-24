@@ -253,13 +253,10 @@ class Api {
     //From yahoo api
     static func getExchangeRate(from: BaseCurrency, complete:@escaping (_ isSuccess: Bool, _ result: Double) -> Void){
         Alamofire.request("http://query.yahooapis.com/v1/public/yql?q=select%20*%20from%20yahoo.finance.xchange%20where%20pair%3D%22\(from.rawValue + MyValue.myBaseCurrency.rawValue)%22&format=json&diagnostics=true&env=store%3A%2F%2Fdatatables.org%2Falltableswithkeys", method: .get).responseJSON { (responseData) -> Void in
-            if((responseData.result.value) != nil) {
-                let swiftyJsonVar = JSON(responseData.result.value!)
-                
-                let rate = swiftyJsonVar["query"]["results"]["rate"]["Rate"].stringValue
-                
-                complete(true, Double(rate)!)
-            }
+            guard let resultValue = responseData.result.value else { return }
+            let swiftyJsonVar = JSON(resultValue)
+            guard let rate = Double(swiftyJsonVar["query"]["results"]["rate"]["Rate"].stringValue) else { return }
+            complete(true, rate)
         }
     }
     
