@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		1FA6BEFCAF295EDD9D40BE92 /* Pods_CoinNow.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FC71B95B1EFD5F5A565D27C8 /* Pods_CoinNow.framework */; };
+		751FD28C1F4F299D00B6991D /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 751FD28B1F4F299D00B6991D /* GoogleService-Info.plist */; };
 		755E39211F081FA400CA6BBC /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 755E39201F081FA400CA6BBC /* AppDelegate.swift */; };
 		755E39251F081FA400CA6BBC /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 755E39241F081FA400CA6BBC /* Assets.xcassets */; };
 		755E39281F081FA400CA6BBC /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 755E39261F081FA400CA6BBC /* Main.storyboard */; };
@@ -27,6 +28,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		751FD28B1F4F299D00B6991D /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		755E391D1F081FA400CA6BBC /* CoinNow.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CoinNow.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		755E39201F081FA400CA6BBC /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		755E39241F081FA400CA6BBC /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -95,6 +97,7 @@
 		755E391F1F081FA400CA6BBC /* CoinNow */ = {
 			isa = PBXGroup;
 			children = (
+				751FD28B1F4F299D00B6991D /* GoogleService-Info.plist */,
 				75E654581F0A4E5300230402 /* CoinNow.entitlements */,
 				755E39201F081FA400CA6BBC /* AppDelegate.swift */,
 				755E392F1F08206E00CA6BBC /* VCPopover.swift */,
@@ -221,6 +224,7 @@
 			files = (
 				75E654961F10BEFE00230402 /* ModelSite.xib in Resources */,
 				755E39251F081FA400CA6BBC /* Assets.xcassets in Resources */,
+				751FD28C1F4F299D00B6991D /* GoogleService-Info.plist in Resources */,
 				755E39321F08206E00CA6BBC /* VCPopover.xib in Resources */,
 				755E39281F081FA400CA6BBC /* Main.storyboard in Resources */,
 			);

@@ -56,6 +56,7 @@ class VCPopover: NSViewController {
     
     @IBOutlet weak var btDonate: NSButton!
     @IBOutlet weak var viewDonate: NSView!
+    @IBOutlet weak var lbDingAlert: NSTextField!//alert message from Dingding to user
     
     var arrCbCoin = [NSButton]()
     var arrCbSite = [NSButton]()
@@ -103,6 +104,17 @@ class VCPopover: NSViewController {
             btMinimode.image = NSImage.init(named: "ic_fullscreen_black")
         }
         NSRunningApplication.current().activate(options: NSApplicationActivationOptions.activateIgnoringOtherApps)
+        
+        //Alert message from Dingding(developer this app)
+        Api.getDingAlertMessage(complete: {isSuccess, message in
+            if(isSuccess){
+                self.lbDingAlert.isHidden = false
+                self.lbDingAlert.stringValue = message
+            }
+            else {
+                self.lbDingAlert.isHidden = true
+            }
+        })
     }
     
     //Setup popup buttons
@@ -232,13 +244,9 @@ class VCPopover: NSViewController {
         }
         countUpdatedSite -= 1
         
-        print("로딩 끝 : \(countUpdatedSite)")
-        
         if(countUpdatedSite <= 0){
             //toggleRefreshButtonAnimation(isRotate: false)
-            lbUpdateTime.stringValue = Date().todayString(format: "yyyy.MM.dd HH:mm:ss")
-            print("로딩 전부 끝 : \(countUpdatedSite)")
-        }
+            lbUpdateTime.stringValue = Date().todayString(format: "yyyy.MM.dd HH:mm:ss")        }
     }
     
     //change coin(will update) check state

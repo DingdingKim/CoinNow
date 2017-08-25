@@ -17,7 +17,6 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     private static var timer = Timer()
     
     func applicationDidFinishLaunching(_ notification: Notification) {
-        
         setStatusButton()
         
         updateStatusLabel(willShowLoadingText: true)
@@ -47,10 +46,6 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     
     //Set label that show my coin state at status bar
     public func updateStatusLabel(willShowLoadingText: Bool) {
-//        if(willShowLoadingText) {
-//            self.statusItem.title = Const.DEFAULT_LOADING_TEXT
-//        }
-        
         //print("Update Status Label : \(MyValue.mySite) / \(MyValue.myCoin.rawValue) / \(MyValue.myBaseCurrency.rawValue)")
         
         if(MyValue.mySite == .bithumb){

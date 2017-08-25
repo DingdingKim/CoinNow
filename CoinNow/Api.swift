@@ -13,6 +13,7 @@ import SwiftyJSON
 class Api {
     static let API_STATUS_CODE_SUCCESS_BITHUMB = "0000"
     static let API_STATUS_CODE_SUCCESS_COINONE = "0"
+    static let API_STATUS_CODE_SUCCESS_DING = 200
     
     static func getCoinsStateBithum(arrSelectedCoins: [String], complete:@escaping (_ isSuccess: Bool, _ arrResult: [InfoCoin]) -> Void){
         
@@ -20,7 +21,6 @@ class Api {
         Api.getExchangeRate(from: .krw, complete: {isSuccess, exchangeRate in
             if(isSuccess){
                 
-                print("환율가져온거 Bithum : \(exchangeRate)")
                 Alamofire.request("https://api.bithumb.com/public/ticker/ALL", method: .get).responseJSON { (responseData) -> Void in
                     if((responseData.result.value) != nil) {
                         let swiftyJsonVar = JSON(responseData.result.value!)
@@ -58,7 +58,6 @@ class Api {
         //After get exchange rate then get price and exchange the price to base currency
         Api.getExchangeRate(from: .krw, complete: {isSuccess, exchangeRate in
             if(isSuccess){
-                print("환율가져온거 Coinone : \(exchangeRate)")
                 
                 Alamofire.request("https://api.coinone.co.kr/ticker/?currency=all", method: .get).responseJSON { (responseData) -> Void in
                     if((responseData.result.value) != nil) {
@@ -103,7 +102,6 @@ class Api {
         //After get exchange rate then get price and exchange the price to base currency
         Api.getExchangeRate(from: .usd, complete: {isSuccess, exchangeRate in
             if(isSuccess){
-                print("환율가져온거 Poloniex : \(exchangeRate)")
                 
                 Alamofire.request("https://poloniex.com/public?command=returnTicker", method: .get).responseJSON { (responseData) -> Void in
                     if((responseData.result.value) != nil) {
@@ -169,7 +167,6 @@ class Api {
         //After get exchange rate then get price and exchange the price to base currency
         Api.getExchangeRate(from: .cny, complete: {isSuccess, exchangeRate in
             if(isSuccess){
-                print("환율가져온거 Okcoin : \(exchangeRate)")
                 
                 //Add empty coins that not tradable in this site.
                 var arrResult = addEmptyCoin(arrSelectedCoins: arrSelectedCoins)
@@ -251,12 +248,77 @@ class Api {
     }
     
     //From yahoo api
+    //1st : yahoo, 2nd : my server
+    //Caching update time
+    static var lastUpdateTimeOfExchangeRate: [String:Date] = ["KRWUSD": Date(), "KRWCNY": Date(), "USDKRW": Date(), "USDCNY": Date(), "CNYUSD": Date(), "CNYKRW": Date()]
+    static var cachedexchangeRate: [String:Double] = ["KRWUSD": 0, "KRWCNY": 0, "USDKRW": 0, "USDCNY": 0, "CNYUSD": 0, "CNYKRW": 0]
+    
     static func getExchangeRate(from: BaseCurrency, complete:@escaping (_ isSuccess: Bool, _ result: Double) -> Void){
-        Alamofire.request("http://query.yahooapis.com/v1/public/yql?q=select%20*%20from%20yahoo.finance.xchange%20where%20pair%3D%22\(from.rawValue + MyValue.myBaseCurrency.rawValue)%22&format=json&diagnostics=true&env=store%3A%2F%2Fdatatables.org%2Falltableswithkeys", method: .get).responseJSON { (responseData) -> Void in
-            guard let resultValue = responseData.result.value else { return }
-            let swiftyJsonVar = JSON(resultValue)
-            guard let rate = Double(swiftyJsonVar["query"]["results"]["rate"]["Rate"].stringValue) else { return }
-            complete(true, rate)
+        let pairOfCurrency = from.rawValue + MyValue.myBaseCurrency.rawValue
+        
+        //Same currency. return 1
+        if(from.rawValue == MyValue.myBaseCurrency.rawValue) {
+            complete(true, 1)
+        }
+        // NOT(caching data is valid(data is valid during 1 hour) || no cached data)
+        else if((lastUpdateTimeOfExchangeRate[pairOfCurrency]!.isTimeToUpdateExchangeRate()) || cachedexchangeRate[pairOfCurrency] == 0) {
+            
+            //1st : yahoo
+            let urlYahoo = "http://query.yahooapis.com/v1/public/yql?q=select%20*%20from%20yahoo.finance.xchange%20where%20pair%20in%20(%22\(pairOfCurrency)%22)&format=json&env=store://datatables.org/alltableswithkeys&callback="
+            Alamofire.request(urlYahoo, method: .get).responseJSON { (responseData) -> Void in
+                if let resultValue = responseData.result.value {
+                    let swiftyJsonVar = JSON(resultValue)
+                    if let rate = swiftyJsonVar["query"]["results"]["rate"]["Rate"].string {
+                        cachedexchangeRate[pairOfCurrency] = Double(rate) ?? 0
+                        complete(true, Double(rate) ?? 0)
+                    }
+                    else {
+                        //2nd : my server
+                        Alamofire.request("http://coinnow.herokuapp.com/coinnow/api/getExchangeRate?pair=\(pairOfCurrency)", method: .get).responseJSON { (responseData) -> Void in
+                            if((responseData.result.value) != nil) {
+                                let swiftyJsonVar = JSON(responseData.result.value!)
+                                
+                                let exchangeRate = Double(swiftyJsonVar["result"].stringValue) ?? 0
+                                cachedexchangeRate[pairOfCurrency] = exchangeRate
+                                
+                                complete(true, exchangeRate)
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        //valid cached exchange rate
+        else {
+            complete(true, cachedexchangeRate[pairOfCurrency] ?? 0)
+        }
+    }
+    
+    //Get alert message from Dingding to user
+    //😱😱😱😱😱😱😱😱😱😱😱😱😱😱😱😱😱😱😱😱I will refactoring this codes .... I was so hasty right now.
+    static func getDingAlertMessage(complete:@escaping (_ isSuccess: Bool, _ result: String) -> Void) {
+        Alamofire.request("http://coinnow.herokuapp.com/coinnow/api/getDingAlertMessage?language=\(NSLocale.preferredLanguages[0])", method: .get).responseJSON { (responseData) -> Void in
+            if((responseData.result.value) != nil) {
+                let swiftyJsonVar = JSON(responseData.result.value!)
+                let statusCode = swiftyJsonVar["statusCode"].intValue
+                
+                if(statusCode == API_STATUS_CODE_SUCCESS_DING){
+                    let message = swiftyJsonVar["result"].stringValue
+                    
+                    if(message == ""){
+                        complete(false, message)
+                    }
+                    else {
+                        complete(true, message)
+                    }
+                }
+                else {
+                    complete(false, "")
+                }
+            }
+            else {
+                complete(false, "")
+            }
         }
     }
     
