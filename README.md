@@ -34,7 +34,7 @@ You can install this app in AppStore! Search 'CoinNow'
 
 ## Donation
 
-# You love this project ? DONATE to me 😄 Thank you ! ❤️
+You love this project ? DONATE to me 😄 Thank you ! ❤️
 
 🍗 🍕 🍔 ☕ 🍻 😍 💃 💕
 
