@@ -12,9 +12,8 @@ Provide current price of cryptocurrency(BTC, ETH, DASH, LTC, ETC, XRP, BCH) in r
 - Fixed a bug where mini mode did not work properly
 - Improved ticker data loading speed. It is slow for the first time after the app runs, and then ~ Very fast! Hehe
 - No longer use Yahoo api. Get data from my api server.
-- The data is updated by Dingding. So not realtime ... 
+  The data is updated by Dingding. So not realtime ... 
 - PLEASE Do not call my api(exchange rate) too often. I have no money for running large server. 🤑
-- You love this project ? DONATE to me 😄 Thank you ! ❤️
 
 ## Demo
 
@@ -34,6 +33,9 @@ You can install this app in AppStore! Search 'CoinNow'
 - [ ] Alarm at target price
 
 ## Donation
+
+# You love this project ? DONATE to me 😄 Thank you ! ❤️
+
 🍗 🍕 🍔 ☕ 🍻 😍 💃 💕
 
 If you :heart: this, you could send me a bit coin :D
