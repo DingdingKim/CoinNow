@@ -55,6 +55,7 @@ class VCPopover: NSViewController {
     @IBOutlet weak var stackViewCoinName: NSStackView!
     
     @IBOutlet weak var btDonate: NSButton!
+    @IBOutlet weak var viewDonateToggle: NSView!
     @IBOutlet weak var viewDonate: NSView!
     @IBOutlet weak var lbDingAlert: NSTextField!//alert message from Dingding to user
     
@@ -79,8 +80,6 @@ class VCPopover: NSViewController {
         //Need to update in outside
         NotificationCenter.default.addObserver(self, selector: #selector(VCPopover.updateCoinState), name: NSNotification.Name(rawValue: "VCPopover.updateCoinState"), object: nil)
         NSRunningApplication.current().activate(options: NSApplicationActivationOptions.activateIgnoringOtherApps)
-        
-        viewDonate.isHidden = true
     }
     
     override func viewWillAppear() {
@@ -104,22 +103,20 @@ class VCPopover: NSViewController {
             btMinimode.image = NSImage.init(named: "ic_fullscreen_black")
         }
         NSRunningApplication.current().activate(options: NSApplicationActivationOptions.activateIgnoringOtherApps)
-        
-        //Alert message from Dingding(developer this app)
-        Api.getDingAlertMessage(complete: {isSuccess, message in
-            if(isSuccess){
-                self.lbDingAlert.isHidden = false
-                self.lbDingAlert.stringValue = message
-            }
-            else {
-                self.lbDingAlert.isHidden = true
-            }
-        })
+
+        //From Secret Api !
+        getDingdingAlertMessage()
+        isShowDonateLayout()
     }
     
     //Setup popup buttons
     func initView() {
+        viewDonateToggle.isHidden = true
+        viewDonate.isHidden = true
         
+        lbDingAlert.isHidden = true
+        
+        //For animation..
         btRefresh.wantsLayer = true
         
         //Popup Button
@@ -175,17 +172,6 @@ class VCPopover: NSViewController {
     
     //Update coins sate in popover view
     func updateCoinState() {
-        //Set all label to Loading..
-        //*remove this code becase it does not feel smooth.. ㅜ(From github issue)
-
-//        lbUpdateTime.stringValue = Const.DEFAULT_LOADING_TEXT
-//        for view in arrSiteView {
-//            view.setLoadingState()
-//        }
-        
-        //refresh animation
-        //toggleRefreshButtonAnimation(isRotate: true)
-        
         lbUpdateTime.stringValue = Const.DEFAULT_LOADING_TEXT
         
         //Calculate count of selected site
@@ -246,7 +232,39 @@ class VCPopover: NSViewController {
         
         if(countUpdatedSite <= 0){
             //toggleRefreshButtonAnimation(isRotate: false)
-            lbUpdateTime.stringValue = Date().todayString(format: "yyyy.MM.dd HH:mm:ss")        }
+            lbUpdateTime.stringValue = Date().todayString(format: "yyyy.MM.dd HH:mm:ss")
+            countUpdatedSite = 0
+        }
+    }
+    
+    //Alert message from Dingding(developer this app)
+    func getDingdingAlertMessage() {
+        SecretApi.getDingAlertMessage(complete: {isSuccess, message in
+            if(isSuccess){
+                self.lbDingAlert.isHidden = false
+                self.lbDingAlert.stringValue = message
+            }
+            else {
+                self.lbDingAlert.isHidden = true
+            }
+        })
+    }
+    
+    //🤑🤑🤑😢😢😢
+    func isShowDonateLayout() {
+        SecretApi.isShowDonateLayout(complete: {isSuccess, result in
+            guard let isWillShow = Bool(result), isSuccess else {self.toggleDonateView(false); return}
+            self.toggleDonateView(isWillShow)
+        })
+    }
+    
+    func toggleDonateView(_ isShow: Bool) {
+        if(isShow) {
+            viewDonateToggle.isHidden = false
+        }
+        else {
+            viewDonateToggle.isHidden = true
+        }
     }
     
     //change coin(will update) check state
@@ -336,10 +354,11 @@ class VCPopover: NSViewController {
         }
         else {
             for view in stackViewRoot.arrangedSubviews {
-                if(view != viewDonate){
+                if(view != viewDonate && view != viewDonateToggle){
                     view.isHidden = false
                 }
             }
+            
             lbBaseCurrency.isHidden = false
             btBaseCurrency.isHidden = false
             
@@ -390,10 +409,6 @@ class VCPopover: NSViewController {
             
             btRefresh.layer?.anchorPoint = CGPoint(x: btRefresh.bounds.width/2, y: btRefresh.bounds.height/2)
             btRefresh.layer?.add(spinAnimation, forKey: "transform.rotation.z")
-            
-            print("야 : \(btRefresh.bounds.width/2) : \(btRefresh.bounds.height/2)")
-
-//            btRefresh.rotate360Degrees()
         } else {
             btRefresh.layer?.removeAllAnimations()
         }
