@@ -64,7 +64,7 @@ In the next major update, I will return to add function, not to add exchanges or
 An alarm at a fixed price or something visual so you can better understand the change in the price!
 Actually, I do not make money with this app, but because I am so funny and need to make an app, it may be a little slower and you may not feel uncomfortable.
 You have a suggestion or something to say about Coinnow! 
-Request issues in Github or send an e-mail to twlovesh89@gmail.com. I'll reply you ASAP :D hehe
+Request issues in Github or send an e-mail to me. I'll reply you ASAP :D hehe
 
 Every time I leave work and start working until dawn, I'm almost out of my mind and I am writing down the update notes! Hehe
 I hope Coinow will help you a little bit!
