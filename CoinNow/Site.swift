@@ -9,9 +9,9 @@
 import Foundation
 
 enum Site: String {
-    case bithumb = "Bithumb", coinone = "Coinone", poloniex = "Poloniex", okcoin = "OKCoin", huobi = "Huobi"
+    case bithumb = "Bithumb", coinone = "Coinone", poloniex = "Poloniex", okcoin = "OKCoin", huobi = "Huobi", bitfinex = "Bitfinex"
     
-    static let allValues = ["Bithumb", "Coinone", "Poloniex", "OKCoin", "Huobi"]
+    static let allValues = ["Bithumb", "Coinone", "Poloniex", "OKCoin", "Huobi", "Bitfinex"]
     
     func baseCurrency() -> BaseCurrency {
         switch self {
@@ -25,24 +25,27 @@ enum Site: String {
             return .cny
         case .huobi:
             return .cny
+        case .bitfinex:
+            return .usd
         }
     }
     
     func arrTradableCoin() -> [String] {
         switch self {
         case .bithumb:
-            return ["BTC", "ETH", "DASH", "LTC", "ETC", "XRP", "BCH"]
+            return ["BTC", "ETH", "DASH", "LTC", "ETC", "XRP", "BCH", "XMR"]
         case .coinone:
-            return ["BTC", "ETH", "ETC", "XRP", "BCH"]
+            return ["BTC", "ETH", "ETC", "XRP", "BCH", "QTUM"]
         case .poloniex:
-            return ["BTC", "ETH", "DASH", "LTC", "ETC", "XRP", "BCH"]
+            return ["BTC", "ETH", "DASH", "LTC", "ETC", "XRP", "BCH", "XMR"]
         case .okcoin:
             return ["BTC", "ETH", "LTC"]
         case .huobi:
-            return ["BTC", "ETH", "LTC", "ETC"]
+            return ["BTC", "LTC"]
+        case .bitfinex:
+            return ["BTC", "ETH", "DASH", "LTC", "ETC", "XRP", "BCH", "XMR"]
         }
     }
-    
     
     static func valueOf(name: String) -> Site {
         switch name {
@@ -56,6 +59,8 @@ enum Site: String {
             return .okcoin
         case huobi.rawValue:
             return .huobi
+        case bitfinex.rawValue:
+            return .bitfinex
         default:
             return .bithumb
         }

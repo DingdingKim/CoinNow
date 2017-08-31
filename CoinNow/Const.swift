@@ -13,6 +13,9 @@ struct Const {
     
     static let HOST_CRYPTOWATCH = "https://api.cryptowat.ch"
     
+//    static let COIN_PRICE_LOAD_FAIL = -1.0 //When server does not receive a value
+//    static let COIN_PRICE_NO_VALUE = 0.0 //When there is no value to display. This is not fail. (Conin that can not be traded on the site.)
+    
     //Default values
     static let DEFAULT_UPDATE_PER: (stirng: String, double: Double) = ("1min", 60)
     static let DEFAULT_MY_COIN = Coin.btc.rawValue

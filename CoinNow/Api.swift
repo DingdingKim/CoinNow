@@ -15,208 +15,178 @@ class Api {
     static let API_STATUS_CODE_SUCCESS_COINONE = "0"
     static let API_STATUS_CODE_SUCCESS_DING = 200
     
-    static func getCoinsStateBithum(arrSelectedCoins: [String], complete:@escaping (_ isSuccess: Bool, _ arrResult: [InfoCoin]) -> Void){
+    //Bithumb ["BTC", "ETH", "DASH", "LTC", "ETC", "XRP", "BCH", "XMR"]
+    static func getCoinsStateBithumb(arrSelectedCoins: [String], complete: @escaping (_ isSuccess: Bool, _ arrResult: [InfoCoin]) -> Void){
         
         //After get exchange rate then get price and exchange the price to base currency
         Api.getExchangeRate(from: .krw, complete: {isSuccess, exchangeRate in
-            if(isSuccess){
+            guard isSuccess else { complete(false, makeResultArrayOfFail()); return }
+            
+            //Add empty coins that not selected and not tradable in this site.
+            var arrResult = addEmptyCoin(arrSelectedCoins: arrSelectedCoins, arrTradableCoins: Site.bithumb.arrTradableCoin())
+            
+            Alamofire.request("https://api.bithumb.com/public/ticker/ALL", method: .get).responseJSON { (responseData) -> Void in
+                guard let resultValue = responseData.result.value else { complete(false, makeResultArrayOfFail()); return }
+                let resultValuseJson = (JSON(resultValue))
                 
-                //Add empty coins that not tradable in this site.
-                var arrResult = addEmptyCoin(arrSelectedCoins: arrSelectedCoins)
+                guard resultValuseJson["status"].stringValue == API_STATUS_CODE_SUCCESS_BITHUMB else { complete(false, makeResultArrayOfFail()); return }
                 
-                Alamofire.request("https://api.bithumb.com/public/ticker/ALL", method: .get).responseJSON { (responseData) -> Void in
-                    guard let resultValue = responseData.result.value else { return }
-                    let resultValuseJson = (JSON(resultValue))
+                for coinName in arrSelectedCoins {
+                    //Add only tradable coins
+                    guard Site.bithumb.arrTradableCoin().contains(coinName) else { complete(false, makeResultArrayOfFail()); continue}
                     
-                    if let statusCode = resultValuseJson["status"].string, statusCode == API_STATUS_CODE_SUCCESS_BITHUMB {
-                        for coinName in arrSelectedCoins {
-                            guard let currentPrice = resultValuseJson["data"][coinName]["closing_price"].string else {continue}
-                            let exchangedPrice = (Double(currentPrice) ?? 0.0) * exchangeRate
-                            
-                            //debugPrint("getCoinsStateBithum >> \(currentPrice) / \(exchangeRate) : \(exchangedPrice)")
-                            
-                            let infoCoin = InfoCoin(coin: Coin.valueOf(name: coinName), currentPrice: exchangedPrice)
-                            arrResult.append(infoCoin)
-                        }
-                        complete(true, arrResult)
-                        
-                    }
-                    else {
-                        complete(false, arrResult)
-                    }
+                    guard let currentPrice = resultValuseJson["data"][coinName]["closing_price"].string else { complete(false, makeResultArrayOfFail()); continue }
+                    let exchangedPrice = (Double(currentPrice) ?? CoinPrice.fail.rawValue) * exchangeRate
                     
-                    
+                    let infoCoin = InfoCoin(coin: Coin.valueOf(name: coinName), currentPrice: exchangedPrice)
+                    arrResult.append(infoCoin)
                 }
+                complete(true, arrResult)
             }
         })
     }
     
-    static func getCoinsStateCoinone(arrSelectedCoins: [String], complete:@escaping (_ isSuccess: Bool, _ arrResult: [InfoCoin]) -> Void){
+    //Coinone ["BTC", "ETH", "ETC", "XRP", "BCH", "QTUM"]
+    static func getCoinsStateCoinone(arrSelectedCoins: [String], complete: @escaping (_ isSuccess: Bool, _ arrResult: [InfoCoin]) -> Void){
         
         Api.getExchangeRate(from: .krw, complete: {isSuccess, exchangeRate in
-            if(isSuccess){
+            guard isSuccess else { complete(false, makeResultArrayOfFail()); return }
+            
+            var arrResult = addEmptyCoin(arrSelectedCoins: arrSelectedCoins, arrTradableCoins: Site.coinone.arrTradableCoin())
+            
+            Alamofire.request("https://api.coinone.co.kr/ticker/?currency=all", method: .get).responseJSON { (responseData) -> Void in
+                guard let resultValue = responseData.result.value else { complete(false, makeResultArrayOfFail()); return }
+                let resultValuseJson = (JSON(resultValue))
                 
-                var arrResult = addEmptyCoin(arrSelectedCoins: arrSelectedCoins)
+                guard resultValuseJson["errorCode"].stringValue == API_STATUS_CODE_SUCCESS_COINONE else { complete(false, makeResultArrayOfFail()); return }
                 
-                Alamofire.request("https://api.coinone.co.kr/ticker/?currency=all", method: .get).responseJSON { (responseData) -> Void in
-                    guard let resultValue = responseData.result.value else { return }
-                    let resultValuseJson = (JSON(resultValue))
+                for coinName in arrSelectedCoins {
+                    guard Site.coinone.arrTradableCoin().contains(coinName) else { complete(false, makeResultArrayOfFail()); continue}
                     
-                    if let statusCode = resultValuseJson["errorCode"].string, statusCode == API_STATUS_CODE_SUCCESS_COINONE {
-                        for coinName in arrSelectedCoins {
-                            if(resultValuseJson[coinName.lowercased()].exists()) {
-                                guard let currentPrice = resultValuseJson[coinName.lowercased()]["last"].string else {continue}
-                                let exchangedPrice = (Double(currentPrice) ?? 0.0) * exchangeRate
-                                
-                                //debugPrint("getCoinsStateCoinone >> \(currentPrice) / \(exchangeRate) : \(exchangedPrice)")
-                                
-                                let infoCoin = InfoCoin(coin: Coin.valueOf(name: coinName), currentPrice: exchangedPrice)
-                                arrResult.append(infoCoin)
-                            }
-                            else {
-                                //Add empty coin
-                                let infoCoin = InfoCoin(coin: Coin.valueOf(name: coinName), currentPrice: 0.0)
-                                arrResult.append(infoCoin)
-                            }
-                        }
+                    guard let currentPrice = resultValuseJson[coinName.lowercased()]["last"].string else { complete(false, makeResultArrayOfFail()); continue}
+                    let exchangedPrice = (Double(currentPrice) ?? CoinPrice.fail.rawValue) * exchangeRate
+                    
+                    let infoCoin = InfoCoin(coin: Coin.valueOf(name: coinName), currentPrice: exchangedPrice)
+                    arrResult.append(infoCoin)
+                }
+                complete(true, arrResult)
+            }
+        })
+    }
+    
+    //Poloniex ["BTC", "ETH", "DASH", "LTC", "ETC", "XRP", "BCH", "XMR"]
+    static func getCoinsStatePoloniex(arrSelectedCoins: [String], complete: @escaping (_ isSuccess: Bool, _ arrResult: [InfoCoin]) -> Void) {
+        
+        Api.getExchangeRate(from: .usd, complete: {isSuccess, exchangeRate in
+            guard isSuccess else { complete(false, makeResultArrayOfFail()); return }
+            
+            var arrResult = addEmptyCoin(arrSelectedCoins: arrSelectedCoins, arrTradableCoins: Site.poloniex.arrTradableCoin())
+            
+            Alamofire.request("https://poloniex.com/public?command=returnTicker", method: .get).responseJSON { (responseData) -> Void in
+                guard let resultValue = responseData.result.value else { complete(false, makeResultArrayOfFail()); return}
+                let resultValuseJson = (JSON(resultValue))
+                
+                for coinName in arrSelectedCoins {
+                    guard Site.poloniex.arrTradableCoin().contains(coinName) else { complete(false, makeResultArrayOfFail()); continue}
+                    
+                    guard let currentPrice = resultValuseJson["USDT_\(coinName)"]["last"].string else { complete(false, makeResultArrayOfFail()); continue}
+                    let exchangedPrice = (Double(currentPrice) ?? CoinPrice.fail.rawValue) * (exchangeRate)// * Const.USDT_RATE
+                   
+                    let infoCoin = InfoCoin(coin: Coin.valueOf(name: coinName), currentPrice: exchangedPrice)
+                    arrResult.append(infoCoin)
+                }
+                complete(true, arrResult)
+            }
+        })
+    }
+    
+    //OkCoin ["BTC", "ETH", "LTC"]
+    static func getCoinsStateOkcoin(arrSelectedCoins: [String], complete: @escaping (_ isSuccess: Bool, _ arrResult: [InfoCoin]) -> Void){
+        
+        Api.getExchangeRate(from: .cny, complete: {isSuccess, exchangeRate in
+            guard isSuccess else { complete(false, makeResultArrayOfFail()); return }
+            
+            var arrResult = addEmptyCoin(arrSelectedCoins: arrSelectedCoins, arrTradableCoins: Site.okcoin.arrTradableCoin())
+            
+            for coinName in arrSelectedCoins {
+                guard Site.okcoin.arrTradableCoin().contains(coinName) else { complete(false, makeResultArrayOfFail()); continue}
+                
+                Alamofire.request("https://www.okcoin.cn/api/v1/ticker.do?symbol=\(coinName)_cny", method: .get).responseJSON { (responseData) -> Void in
+                    guard let resultValue = responseData.result.value else { complete(false, makeResultArrayOfFail()); return}
+                    
+                    guard let currentPrice = (JSON(resultValue))["ticker"]["last"].string else { complete(false, makeResultArrayOfFail()); return}
+                    let exchangedPrice = (Double(currentPrice) ?? CoinPrice.fail.rawValue) * exchangeRate
+                    
+                    let infoCoin = InfoCoin(coin: Coin.valueOf(name: coinName), currentPrice: exchangedPrice)
+                    arrResult.append(infoCoin)
+                    
+                    //callback when finish last item request
+                    if(arrResult.count == Coin.allValues.count) {
+                        //After all request is finished
                         complete(true, arrResult)
-                    
-                    }
-                    else {
-                        complete(false, arrResult)
                     }
                 }
             }
         })
     }
     
-    static func getCoinsStatePoloniex(arrSelectedCoins: [String], complete:@escaping (_ isSuccess: Bool, _ arrResult: [InfoCoin]) -> Void) {
-        
-        Api.getExchangeRate(from: .usd, complete: {isSuccess, exchangeRate in
-            if(isSuccess){
-                var arrResult = addEmptyCoin(arrSelectedCoins: arrSelectedCoins)
-                
-                Alamofire.request("https://poloniex.com/public?command=returnTicker", method: .get).responseJSON { (responseData) -> Void in
-                    guard let resultValue = responseData.result.value else { return }
-                    let resultValuseJson = (JSON(resultValue))
-                    
-                    for coinName in arrSelectedCoins {
-                        guard let currentPrice = resultValuseJson["USDT_\(coinName)"]["last"].string else {continue}
-                        let exchangedPrice = (Double(currentPrice) ?? 0.0) * (exchangeRate)// * Const.USDT_RATE
-                        
-                        //debugPrint("getCoinsStatePoloniex >> \(currentPrice) / \(exchangeRate) : \(exchangedPrice)")
-                        
-                        let infoCoin = InfoCoin(coin: Coin.valueOf(name: coinName), currentPrice: exchangedPrice)
-                        arrResult.append(infoCoin)
-                    }
-                    complete(true, arrResult)
-                }
-            }
-        })
-    }
-    
-    /*
-    static func getCoinsStatePoloniexByCryptowatch(arrSelectedCoins: [String], complete:@escaping (_ isSuccess: Bool, _ arrResult: [InfoCoin]) -> Void){
-        
-        //After get exchange rate then get price and exchange the price to base currency
-        Api.getExchangeRate(from: .usd, complete: {isSuccess, exchangeRate in
-            if(isSuccess){
-                //Add empty coins that not tradable in this site.
-                var arrResult = addEmptyCoin(arrSelectedCoins: arrSelectedCoins)
-                
-                for coinName in arrSelectedCoins {
-                    Alamofire.request("https://api.cryptowat.ch/markets/poloniex/\(coinName)usd/price", method: .get).responseJSON { (responseData) -> Void in
-                        if((responseData.result.value) != nil) {
-                            let swiftyJsonVar = JSON(responseData.result.value!)
-                            
-                            let currentPrice = swiftyJsonVar["result"]["price"].stringValue
-                            let exchangedPrice = (Double(currentPrice) ?? 0.0) * exchangeRate
-                            
-                            //debugPrint("getCoinsStateOkcoin >> \(currentPrice) / \(exchangeRate) : \(exchangedPrice)")
-                            
-                            let infoCoin = InfoCoin(coin: Coin.valueOf(name: coinName), currentPrice: exchangedPrice)
-                            arrResult.append(infoCoin)
-                            
-                            //callback when finish last item request
-                            if(arrResult.count == Coin.allValues.count) {
-                                //After all request is finished
-                                complete(true, arrResult)
-                            }
-                        }
-                    }
-                }
-            }
-        })
-    }
-     */
-    
-    static func getCoinsStateOkcoin(arrSelectedCoins: [String], complete:@escaping (_ isSuccess: Bool, _ arrResult: [InfoCoin]) -> Void){
+    //Huobi ["BTC", "LTC"]
+    static func getCoinsStateHuobiByCryptowatch(arrSelectedCoins: [String], complete: @escaping (_ isSuccess: Bool, _ arrResult: [InfoCoin]) -> Void){
         
         Api.getExchangeRate(from: .cny, complete: {isSuccess, exchangeRate in
-            if(isSuccess){
-                var arrResult = addEmptyCoin(arrSelectedCoins: arrSelectedCoins)
+            guard isSuccess else { complete(false, makeResultArrayOfFail()); return }
+            
+            var arrResult = addEmptyCoin(arrSelectedCoins: arrSelectedCoins, arrTradableCoins: Site.huobi.arrTradableCoin())
+            
+            for coinName in arrSelectedCoins {
+                guard Site.huobi.arrTradableCoin().contains(coinName) else { complete(false, makeResultArrayOfFail()); continue}
                 
-                for coinName in arrSelectedCoins {
+                Alamofire.request("https://api.cryptowat.ch/markets/huobi/\(coinName)cny/price", method: .get).responseJSON { (responseData) -> Void in
+                    guard let resultValue = responseData.result.value else { complete(false, makeResultArrayOfFail()); return}
                     
-                    //Okcoin offers only BTC, ETH, LTC
-                    if(Site.okcoin.arrTradableCoin().contains(coinName)) {
-                        
-                        Alamofire.request("https://www.okcoin.cn/api/v1/ticker.do?symbol=\(coinName)_cny", method: .get).responseJSON { (responseData) -> Void in
-                            guard let resultValue = responseData.result.value else { return }
-                            guard let currentPrice = (JSON(resultValue))["ticker"]["last"].string else {return}
-                            let exchangedPrice = (Double(currentPrice) ?? 0.0) * exchangeRate
-                            
-                            //debugPrint("getCoinsStateOkcoin >> \(currentPrice) / \(exchangeRate) : \(exchangedPrice)")
-                            
-                            let infoCoin = InfoCoin(coin: Coin.valueOf(name: coinName), currentPrice: exchangedPrice)
-                            arrResult.append(infoCoin)
-                            
-                            //callback when finish last item request
-                            if(arrResult.count == Coin.allValues.count) {
-                                //After all request is finished
-                                complete(true, arrResult)
-                            }
-                        }
-                    }
-                    else{
-                        let infoCoin = InfoCoin(coin: Coin.valueOf(name: coinName), currentPrice: 0.0)
-                        arrResult.append(infoCoin)
+                    guard let currentPrice = (JSON(resultValue))["result"]["price"].double else { complete(false, makeResultArrayOfFail()); return}
+                    let exchangedPrice = currentPrice * exchangeRate
+                    
+                    let infoCoin = InfoCoin(coin: Coin.valueOf(name: coinName), currentPrice: exchangedPrice)
+                    arrResult.append(infoCoin)
+                    
+                    //callback when finish last item request
+                    if(arrResult.count == Coin.allValues.count) {
+                        //After all request is finished
+                        complete(true, arrResult)
                     }
                 }
             }
         })
     }
     
-    static func getCoinsStateHuobiByCryptowatch(arrSelectedCoins: [String], complete:@escaping (_ isSuccess: Bool, _ arrResult: [InfoCoin]) -> Void){
+    //Bitfinex ["BTC", "ETH", "DASH", "LTC", "ETC", "XRP", "BCH", "XMR"]
+    static func getCoinsStateBitfinex(arrSelectedCoins: [String], complete: @escaping (_ isSuccess: Bool, _ arrResult: [InfoCoin]) -> Void){
         
-        Api.getExchangeRate(from: .cny, complete: {isSuccess, exchangeRate in
-            if(isSuccess){
-                var arrResult = addEmptyCoin(arrSelectedCoins: arrSelectedCoins)
+        Api.getExchangeRate(from: .usd, complete: {isSuccess, exchangeRate in
+            guard isSuccess else { complete(false, makeResultArrayOfFail()); return }
+            
+            var arrResult = addEmptyCoin(arrSelectedCoins: arrSelectedCoins, arrTradableCoins: Site.bitfinex.arrTradableCoin())
+            
+            for coinName in arrSelectedCoins {
+                guard Site.bitfinex.arrTradableCoin().contains(coinName) else { complete(false, makeResultArrayOfFail()); continue}
                 
-                for coinName in arrSelectedCoins {
+                //DASH -> dsh
+                let dashToDsh = coinName.replacingOccurrences(of: "DASH", with: "dsh")
+                
+                Alamofire.request("https://api.bitfinex.com/v1/pubticker/\(coinName == "DASH" ? dashToDsh : coinName)USD", method: .get).responseJSON { (responseData) -> Void in
+                    guard let resultValue = responseData.result.value else { complete(false, makeResultArrayOfFail()); return}
                     
-                    //Huobi offers only BTC, LTC
-                    if(Site.okcoin.arrTradableCoin().contains(coinName)) {
-                        Alamofire.request("https://api.cryptowat.ch/markets/huobi/\(coinName)cny/price", method: .get).responseJSON { (responseData) -> Void in
-                            guard let resultValue = responseData.result.value else { return }
-                            guard let currentPrice = (JSON(resultValue))["result"]["price"].double else {return}
-                            let exchangedPrice = currentPrice * exchangeRate
-                            
-                            //debugPrint("getCoinsStateHuobiByCryptowatch >> \(currentPrice) / \(exchangeRate) : \(exchangedPrice)")
-
-                            let infoCoin = InfoCoin(coin: Coin.valueOf(name: coinName), currentPrice: exchangedPrice)
-                            arrResult.append(infoCoin)
-                            
-                            //callback when finish last item request
-                            if(arrResult.count == Coin.allValues.count) {
-                                //After all request is finished
-                                complete(true, arrResult)
-                            }
-                        }
-                    }
-                    else{
-                        let infoCoin = InfoCoin(coin: Coin.valueOf(name: coinName), currentPrice: 0.0)
-                        arrResult.append(infoCoin)
+                    guard let currentPrice = (JSON(resultValue))["last_price"].string else { complete(false, makeResultArrayOfFail()); return}
+                    let exchangedPrice = (Double(currentPrice) ?? CoinPrice.fail.rawValue) * exchangeRate
+                    
+                    let infoCoin = InfoCoin(coin: Coin.valueOf(name: coinName), currentPrice: exchangedPrice)
+                    arrResult.append(infoCoin)
+                    
+                    //callback when finish last item request
+                    if(arrResult.count == Coin.allValues.count) {
+                        //After all request is finished
+                        complete(true, arrResult)
                     }
                 }
             }
@@ -228,42 +198,53 @@ class Api {
     static var lastUpdateTimeOfExchangeRate: [String:Date] = ["KRWUSD": Date(), "KRWCNY": Date(), "USDKRW": Date(), "USDCNY": Date(), "CNYUSD": Date(), "CNYKRW": Date()]
     static var cachedexchangeRate: [String:Double] = ["KRWUSD": 0, "KRWCNY": 0, "USDKRW": 0, "USDCNY": 0, "CNYUSD": 0, "CNYKRW": 0]
     
-    static func getExchangeRate(from: BaseCurrency, complete:@escaping (_ isSuccess: Bool, _ result: Double) -> Void){
+    static func getExchangeRate(from: BaseCurrency, complete: @escaping (_ isSuccess: Bool, _ result: Double) -> Void){
         let pairOfCurrency = from.rawValue + MyValue.myBaseCurrency.rawValue
         
         //Same currency. return 1
         if(from.rawValue == MyValue.myBaseCurrency.rawValue) {
             complete(true, 1)
         }
-            // NOT(caching data is valid(data is valid during 1 hour) || no cached data)
+        // NOT(caching data is valid(data is valid during 1 hour) || no cached data)
         else if((lastUpdateTimeOfExchangeRate[pairOfCurrency]!.isTimeToUpdateExchangeRate()) || cachedexchangeRate[pairOfCurrency] == 0) {
             //Yahoo exchange rate API ... bye ... 😭
             //The data is from Dingding server(The data is updated by Dingding. So not realtime).
             //*******************PLEASE Do not use this api ... I have no money for running large server. 🤑
             Alamofire.request("http://coinnow.herokuapp.com/coinnow/api/getExchangeRate?pair=\(pairOfCurrency)", method: .get).responseJSON { (responseData) -> Void in
                 guard let resultValue = responseData.result.value else { return }
-                guard let exchangeRate = (JSON(resultValue))["result"].double, (JSON(resultValue))["statusCode"].int == API_STATUS_CODE_SUCCESS_DING else {return}
+                guard let exchangeRate = (JSON(resultValue))["result"].double, (JSON(resultValue))["statusCode"].int == API_STATUS_CODE_SUCCESS_DING else { return }
                 
                 cachedexchangeRate[pairOfCurrency] = exchangeRate
                 complete(true, exchangeRate)
             }
         }
-            //valid cached exchange rate
+        //valid cached exchange rate
         else {
             complete(true, cachedexchangeRate[pairOfCurrency] ?? 0)
         }
     }
     
-    
-    //Add empty object(Not selected coins)
-    static func addEmptyCoin(arrSelectedCoins: [String]) -> [InfoCoin] {
+    //Add empty object(Not selected coins and Not tradable coins in that site)
+    static func addEmptyCoin(arrSelectedCoins: [String], arrTradableCoins: [String]) -> [InfoCoin] {
         var arrResult = [InfoCoin]()
         
         for coinName in Coin.allValues {
-            if(!arrSelectedCoins.contains(coinName)) {
-                let infoCoin = InfoCoin(coin: Coin.valueOf(name: coinName), currentPrice: 0.0)
+            if(!arrSelectedCoins.contains(coinName) || !arrTradableCoins.contains(coinName)) {
+                let infoCoin = InfoCoin(coin: Coin.valueOf(name: coinName), currentPrice: CoinPrice.noValue.rawValue)
                 arrResult.append(infoCoin)
             }
+        }
+        
+        return arrResult
+    }
+    
+    //currentPrice == -1 is Fail
+    static func makeResultArrayOfFail() -> [InfoCoin] {
+        var arrResult = [InfoCoin]()
+        
+        for coinName in Coin.allValues {
+            let infoCoin = InfoCoin(coin: Coin.valueOf(name: coinName), currentPrice: CoinPrice.fail.rawValue)
+            arrResult.append(infoCoin)
         }
         
         return arrResult

@@ -10,10 +10,10 @@ import Foundation
 import Cocoa
 
 enum Coin: String {
-    case btc = "BTC", eth = "ETH", dash = "DASH", ltc = "LTC", etc = "ETC", xrp = "XRP", bch = "BCH"
-    static let allValues = ["BTC", "ETH", "DASH", "LTC", "ETC", "XRP", "BCH"]
+    case btc = "BTC", eth = "ETH", dash = "DASH", ltc = "LTC", etc = "ETC", xrp = "XRP", bch = "BCH", xmr = "XMR", qtum = "QTUM"
+    static let allValues = ["BTC", "ETH", "DASH", "LTC", "ETC", "XRP", "BCH", "XMR", "QTUM"]
     
-    func getIndex() -> Int {
+    func index() -> Int {
         switch self {
         case .btc:
             return 0
@@ -29,27 +29,33 @@ enum Coin: String {
             return 5
         case .bch:
             return 6
+        case .xmr:
+            return 7
+        case .qtum:
+            return 8
         }
     }
     
     static func donateAddress(index: Int) -> String {
         switch index {
-        case btc.getIndex():
+        case btc.index():
             return "1JbmDy892gKGYMaWU5D9V11Qd9zsTXijZg"
-        case eth.getIndex():
+        case eth.index():
             return "0x8c38c68ccd6a0f9c8e4f9996da53cba61016b4ed"
-        case dash.getIndex():
+        case dash.index():
             return "XcZVkpJ3AWP5PeVhd78d85w8TGbsfWfjsk"
-        case ltc.getIndex():
+        case ltc.index():
             return "LbknpNGdpnDW6NRc4sbkFeu8yhvoFdo4yn"
-        case etc.getIndex():
+        case etc.index():
             return "0x68d3e549bfe631ec4f4916070d8fdb6c9bed669c"
-        case xrp.getIndex():
+        case xrp.index():
             return "rsG1sNifXJxGS2nDQ9zHyoe1S5APrtwpjV (DT 1000581537)"
-        case bch.getIndex():
+        case bch.index():
             return "16QPpstvKgGAY6Gfcfao2DeFfSyWLWtM5L"
+        case xmr.index():
+            return "4L7DhwADX9Y6wN7BfFBaEfF3Fw8uc3LiV8NUpTXgNDk8EeP732b1yRxJGuNLwr4nowbn7g6kocN5LgVGVqsXuSseHCHdW89LLsZCUNaubp"
         default:
-            return "1JbmDy892gKGYMaWU5D9V11Qd9zsTXijZg"
+            return "I have no address of QTUM"
         }
     }
 
@@ -69,6 +75,10 @@ enum Coin: String {
             return .xrp
         case bch.rawValue:
             return .bch
+        case xmr.rawValue:
+            return .xmr
+        case qtum.rawValue:
+            return .qtum
         default:
             return .btc
         }

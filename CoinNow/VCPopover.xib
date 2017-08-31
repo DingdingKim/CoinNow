@@ -18,6 +18,7 @@
                 <outlet property="btStatusSite" destination="FIh-G9-J5h" id="aok-Ul-UWF"/>
                 <outlet property="btStatusUpdatePer" destination="lU9-Gp-3Ts" id="wvC-hS-Fj2"/>
                 <outlet property="cbBch" destination="85E-zf-coP" id="2P0-YP-Ao7"/>
+                <outlet property="cbBitfinex" destination="ttR-Lg-d5W" id="L1A-bj-Jxf"/>
                 <outlet property="cbBithumb" destination="mDp-Lv-fYl" id="oFq-3g-pm8"/>
                 <outlet property="cbBtc" destination="5Bn-br-VYE" id="WcW-Rj-rZq"/>
                 <outlet property="cbCoinone" destination="K9P-ea-9A1" id="dfk-MQ-6Y9"/>
@@ -28,6 +29,8 @@
                 <outlet property="cbLtc" destination="UbM-5S-LsY" id="trD-8o-VMy"/>
                 <outlet property="cbOkcoin" destination="LHO-Wr-FU4" id="kEr-TY-JPX"/>
                 <outlet property="cbPoloniex" destination="ThZ-91-3ne" id="q2E-gr-nMl"/>
+                <outlet property="cbQtum" destination="LfH-Zo-gDZ" id="6jH-aG-UFv"/>
+                <outlet property="cbXmr" destination="8Hv-a5-2BC" id="q0B-0T-76F"/>
                 <outlet property="cbXrp" destination="hhl-e1-3fz" id="XPr-sM-mYm"/>
                 <outlet property="lbBaseCurrency" destination="LqK-U1-Z1l" id="Zxw-bl-zQF"/>
                 <outlet property="lbBchTitle" destination="8FR-Xz-D7z" id="Gtn-xV-tIG"/>
@@ -38,14 +41,18 @@
                 <outlet property="lbEthTitle" destination="4Ow-WD-mS2" id="IqU-oG-gvf"/>
                 <outlet property="lbLine" destination="Wou-lk-jUJ" id="svv-zp-FC3"/>
                 <outlet property="lbLtcTitle" destination="RRh-Vu-P9b" id="UnA-Mi-kUY"/>
+                <outlet property="lbQtumTitle" destination="Yr5-Um-zfu" id="vBP-1w-ECh"/>
                 <outlet property="lbUpdateTime" destination="pD8-71-cuc" id="4v4-Jd-mdK"/>
+                <outlet property="lbXmrTitle" destination="1W2-ce-ovI" id="Uyy-4L-s7r"/>
                 <outlet property="lbXrpTitle" destination="dg4-j9-xSZ" id="93X-S4-mBf"/>
-                <outlet property="stackViewCoinCheck" destination="C5u-Af-EYb" id="EMH-dV-f8y"/>
+                <outlet property="stackViewCoinCheck1" destination="C5u-Af-EYb" id="Siw-6f-tk7"/>
+                <outlet property="stackViewCoinCheck2" destination="ddf-mW-g4F" id="BCl-8P-xUr"/>
                 <outlet property="stackViewCoinName" destination="LID-pe-Bxd" id="fIb-KO-tMS"/>
                 <outlet property="stackViewRoot" destination="E8k-QV-wP3" id="PBh-Cd-1n5"/>
                 <outlet property="stackViewSiteCheck" destination="E4r-65-EFF" id="Y8x-je-UFs"/>
                 <outlet property="stackViewSites" destination="DZW-Ye-x59" id="u9o-am-Alg"/>
-                <outlet property="view" destination="Hz6-mo-xeY" id="0bl-1N-x8E"/>
+                <outlet property="view" destination="Hz6-mo-xeY" id="kkN-F2-eo5"/>
+                <outlet property="viewCoinCheck" destination="8Gr-Ae-ugc" id="9gd-2d-ozD"/>
                 <outlet property="viewDonate" destination="lUP-Lp-Wel" id="HdP-ks-SEe"/>
                 <outlet property="viewDonateToggle" destination="NXn-AB-4RR" id="myo-fZ-wmI"/>
                 <outlet property="viewStateTable" destination="Kib-RW-y3K" id="tT3-RM-YCQ"/>
@@ -55,11 +62,11 @@
         <customObject id="-1" userLabel="First Responder" customClass="FirstResponder"/>
         <customObject id="-3" userLabel="Application" customClass="NSObject"/>
         <customView id="Hz6-mo-xeY">
-            <rect key="frame" x="0.0" y="0.0" width="443" height="426"/>
+            <rect key="frame" x="0.0" y="0.0" width="443" height="698"/>
             <autoresizingMask key="autoresizingMask"/>
             <subviews>
                 <button imageHugsTitle="YES" translatesAutoresizingMaskIntoConstraints="NO" id="pce-U1-erj">
-                    <rect key="frame" x="353" y="401" width="85" height="20"/>
+                    <rect key="frame" x="353" y="673" width="85" height="20"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="20" id="c4h-LS-OtQ"/>
                         <constraint firstAttribute="width" constant="85" id="gxr-IZ-8ov"/>
@@ -73,10 +80,10 @@
                     </connections>
                 </button>
                 <stackView distribution="fill" orientation="vertical" alignment="leading" spacing="6" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="E8k-QV-wP3" userLabel="Stack View Root">
-                    <rect key="frame" x="25" y="5" width="393" height="396"/>
+                    <rect key="frame" x="25" y="15" width="393" height="658"/>
                     <subviews>
                         <customView translatesAutoresizingMaskIntoConstraints="NO" id="Lt9-nb-WLc" userLabel="View_Coin in status bar">
-                            <rect key="frame" x="0.0" y="336" width="393" height="60"/>
+                            <rect key="frame" x="0.0" y="598" width="393" height="60"/>
                             <subviews>
                                 <textField verticalHuggingPriority="750" allowsCharacterPickerTouchBarItem="NO" translatesAutoresizingMaskIntoConstraints="NO" id="wix-Pa-lMa">
                                     <rect key="frame" x="-2" y="41" width="129" height="19"/>
@@ -167,7 +174,7 @@
                             </constraints>
                         </customView>
                         <textField hidden="YES" horizontalHuggingPriority="251" verticalHuggingPriority="750" allowsCharacterPickerTouchBarItem="NO" translatesAutoresizingMaskIntoConstraints="NO" id="VUd-Ql-91c">
-                            <rect key="frame" x="-2" y="383" width="397" height="13"/>
+                            <rect key="frame" x="-2" y="645" width="397" height="13"/>
                             <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="이전 버전에서 환율api에 문제가 있어서 앱이 죽어버렸습니다 ㅠ 불편을 드려 죄송합니다." id="khy-Jj-co1">
                                 <font key="font" metaFont="system" size="10"/>
                                 <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
@@ -175,7 +182,7 @@
                             </textFieldCell>
                         </textField>
                         <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" allowsCharacterPickerTouchBarItem="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Wou-lk-jUJ" userLabel="Line">
-                            <rect key="frame" x="0.0" y="329" width="393" height="1"/>
+                            <rect key="frame" x="0.0" y="591" width="393" height="1"/>
                             <constraints>
                                 <constraint firstAttribute="height" constant="1" id="qZg-95-xo4"/>
                             </constraints>
@@ -186,7 +193,7 @@
                             </textFieldCell>
                         </textField>
                         <customView translatesAutoresizingMaskIntoConstraints="NO" id="9Ma-2L-eKd" userLabel="View state title">
-                            <rect key="frame" x="0.0" y="298" width="393" height="25"/>
+                            <rect key="frame" x="0.0" y="560" width="393" height="25"/>
                             <subviews>
                                 <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" allowsCharacterPickerTouchBarItem="YES" translatesAutoresizingMaskIntoConstraints="NO" id="9lg-xr-wyn">
                                     <rect key="frame" x="-2" y="3" width="141" height="19"/>
@@ -255,117 +262,169 @@
                                 <constraint firstItem="LqK-U1-Z1l" firstAttribute="centerY" secondItem="l7v-Ov-e72" secondAttribute="centerY" id="udH-tZ-GWW"/>
                             </constraints>
                         </customView>
-                        <stackView distribution="equalSpacing" orientation="horizontal" alignment="top" spacing="0.0" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="C5u-Af-EYb" userLabel="Stack View_CheckCoins">
-                            <rect key="frame" x="0.0" y="262" width="393" height="30"/>
+                        <customView translatesAutoresizingMaskIntoConstraints="NO" id="8Gr-Ae-ugc">
+                            <rect key="frame" x="0.0" y="504" width="393" height="50"/>
                             <subviews>
-                                <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="5Bn-br-VYE">
-                                    <rect key="frame" x="-2" y="6" width="44" height="18"/>
-                                    <buttonCell key="cell" type="check" title="BTC" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="GhN-6N-Ri2">
-                                        <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
-                                        <font key="font" metaFont="smallSystem"/>
-                                    </buttonCell>
-                                    <connections>
-                                        <action selector="changeCheckCoin:" target="-2" id="oYz-fN-CaE"/>
-                                    </connections>
-                                </button>
-                                <button verticalHuggingPriority="750" tag="1" translatesAutoresizingMaskIntoConstraints="NO" id="u9B-Kk-t9K">
-                                    <rect key="frame" x="55.5" y="6" width="44" height="18"/>
-                                    <buttonCell key="cell" type="check" title="ETH" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="wo3-mw-Kta">
-                                        <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
-                                        <font key="font" metaFont="smallSystem"/>
-                                    </buttonCell>
-                                    <connections>
-                                        <action selector="changeCheckCoin:" target="-2" id="hsI-ao-GMu"/>
-                                    </connections>
-                                </button>
-                                <button verticalHuggingPriority="750" tag="2" translatesAutoresizingMaskIntoConstraints="NO" id="eHz-8d-TVN">
-                                    <rect key="frame" x="112.5" y="6" width="53" height="18"/>
-                                    <buttonCell key="cell" type="check" title="DASH" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="WuJ-3P-1at">
-                                        <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
-                                        <font key="font" metaFont="smallSystem"/>
-                                    </buttonCell>
-                                    <connections>
-                                        <action selector="changeCheckCoin:" target="-2" id="OMi-zl-JJv"/>
-                                    </connections>
-                                </button>
-                                <button verticalHuggingPriority="750" tag="3" translatesAutoresizingMaskIntoConstraints="NO" id="UbM-5S-LsY">
-                                    <rect key="frame" x="179" y="6" width="42" height="18"/>
-                                    <buttonCell key="cell" type="check" title="LTC" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="r9A-7M-hqc">
-                                        <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
-                                        <font key="font" metaFont="smallSystem"/>
-                                    </buttonCell>
-                                    <connections>
-                                        <action selector="changeCheckCoin:" target="-2" id="ulg-Oj-8Pu"/>
-                                    </connections>
-                                </button>
-                                <button verticalHuggingPriority="750" tag="4" translatesAutoresizingMaskIntoConstraints="NO" id="3Yf-am-ohV">
-                                    <rect key="frame" x="234.5" y="6" width="44" height="18"/>
-                                    <buttonCell key="cell" type="check" title="ETC" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="8bK-jd-Dob">
-                                        <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
-                                        <font key="font" metaFont="smallSystem"/>
-                                    </buttonCell>
-                                    <connections>
-                                        <action selector="changeCheckCoin:" target="-2" id="wGa-js-yPY"/>
-                                    </connections>
-                                </button>
-                                <button verticalHuggingPriority="750" tag="5" translatesAutoresizingMaskIntoConstraints="NO" id="hhl-e1-3fz">
-                                    <rect key="frame" x="291.5" y="6" width="44" height="18"/>
-                                    <buttonCell key="cell" type="check" title="XRP" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="oqQ-xK-xlT">
-                                        <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
-                                        <font key="font" metaFont="smallSystem"/>
-                                    </buttonCell>
-                                    <connections>
-                                        <action selector="changeCheckCoin:" target="-2" id="Nwt-Jx-d4I"/>
-                                    </connections>
-                                </button>
-                                <button verticalHuggingPriority="750" tag="6" translatesAutoresizingMaskIntoConstraints="NO" id="85E-zf-coP">
-                                    <rect key="frame" x="349" y="6" width="46" height="18"/>
-                                    <buttonCell key="cell" type="check" title="BCH" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="yCj-6s-pcy">
-                                        <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
-                                        <font key="font" metaFont="smallSystem"/>
-                                    </buttonCell>
-                                    <connections>
-                                        <action selector="changeCheckCoin:" target="-2" id="UFZ-Lh-nUu"/>
-                                    </connections>
-                                </button>
+                                <stackView distribution="equalSpacing" orientation="horizontal" alignment="top" spacing="0.0" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="C5u-Af-EYb" userLabel="Stack View_CheckCoins">
+                                    <rect key="frame" x="0.0" y="25" width="393" height="25"/>
+                                    <subviews>
+                                        <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="5Bn-br-VYE">
+                                            <rect key="frame" x="-2" y="4" width="44" height="18"/>
+                                            <buttonCell key="cell" type="check" title="BTC" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="GhN-6N-Ri2">
+                                                <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                                                <font key="font" metaFont="smallSystem"/>
+                                            </buttonCell>
+                                            <connections>
+                                                <action selector="changeCheckCoin:" target="-2" id="oYz-fN-CaE"/>
+                                            </connections>
+                                        </button>
+                                        <button verticalHuggingPriority="750" tag="1" translatesAutoresizingMaskIntoConstraints="NO" id="u9B-Kk-t9K">
+                                            <rect key="frame" x="55.5" y="4" width="44" height="18"/>
+                                            <buttonCell key="cell" type="check" title="ETH" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="wo3-mw-Kta">
+                                                <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                                                <font key="font" metaFont="smallSystem"/>
+                                            </buttonCell>
+                                            <connections>
+                                                <action selector="changeCheckCoin:" target="-2" id="hsI-ao-GMu"/>
+                                            </connections>
+                                        </button>
+                                        <button verticalHuggingPriority="750" tag="2" translatesAutoresizingMaskIntoConstraints="NO" id="eHz-8d-TVN">
+                                            <rect key="frame" x="112.5" y="4" width="53" height="18"/>
+                                            <buttonCell key="cell" type="check" title="DASH" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="WuJ-3P-1at">
+                                                <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                                                <font key="font" metaFont="smallSystem"/>
+                                            </buttonCell>
+                                            <connections>
+                                                <action selector="changeCheckCoin:" target="-2" id="OMi-zl-JJv"/>
+                                            </connections>
+                                        </button>
+                                        <button verticalHuggingPriority="750" tag="3" translatesAutoresizingMaskIntoConstraints="NO" id="UbM-5S-LsY">
+                                            <rect key="frame" x="179" y="4" width="42" height="18"/>
+                                            <buttonCell key="cell" type="check" title="LTC" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="r9A-7M-hqc">
+                                                <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                                                <font key="font" metaFont="smallSystem"/>
+                                            </buttonCell>
+                                            <connections>
+                                                <action selector="changeCheckCoin:" target="-2" id="ulg-Oj-8Pu"/>
+                                            </connections>
+                                        </button>
+                                        <button verticalHuggingPriority="750" tag="4" translatesAutoresizingMaskIntoConstraints="NO" id="3Yf-am-ohV">
+                                            <rect key="frame" x="234.5" y="4" width="44" height="18"/>
+                                            <buttonCell key="cell" type="check" title="ETC" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="8bK-jd-Dob">
+                                                <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                                                <font key="font" metaFont="smallSystem"/>
+                                            </buttonCell>
+                                            <connections>
+                                                <action selector="changeCheckCoin:" target="-2" id="wGa-js-yPY"/>
+                                            </connections>
+                                        </button>
+                                        <button verticalHuggingPriority="750" tag="5" translatesAutoresizingMaskIntoConstraints="NO" id="hhl-e1-3fz">
+                                            <rect key="frame" x="291.5" y="4" width="44" height="18"/>
+                                            <buttonCell key="cell" type="check" title="XRP" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="oqQ-xK-xlT">
+                                                <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                                                <font key="font" metaFont="smallSystem"/>
+                                            </buttonCell>
+                                            <connections>
+                                                <action selector="changeCheckCoin:" target="-2" id="Nwt-Jx-d4I"/>
+                                            </connections>
+                                        </button>
+                                        <button verticalHuggingPriority="750" tag="6" translatesAutoresizingMaskIntoConstraints="NO" id="85E-zf-coP">
+                                            <rect key="frame" x="349" y="4" width="46" height="18"/>
+                                            <buttonCell key="cell" type="check" title="BCH" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="yCj-6s-pcy">
+                                                <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                                                <font key="font" metaFont="smallSystem"/>
+                                            </buttonCell>
+                                            <connections>
+                                                <action selector="changeCheckCoin:" target="-2" id="UFZ-Lh-nUu"/>
+                                            </connections>
+                                        </button>
+                                    </subviews>
+                                    <constraints>
+                                        <constraint firstItem="3Yf-am-ohV" firstAttribute="centerY" secondItem="C5u-Af-EYb" secondAttribute="centerY" id="2sS-u4-8of"/>
+                                        <constraint firstItem="u9B-Kk-t9K" firstAttribute="centerY" secondItem="C5u-Af-EYb" secondAttribute="centerY" id="Dew-uQ-700"/>
+                                        <constraint firstAttribute="height" constant="25" id="Ms1-IN-Wmz"/>
+                                        <constraint firstItem="eHz-8d-TVN" firstAttribute="centerY" secondItem="C5u-Af-EYb" secondAttribute="centerY" id="Vm9-jN-mvw"/>
+                                        <constraint firstItem="hhl-e1-3fz" firstAttribute="centerY" secondItem="C5u-Af-EYb" secondAttribute="centerY" id="ZdB-GI-ADE"/>
+                                        <constraint firstItem="5Bn-br-VYE" firstAttribute="centerY" secondItem="C5u-Af-EYb" secondAttribute="centerY" id="b5m-3t-x8P"/>
+                                        <constraint firstItem="UbM-5S-LsY" firstAttribute="centerY" secondItem="C5u-Af-EYb" secondAttribute="centerY" id="coi-PC-lVp"/>
+                                        <constraint firstItem="85E-zf-coP" firstAttribute="centerY" secondItem="C5u-Af-EYb" secondAttribute="centerY" id="rpX-sB-3aW"/>
+                                    </constraints>
+                                    <visibilityPriorities>
+                                        <integer value="1000"/>
+                                        <integer value="1000"/>
+                                        <integer value="1000"/>
+                                        <integer value="1000"/>
+                                        <integer value="1000"/>
+                                        <integer value="1000"/>
+                                        <integer value="1000"/>
+                                    </visibilityPriorities>
+                                    <customSpacing>
+                                        <real value="3.4028234663852886e+38"/>
+                                        <real value="3.4028234663852886e+38"/>
+                                        <real value="3.4028234663852886e+38"/>
+                                        <real value="3.4028234663852886e+38"/>
+                                        <real value="3.4028234663852886e+38"/>
+                                        <real value="3.4028234663852886e+38"/>
+                                        <real value="3.4028234663852886e+38"/>
+                                    </customSpacing>
+                                </stackView>
+                                <stackView distribution="equalSpacing" orientation="horizontal" alignment="top" spacing="0.0" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" translatesAutoresizingMaskIntoConstraints="NO" id="ddf-mW-g4F" userLabel="Stack View_CheckCoins">
+                                    <rect key="frame" x="0.0" y="0.0" width="109.5" height="25"/>
+                                    <subviews>
+                                        <button verticalHuggingPriority="750" tag="7" translatesAutoresizingMaskIntoConstraints="NO" id="8Hv-a5-2BC">
+                                            <rect key="frame" x="-2" y="4" width="47" height="18"/>
+                                            <buttonCell key="cell" type="check" title="XMR" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="W1s-ns-dM4">
+                                                <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                                                <font key="font" metaFont="smallSystem"/>
+                                            </buttonCell>
+                                            <connections>
+                                                <action selector="changeCheckCoin:" target="-2" id="HAV-qc-tEA"/>
+                                            </connections>
+                                        </button>
+                                        <button verticalHuggingPriority="750" tag="8" translatesAutoresizingMaskIntoConstraints="NO" id="LfH-Zo-gDZ">
+                                            <rect key="frame" x="55.5" y="4" width="56" height="18"/>
+                                            <buttonCell key="cell" type="check" title="QTUM" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="OZp-mx-Zr7">
+                                                <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                                                <font key="font" metaFont="smallSystem"/>
+                                            </buttonCell>
+                                            <connections>
+                                                <action selector="changeCheckCoin:" target="-2" id="BVg-mR-s7Q"/>
+                                            </connections>
+                                        </button>
+                                    </subviews>
+                                    <constraints>
+                                        <constraint firstAttribute="height" constant="25" id="90B-Ee-zPj"/>
+                                        <constraint firstItem="LfH-Zo-gDZ" firstAttribute="centerY" secondItem="ddf-mW-g4F" secondAttribute="centerY" id="EQE-fD-ti0"/>
+                                        <constraint firstItem="8Hv-a5-2BC" firstAttribute="centerY" secondItem="ddf-mW-g4F" secondAttribute="centerY" id="htu-dd-w3Z"/>
+                                    </constraints>
+                                    <visibilityPriorities>
+                                        <integer value="1000"/>
+                                        <integer value="1000"/>
+                                    </visibilityPriorities>
+                                    <customSpacing>
+                                        <real value="3.4028234663852886e+38"/>
+                                        <real value="3.4028234663852886e+38"/>
+                                    </customSpacing>
+                                </stackView>
                             </subviews>
                             <constraints>
-                                <constraint firstItem="3Yf-am-ohV" firstAttribute="centerY" secondItem="C5u-Af-EYb" secondAttribute="centerY" id="2sS-u4-8of"/>
-                                <constraint firstItem="u9B-Kk-t9K" firstAttribute="centerY" secondItem="C5u-Af-EYb" secondAttribute="centerY" id="Dew-uQ-700"/>
-                                <constraint firstAttribute="height" constant="30" id="Ms1-IN-Wmz"/>
-                                <constraint firstItem="eHz-8d-TVN" firstAttribute="centerY" secondItem="C5u-Af-EYb" secondAttribute="centerY" id="Vm9-jN-mvw"/>
-                                <constraint firstItem="hhl-e1-3fz" firstAttribute="centerY" secondItem="C5u-Af-EYb" secondAttribute="centerY" id="ZdB-GI-ADE"/>
-                                <constraint firstItem="5Bn-br-VYE" firstAttribute="centerY" secondItem="C5u-Af-EYb" secondAttribute="centerY" id="b5m-3t-x8P"/>
-                                <constraint firstItem="UbM-5S-LsY" firstAttribute="centerY" secondItem="C5u-Af-EYb" secondAttribute="centerY" id="coi-PC-lVp"/>
-                                <constraint firstItem="85E-zf-coP" firstAttribute="centerY" secondItem="C5u-Af-EYb" secondAttribute="centerY" id="rpX-sB-3aW"/>
+                                <constraint firstAttribute="bottom" secondItem="ddf-mW-g4F" secondAttribute="bottom" id="6b8-ew-YQN"/>
+                                <constraint firstAttribute="trailing" secondItem="C5u-Af-EYb" secondAttribute="trailing" id="HID-Yj-Es0"/>
+                                <constraint firstItem="ddf-mW-g4F" firstAttribute="leading" secondItem="8Gr-Ae-ugc" secondAttribute="leading" id="JLU-d9-53y"/>
+                                <constraint firstItem="ddf-mW-g4F" firstAttribute="top" secondItem="C5u-Af-EYb" secondAttribute="bottom" id="b9b-53-gqf"/>
+                                <constraint firstItem="C5u-Af-EYb" firstAttribute="leading" secondItem="8Gr-Ae-ugc" secondAttribute="leading" id="o76-FK-Mmk"/>
+                                <constraint firstItem="C5u-Af-EYb" firstAttribute="top" secondItem="8Gr-Ae-ugc" secondAttribute="top" id="rBm-FU-c1r"/>
+                                <constraint firstItem="LfH-Zo-gDZ" firstAttribute="leading" secondItem="u9B-Kk-t9K" secondAttribute="leading" id="rhI-EP-9fw"/>
                             </constraints>
-                            <visibilityPriorities>
-                                <integer value="1000"/>
-                                <integer value="1000"/>
-                                <integer value="1000"/>
-                                <integer value="1000"/>
-                                <integer value="1000"/>
-                                <integer value="1000"/>
-                                <integer value="1000"/>
-                            </visibilityPriorities>
-                            <customSpacing>
-                                <real value="3.4028234663852886e+38"/>
-                                <real value="3.4028234663852886e+38"/>
-                                <real value="3.4028234663852886e+38"/>
-                                <real value="3.4028234663852886e+38"/>
-                                <real value="3.4028234663852886e+38"/>
-                                <real value="3.4028234663852886e+38"/>
-                                <real value="3.4028234663852886e+38"/>
-                            </customSpacing>
-                        </stackView>
+                        </customView>
                         <customView translatesAutoresizingMaskIntoConstraints="NO" id="Kib-RW-y3K" userLabel="ViewStateTable">
-                            <rect key="frame" x="0.0" y="63" width="393" height="193"/>
+                            <rect key="frame" x="0.0" y="245" width="393" height="253"/>
                             <subviews>
                                 <stackView distribution="fillEqually" orientation="vertical" alignment="leading" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" verticalHuggingPriority="251" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="LID-pe-Bxd">
-                                    <rect key="frame" x="0.0" y="0.0" width="50" height="193"/>
+                                    <rect key="frame" x="0.0" y="10" width="50" height="243"/>
                                     <subviews>
-                                        <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" allowsCharacterPickerTouchBarItem="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Gl7-PO-xLc">
-                                            <rect key="frame" x="-2" y="175" width="54" height="18"/>
+                                        <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" allowsCharacterPickerTouchBarItem="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Gl7-PO-xLc" userLabel="Nothing">
+                                            <rect key="frame" x="-2" y="225" width="54" height="18"/>
                                             <textFieldCell key="cell" lineBreakMode="truncatingTail" sendsActionOnEndEditing="YES" alignment="left" usesSingleLineMode="YES" id="hnv-2G-nGi">
                                                 <font key="font" metaFont="systemBold" size="14"/>
                                                 <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
@@ -373,7 +432,7 @@
                                             </textFieldCell>
                                         </textField>
                                         <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" allowsCharacterPickerTouchBarItem="YES" translatesAutoresizingMaskIntoConstraints="NO" id="4ZI-fr-EIy">
-                                            <rect key="frame" x="-2" y="150" width="54" height="17"/>
+                                            <rect key="frame" x="-2" y="200" width="54" height="17"/>
                                             <textFieldCell key="cell" lineBreakMode="truncatingTail" sendsActionOnEndEditing="YES" alignment="left" title="BTC" usesSingleLineMode="YES" id="62u-ch-joF">
                                                 <font key="font" metaFont="systemSemibold" size="13"/>
                                                 <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
@@ -381,7 +440,7 @@
                                             </textFieldCell>
                                         </textField>
                                         <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" tag="1" setsMaxLayoutWidthAtFirstLayout="YES" allowsCharacterPickerTouchBarItem="YES" translatesAutoresizingMaskIntoConstraints="NO" id="4Ow-WD-mS2">
-                                            <rect key="frame" x="-2" y="125" width="54" height="17"/>
+                                            <rect key="frame" x="-2" y="175" width="54" height="17"/>
                                             <textFieldCell key="cell" lineBreakMode="truncatingTail" sendsActionOnEndEditing="YES" alignment="left" title="ETH" usesSingleLineMode="YES" id="2kA-Me-m8t">
                                                 <font key="font" metaFont="systemSemibold" size="13"/>
                                                 <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
@@ -389,7 +448,7 @@
                                             </textFieldCell>
                                         </textField>
                                         <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" tag="2" setsMaxLayoutWidthAtFirstLayout="YES" allowsCharacterPickerTouchBarItem="YES" translatesAutoresizingMaskIntoConstraints="NO" id="5YM-Gn-FJV">
-                                            <rect key="frame" x="-2" y="100" width="54" height="17"/>
+                                            <rect key="frame" x="-2" y="150" width="54" height="17"/>
                                             <textFieldCell key="cell" lineBreakMode="truncatingTail" sendsActionOnEndEditing="YES" alignment="left" title="DASH" usesSingleLineMode="YES" id="PoI-Gw-0Ul">
                                                 <font key="font" metaFont="systemSemibold" size="13"/>
                                                 <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
@@ -397,7 +456,7 @@
                                             </textFieldCell>
                                         </textField>
                                         <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" tag="3" setsMaxLayoutWidthAtFirstLayout="YES" allowsCharacterPickerTouchBarItem="YES" translatesAutoresizingMaskIntoConstraints="NO" id="RRh-Vu-P9b">
-                                            <rect key="frame" x="-2" y="75" width="54" height="17"/>
+                                            <rect key="frame" x="-2" y="125" width="54" height="17"/>
                                             <textFieldCell key="cell" lineBreakMode="truncatingTail" sendsActionOnEndEditing="YES" alignment="left" title="LTC" usesSingleLineMode="YES" id="xmx-NL-LzO">
                                                 <font key="font" metaFont="systemSemibold" size="13"/>
                                                 <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
@@ -405,7 +464,7 @@
                                             </textFieldCell>
                                         </textField>
                                         <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" tag="4" setsMaxLayoutWidthAtFirstLayout="YES" allowsCharacterPickerTouchBarItem="YES" translatesAutoresizingMaskIntoConstraints="NO" id="9K2-W4-Mf8">
-                                            <rect key="frame" x="-2" y="50" width="54" height="17"/>
+                                            <rect key="frame" x="-2" y="100" width="54" height="17"/>
                                             <textFieldCell key="cell" lineBreakMode="truncatingTail" sendsActionOnEndEditing="YES" alignment="left" title="ETC" usesSingleLineMode="YES" id="WLZ-BC-Glo">
                                                 <font key="font" metaFont="systemSemibold" size="13"/>
                                                 <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
@@ -413,16 +472,32 @@
                                             </textFieldCell>
                                         </textField>
                                         <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" tag="5" setsMaxLayoutWidthAtFirstLayout="YES" allowsCharacterPickerTouchBarItem="YES" translatesAutoresizingMaskIntoConstraints="NO" id="dg4-j9-xSZ">
-                                            <rect key="frame" x="-2" y="25" width="54" height="17"/>
+                                            <rect key="frame" x="-2" y="75" width="54" height="17"/>
                                             <textFieldCell key="cell" lineBreakMode="truncatingTail" sendsActionOnEndEditing="YES" alignment="left" title="XRP" usesSingleLineMode="YES" id="kig-Ji-XMt">
                                                 <font key="font" metaFont="systemSemibold" size="13"/>
                                                 <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                                                 <color key="backgroundColor" red="0.0" green="0.81568627449999997" blue="0.28627450980000002" alpha="1" colorSpace="deviceRGB"/>
                                             </textFieldCell>
                                         </textField>
-                                        <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" tag="5" setsMaxLayoutWidthAtFirstLayout="YES" allowsCharacterPickerTouchBarItem="YES" translatesAutoresizingMaskIntoConstraints="NO" id="8FR-Xz-D7z">
-                                            <rect key="frame" x="-2" y="0.0" width="54" height="17"/>
+                                        <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" tag="6" setsMaxLayoutWidthAtFirstLayout="YES" allowsCharacterPickerTouchBarItem="YES" translatesAutoresizingMaskIntoConstraints="NO" id="8FR-Xz-D7z">
+                                            <rect key="frame" x="-2" y="50" width="54" height="17"/>
                                             <textFieldCell key="cell" lineBreakMode="truncatingTail" sendsActionOnEndEditing="YES" alignment="left" title="BCH" usesSingleLineMode="YES" id="Iux-bd-RwE">
+                                                <font key="font" metaFont="systemSemibold" size="13"/>
+                                                <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                                <color key="backgroundColor" red="0.0" green="0.81568627449999997" blue="0.28627450980000002" alpha="1" colorSpace="deviceRGB"/>
+                                            </textFieldCell>
+                                        </textField>
+                                        <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" tag="7" setsMaxLayoutWidthAtFirstLayout="YES" allowsCharacterPickerTouchBarItem="YES" translatesAutoresizingMaskIntoConstraints="NO" id="1W2-ce-ovI">
+                                            <rect key="frame" x="-2" y="25" width="54" height="17"/>
+                                            <textFieldCell key="cell" lineBreakMode="truncatingTail" sendsActionOnEndEditing="YES" alignment="left" title="XMR" usesSingleLineMode="YES" id="Cfy-jn-VDh">
+                                                <font key="font" metaFont="systemSemibold" size="13"/>
+                                                <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                                <color key="backgroundColor" red="0.0" green="0.81568627449999997" blue="0.28627450980000002" alpha="1" colorSpace="deviceRGB"/>
+                                            </textFieldCell>
+                                        </textField>
+                                        <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" tag="8" setsMaxLayoutWidthAtFirstLayout="YES" allowsCharacterPickerTouchBarItem="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Yr5-Um-zfu">
+                                            <rect key="frame" x="-2" y="0.0" width="54" height="17"/>
+                                            <textFieldCell key="cell" lineBreakMode="truncatingTail" sendsActionOnEndEditing="YES" alignment="left" title="QTUM" usesSingleLineMode="YES" id="yXt-tu-mwc">
                                                 <font key="font" metaFont="systemSemibold" size="13"/>
                                                 <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                                                 <color key="backgroundColor" red="0.0" green="0.81568627449999997" blue="0.28627450980000002" alpha="1" colorSpace="deviceRGB"/>
@@ -436,10 +511,14 @@
                                         <constraint firstAttribute="trailing" secondItem="5YM-Gn-FJV" secondAttribute="trailing" id="LBj-Uj-1QL"/>
                                         <constraint firstAttribute="trailing" secondItem="4ZI-fr-EIy" secondAttribute="trailing" id="aQJ-8u-Dod"/>
                                         <constraint firstAttribute="trailing" secondItem="dg4-j9-xSZ" secondAttribute="trailing" id="ddg-D5-qco"/>
+                                        <constraint firstAttribute="trailing" secondItem="1W2-ce-ovI" secondAttribute="trailing" id="gMO-b2-mI9"/>
+                                        <constraint firstAttribute="trailing" secondItem="Yr5-Um-zfu" secondAttribute="trailing" id="lu9-uP-1cw"/>
                                         <constraint firstAttribute="trailing" secondItem="9K2-W4-Mf8" secondAttribute="trailing" id="oxi-l7-cxV"/>
                                         <constraint firstAttribute="trailing" secondItem="4Ow-WD-mS2" secondAttribute="trailing" id="yge-2u-5bz"/>
                                     </constraints>
                                     <visibilityPriorities>
+                                        <integer value="1000"/>
+                                        <integer value="1000"/>
                                         <integer value="1000"/>
                                         <integer value="1000"/>
                                         <integer value="1000"/>
@@ -458,14 +537,16 @@
                                         <real value="3.4028234663852886e+38"/>
                                         <real value="3.4028234663852886e+38"/>
                                         <real value="3.4028234663852886e+38"/>
+                                        <real value="3.4028234663852886e+38"/>
+                                        <real value="3.4028234663852886e+38"/>
                                     </customSpacing>
                                 </stackView>
                                 <stackView distribution="fillEqually" orientation="horizontal" alignment="top" spacing="0.0" horizontalStackHuggingPriority="250" verticalStackHuggingPriority="249.99998474121094" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="DZW-Ye-x59" userLabel="Stack View_Sites">
-                                    <rect key="frame" x="50" y="0.0" width="343" height="193"/>
+                                    <rect key="frame" x="50" y="10" width="343" height="243"/>
                                 </stackView>
                             </subviews>
                             <constraints>
-                                <constraint firstAttribute="bottom" secondItem="LID-pe-Bxd" secondAttribute="bottom" id="Axk-Ud-0ET"/>
+                                <constraint firstAttribute="bottom" secondItem="LID-pe-Bxd" secondAttribute="bottom" constant="10" id="Axk-Ud-0ET"/>
                                 <constraint firstItem="DZW-Ye-x59" firstAttribute="bottom" secondItem="LID-pe-Bxd" secondAttribute="bottom" id="JX2-HQ-h7p"/>
                                 <constraint firstItem="DZW-Ye-x59" firstAttribute="top" secondItem="LID-pe-Bxd" secondAttribute="top" id="TBx-eH-Ctr"/>
                                 <constraint firstAttribute="trailing" secondItem="DZW-Ye-x59" secondAttribute="trailing" id="kIR-bJ-GbJ"/>
@@ -475,7 +556,7 @@
                             </constraints>
                         </customView>
                         <stackView distribution="equalSpacing" orientation="horizontal" alignment="top" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" verticalHuggingPriority="750" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="E4r-65-EFF" userLabel="Stack View_CheckSites">
-                            <rect key="frame" x="0.0" y="27" width="393" height="30"/>
+                            <rect key="frame" x="0.0" y="209" width="393" height="30"/>
                             <subviews>
                                 <button translatesAutoresizingMaskIntoConstraints="NO" id="mDp-Lv-fYl">
                                     <rect key="frame" x="-2" y="-2" width="66" height="34"/>
@@ -488,7 +569,7 @@
                                     </connections>
                                 </button>
                                 <button tag="1" translatesAutoresizingMaskIntoConstraints="NO" id="K9P-ea-9A1">
-                                    <rect key="frame" x="85" y="-2" width="66" height="34"/>
+                                    <rect key="frame" x="68" y="-2" width="66" height="34"/>
                                     <buttonCell key="cell" type="check" title="Coinone" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="t8u-72-ie5">
                                         <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                                         <font key="font" metaFont="smallSystem"/>
@@ -498,7 +579,7 @@
                                     </connections>
                                 </button>
                                 <button tag="2" translatesAutoresizingMaskIntoConstraints="NO" id="ThZ-91-3ne">
-                                    <rect key="frame" x="171.5" y="-2" width="67" height="34"/>
+                                    <rect key="frame" x="138.5" y="-2" width="67" height="34"/>
                                     <buttonCell key="cell" type="check" title="Poloniex" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="jVZ-Eu-egD">
                                         <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                                         <font key="font" metaFont="smallSystem"/>
@@ -508,7 +589,7 @@
                                     </connections>
                                 </button>
                                 <button tag="3" translatesAutoresizingMaskIntoConstraints="NO" id="LHO-Wr-FU4">
-                                    <rect key="frame" x="259.5" y="-2" width="62" height="34"/>
+                                    <rect key="frame" x="209.5" y="-2" width="62" height="34"/>
                                     <buttonCell key="cell" type="check" title="OKCoin" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="uSO-TW-7tB">
                                         <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                                         <font key="font" metaFont="smallSystem"/>
@@ -518,13 +599,23 @@
                                     </connections>
                                 </button>
                                 <button tag="4" translatesAutoresizingMaskIntoConstraints="NO" id="HHU-a3-VfL">
-                                    <rect key="frame" x="342" y="-2" width="53" height="34"/>
+                                    <rect key="frame" x="276" y="-2" width="53" height="34"/>
                                     <buttonCell key="cell" type="check" title="Huobi" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="hSE-ec-voB">
                                         <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                                         <font key="font" metaFont="smallSystem"/>
                                     </buttonCell>
                                     <connections>
                                         <action selector="changeCheckSite:" target="-2" id="QV5-Lg-evp"/>
+                                    </connections>
+                                </button>
+                                <button tag="5" translatesAutoresizingMaskIntoConstraints="NO" id="ttR-Lg-d5W">
+                                    <rect key="frame" x="333" y="-2" width="62" height="34"/>
+                                    <buttonCell key="cell" type="check" title="Bitfinex" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="N4p-si-i8r">
+                                        <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                                        <font key="font" metaFont="smallSystem"/>
+                                    </buttonCell>
+                                    <connections>
+                                        <action selector="changeCheckSite:" target="-2" id="lpm-92-xoP"/>
                                     </connections>
                                 </button>
                             </subviews>
@@ -534,9 +625,11 @@
                                 <constraint firstItem="K9P-ea-9A1" firstAttribute="centerY" secondItem="E4r-65-EFF" secondAttribute="centerY" id="JTF-hl-c1c"/>
                                 <constraint firstItem="ThZ-91-3ne" firstAttribute="centerY" secondItem="E4r-65-EFF" secondAttribute="centerY" id="QUf-ba-tZX"/>
                                 <constraint firstItem="HHU-a3-VfL" firstAttribute="centerY" secondItem="E4r-65-EFF" secondAttribute="centerY" id="b8a-mv-mDb"/>
+                                <constraint firstItem="ttR-Lg-d5W" firstAttribute="centerY" secondItem="E4r-65-EFF" secondAttribute="centerY" id="cUw-lU-Mno"/>
                                 <constraint firstAttribute="height" constant="30" id="m1q-Yt-A8O"/>
                             </constraints>
                             <visibilityPriorities>
+                                <integer value="1000"/>
                                 <integer value="1000"/>
                                 <integer value="1000"/>
                                 <integer value="1000"/>
@@ -549,10 +642,14 @@
                                 <real value="3.4028234663852886e+38"/>
                                 <real value="3.4028234663852886e+38"/>
                                 <real value="3.4028234663852886e+38"/>
+                                <real value="3.4028234663852886e+38"/>
                             </customSpacing>
                         </stackView>
                         <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="85e-Gl-b47">
-                            <rect key="frame" x="-6" y="-7" width="405" height="32"/>
+                            <rect key="frame" x="-6" y="176" width="405" height="31"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="20" id="R3J-Of-eQa"/>
+                            </constraints>
                             <buttonCell key="cell" type="push" title="Quit App" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="1ab-6A-iRc">
                                 <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                 <font key="font" metaFont="system"/>
@@ -561,8 +658,8 @@
                                 <action selector="clickQuit:" target="-2" id="jjc-Rn-VOG"/>
                             </connections>
                         </button>
-                        <customView hidden="YES" translatesAutoresizingMaskIntoConstraints="NO" id="NXn-AB-4RR">
-                            <rect key="frame" x="0.0" y="376" width="393" height="20"/>
+                        <customView translatesAutoresizingMaskIntoConstraints="NO" id="NXn-AB-4RR">
+                            <rect key="frame" x="0.0" y="157" width="393" height="20"/>
                             <subviews>
                                 <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" allowsCharacterPickerTouchBarItem="NO" translatesAutoresizingMaskIntoConstraints="NO" id="IQf-ja-7ac">
                                     <rect key="frame" x="212" y="5" width="103" height="11"/>
@@ -595,8 +692,8 @@
                                 <constraint firstItem="tKF-7c-ZiL" firstAttribute="top" secondItem="NXn-AB-4RR" secondAttribute="top" id="xd9-xr-CJD"/>
                             </constraints>
                         </customView>
-                        <customView hidden="YES" translatesAutoresizingMaskIntoConstraints="NO" id="lUP-Lp-Wel">
-                            <rect key="frame" x="0.0" y="245" width="393" height="151"/>
+                        <customView translatesAutoresizingMaskIntoConstraints="NO" id="lUP-Lp-Wel">
+                            <rect key="frame" x="0.0" y="0.0" width="393" height="151"/>
                             <subviews>
                                 <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" allowsCharacterPickerTouchBarItem="NO" translatesAutoresizingMaskIntoConstraints="NO" id="e7f-Pm-t2B">
                                     <rect key="frame" x="-2" y="135" width="290" height="16"/>
@@ -791,9 +888,9 @@
                         <constraint firstAttribute="trailing" secondItem="9Ma-2L-eKd" secondAttribute="trailing" id="6vP-9Z-RfU"/>
                         <constraint firstItem="VUd-Ql-91c" firstAttribute="trailing" secondItem="Lt9-nb-WLc" secondAttribute="trailing" id="FuS-zw-BKu"/>
                         <constraint firstAttribute="trailing" secondItem="Lt9-nb-WLc" secondAttribute="trailing" id="PXi-hh-J28"/>
+                        <constraint firstAttribute="trailing" secondItem="8Gr-Ae-ugc" secondAttribute="trailing" id="a11-OW-IJk"/>
                         <constraint firstAttribute="trailing" secondItem="Kib-RW-y3K" secondAttribute="trailing" id="bUv-ab-sQl"/>
                         <constraint firstAttribute="trailing" secondItem="lUP-Lp-Wel" secondAttribute="trailing" id="j02-D9-h8Z"/>
-                        <constraint firstAttribute="trailing" secondItem="C5u-Af-EYb" secondAttribute="trailing" id="k95-L6-Ggt"/>
                         <constraint firstAttribute="trailing" secondItem="E4r-65-EFF" secondAttribute="trailing" id="ne5-9e-if2"/>
                         <constraint firstAttribute="trailing" secondItem="85e-Gl-b47" secondAttribute="trailing" id="vXK-CC-yjN"/>
                     </constraints>
@@ -824,7 +921,7 @@
                 </stackView>
             </subviews>
             <constraints>
-                <constraint firstAttribute="bottom" secondItem="E8k-QV-wP3" secondAttribute="bottom" constant="5" id="Brj-MR-bJg"/>
+                <constraint firstAttribute="bottom" secondItem="E8k-QV-wP3" secondAttribute="bottom" constant="15" id="Brj-MR-bJg"/>
                 <constraint firstItem="E8k-QV-wP3" firstAttribute="leading" secondItem="Hz6-mo-xeY" secondAttribute="leading" constant="25" id="EX4-Pn-cub"/>
                 <constraint firstItem="E8k-QV-wP3" firstAttribute="top" secondItem="Hz6-mo-xeY" secondAttribute="top" constant="25" id="LpO-zz-s5T"/>
                 <constraint firstItem="pce-U1-erj" firstAttribute="top" secondItem="Hz6-mo-xeY" secondAttribute="top" constant="5" id="Ogr-A1-bZD"/>

@@ -49,7 +49,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         //print("Update Status Label : \(MyValue.mySite) / \(MyValue.myCoin.rawValue) / \(MyValue.myBaseCurrency.rawValue)")
         
         if(MyValue.mySite == .bithumb){
-            Api.getCoinsStateBithum(arrSelectedCoins: [MyValue.myCoin.rawValue], complete: {isSuccess, arrResult in
+            Api.getCoinsStateBithumb(arrSelectedCoins: [MyValue.myCoin.rawValue], complete: {isSuccess, arrResult in
                 for infoCoin in arrResult {
                     if(infoCoin.coin == MyValue.myCoin) {
                         self.setStatusLabelTitle(title: "\(infoCoin.coin.rawValue) \(Double(infoCoin.currentPrice).withCommas()) ")
@@ -90,6 +90,16 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         }
         else if(MyValue.mySite == .huobi) {
             Api.getCoinsStateHuobiByCryptowatch(arrSelectedCoins: [MyValue.myCoin.rawValue], complete: {isSuccess, arrResult in
+                for infoCoin in arrResult {
+                    if(infoCoin.coin == MyValue.myCoin) {
+                        self.setStatusLabelTitle(title: "\(infoCoin.coin.rawValue) \(Double(infoCoin.currentPrice).withCommas()) ")
+                        break
+                    }
+                }
+            })
+        }
+        else if(MyValue.mySite == .bitfinex) {
+            Api.getCoinsStateBitfinex(arrSelectedCoins: [MyValue.myCoin.rawValue], complete: {isSuccess, arrResult in
                 for infoCoin in arrResult {
                     if(infoCoin.coin == MyValue.myCoin) {
                         self.setStatusLabelTitle(title: "\(infoCoin.coin.rawValue) \(Double(infoCoin.currentPrice).withCommas()) ")

@@ -10,6 +10,7 @@
 		1FA6BEFCAF295EDD9D40BE92 /* Pods_CoinNow.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FC71B95B1EFD5F5A565D27C8 /* Pods_CoinNow.framework */; };
 		751FD28C1F4F299D00B6991D /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 751FD28B1F4F299D00B6991D /* GoogleService-Info.plist */; };
 		7522BF111F5733580070561D /* SecretApi.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7522BF101F5733580070561D /* SecretApi.swift */; };
+		7522BF131F586ECA0070561D /* CoinPrice.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7522BF121F586ECA0070561D /* CoinPrice.swift */; };
 		755E39211F081FA400CA6BBC /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 755E39201F081FA400CA6BBC /* AppDelegate.swift */; };
 		755E39251F081FA400CA6BBC /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 755E39241F081FA400CA6BBC /* Assets.xcassets */; };
 		755E39281F081FA400CA6BBC /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 755E39261F081FA400CA6BBC /* Main.storyboard */; };
@@ -31,6 +32,7 @@
 /* Begin PBXFileReference section */
 		751FD28B1F4F299D00B6991D /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		7522BF101F5733580070561D /* SecretApi.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SecretApi.swift; sourceTree = "<group>"; };
+		7522BF121F586ECA0070561D /* CoinPrice.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CoinPrice.swift; sourceTree = "<group>"; };
 		755E391D1F081FA400CA6BBC /* CoinNow.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CoinNow.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		755E39201F081FA400CA6BBC /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		755E39241F081FA400CA6BBC /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -104,8 +106,8 @@
 				755E39201F081FA400CA6BBC /* AppDelegate.swift */,
 				755E392F1F08206E00CA6BBC /* VCPopover.swift */,
 				755E39301F08206E00CA6BBC /* VCPopover.xib */,
-				75E654951F10BEFE00230402 /* ModelSite.xib */,
 				75E654971F10C46B00230402 /* ModelSite.swift */,
+				75E654951F10BEFE00230402 /* ModelSite.xib */,
 				755E39331F08207200CA6BBC /* Info */,
 				755E39341F08207700CA6BBC /* Util */,
 				75E6549B1F1684E700230402 /* Resources */,
@@ -124,6 +126,7 @@
 				75E654A01F175C9F00230402 /* Coin.swift */,
 				75E654A41F17950200230402 /* BaseCurrency.swift */,
 				75E654A21F1761A400230402 /* MyValue.swift */,
+				7522BF121F586ECA0070561D /* CoinPrice.swift */,
 			);
 			name = Info;
 			sourceTree = "<group>";
@@ -288,6 +291,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				7522BF131F586ECA0070561D /* CoinPrice.swift in Sources */,
 				7522BF111F5733580070561D /* SecretApi.swift in Sources */,
 				75E654981F10C46B00230402 /* ModelSite.swift in Sources */,
 				755E393B1F08208000CA6BBC /* Extension.swift in Sources */,

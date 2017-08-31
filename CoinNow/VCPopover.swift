@@ -26,7 +26,9 @@ class VCPopover: NSViewController {
     @IBOutlet weak var lbUpdateTime: NSTextField!
     @IBOutlet weak var btRefresh: NSButton!
     
-    @IBOutlet weak var stackViewCoinCheck: NSStackView!
+    @IBOutlet weak var viewCoinCheck: NSView!
+//    @IBOutlet weak var stackViewCoinCheck1: NSStackView!
+//    @IBOutlet weak var stackViewCoinCheck2: NSStackView!
     @IBOutlet weak var stackViewSiteCheck: NSStackView!
     
     @IBOutlet weak var cbBtc: NSButton!
@@ -36,12 +38,15 @@ class VCPopover: NSViewController {
     @IBOutlet weak var cbEtc: NSButton!
     @IBOutlet weak var cbXrp: NSButton!
     @IBOutlet weak var cbBch: NSButton!
+    @IBOutlet weak var cbXmr: NSButton!
+    @IBOutlet weak var cbQtum: NSButton!
     
     @IBOutlet weak var cbBithumb: NSButton!
     @IBOutlet weak var cbCoinone: NSButton!
     @IBOutlet weak var cbPoloniex: NSButton!
     @IBOutlet weak var cbOkcoin: NSButton!
     @IBOutlet weak var cbHuobi: NSButton!
+    @IBOutlet weak var cbBitfinex: NSButton!
     
     @IBOutlet var lbBtcTitle: NSTextField!
     @IBOutlet var lbEthTitle: NSTextField!
@@ -50,6 +55,8 @@ class VCPopover: NSViewController {
     @IBOutlet var lbEtcTitle: NSTextField!
     @IBOutlet var lbXrpTitle: NSTextField!
     @IBOutlet var lbBchTitle: NSTextField!
+    @IBOutlet var lbXmrTitle: NSTextField!
+    @IBOutlet var lbQtumTitle: NSTextField!
     
     @IBOutlet weak var stackViewSites: NSStackView!
     @IBOutlet weak var stackViewCoinName: NSStackView!
@@ -69,9 +76,9 @@ class VCPopover: NSViewController {
     var countUpdatedSite: Int = 0
     
     override func viewDidLoad() {
-        arrCbCoin = [cbBtc, cbEth, cbDash, cbLtc, cbEtc, cbXrp, cbBch]
-        arrCbSite = [cbBithumb, cbCoinone, cbPoloniex, cbOkcoin, cbHuobi]
-        arrlbCoinTitle = [lbBtcTitle, lbEthTitle, lbDashTitle, lbLtcTitle, lbEtcTitle, lbXrpTitle, lbBchTitle]
+        arrCbCoin = [cbBtc, cbEth, cbDash, cbLtc, cbEtc, cbXrp, cbBch, cbXmr, cbQtum]
+        arrCbSite = [cbBithumb, cbCoinone, cbPoloniex, cbOkcoin, cbHuobi, cbBitfinex]
+        arrlbCoinTitle = [lbBtcTitle, lbEthTitle, lbDashTitle, lbLtcTitle, lbEtcTitle, lbXrpTitle, lbBchTitle, lbXmrTitle, lbQtumTitle]
         
         addSiteView()
         
@@ -104,7 +111,7 @@ class VCPopover: NSViewController {
         }
         NSRunningApplication.current().activate(options: NSApplicationActivationOptions.activateIgnoringOtherApps)
 
-        //From Secret Api !
+        //From Secret Api!
         getDingdingAlertMessage()
         isShowDonateLayout()
     }
@@ -191,7 +198,7 @@ class VCPopover: NSViewController {
     
     func getCoinStateFromApi(indexOfSite: Int) {
         if(indexOfSite == 0){
-            Api.getCoinsStateBithum(arrSelectedCoins: MyValue.arrSelectedCoin, complete: {isSuccess, arrResult in
+            Api.getCoinsStateBithumb(arrSelectedCoins: MyValue.arrSelectedCoin, complete: {isSuccess, arrResult in
                 self.updateStateViewAfterGetDataFromApi(isSuccess: isSuccess, indexOfView: indexOfSite, arrData: arrResult)
             })
         }
@@ -212,6 +219,11 @@ class VCPopover: NSViewController {
         }
         else if(indexOfSite == 4) {
             Api.getCoinsStateHuobiByCryptowatch(arrSelectedCoins: MyValue.arrSelectedCoin, complete: {isSuccess, arrResult in
+                self.updateStateViewAfterGetDataFromApi(isSuccess: isSuccess, indexOfView: indexOfSite, arrData: arrResult)
+            })
+        }
+        else if(indexOfSite == 5) {
+            Api.getCoinsStateBitfinex(arrSelectedCoins: MyValue.arrSelectedCoin, complete: {isSuccess, arrResult in
                 self.updateStateViewAfterGetDataFromApi(isSuccess: isSuccess, indexOfView: indexOfSite, arrData: arrResult)
             })
         }
@@ -344,7 +356,7 @@ class VCPopover: NSViewController {
 
         if(MyValue.isSimpleMode) {
             viewStatusSetting.isHidden = true
-            stackViewCoinCheck.isHidden = true
+            viewCoinCheck.isHidden = true
             stackViewSiteCheck.isHidden = true
             lbLine.isHidden = true
             lbBaseCurrency.isHidden = true
