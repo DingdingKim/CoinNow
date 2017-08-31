@@ -56,13 +56,13 @@ If you :heart: this, you could send me a bit coin :D
 | XRP | rsG1sNifXJxGS2nDQ9zHyoe1S5APrtwpjV (DT 1000581537) |
 | BCH | 16QPpstvKgGAY6Gfcfao2DeFfSyWLWtM5L |
 
-## To users❤️ (Update note .. Not important 😅)
+## To users ❤️ (Update note ..Not important 😅)
 As coins and exchanges increase, it's too narrow to fit in the popup.
 How do you at a glance! Do not be mad! neatly! I'm worried about whether I can show you!
 
 In the next major update, I will return to add function, not to add exchanges or coins!
 An alarm at a fixed price or something visual so you can better understand the change in the price!
-Actually, I do not make money with this app, but because I am so funny and need to make an app, it may be a little slower and you may not feel uncomfortable
+Actually, I do not make money with this app, but because I am so funny and need to make an app, it may be a little slower and you may not feel uncomfortable.
 You have a suggestion or something to say about Coinnow! 
 Request issues in Github or send an e-mail to twlovesh89@gmail.com. I'll reply you ASAP :D hehe
 
