@@ -45,8 +45,9 @@ class VCPopover: NSViewController {
     @IBOutlet weak var cbCoinone: NSButton!
     @IBOutlet weak var cbPoloniex: NSButton!
     @IBOutlet weak var cbOkcoin: NSButton!
-    @IBOutlet weak var cbHuobi: NSButton!
+//    @IBOutlet weak var cbHuobi: NSButton!
     @IBOutlet weak var cbBitfinex: NSButton!
+    @IBOutlet weak var cbBittrex: NSButton!
     
     @IBOutlet var lbBtcTitle: NSTextField!
     @IBOutlet var lbEthTitle: NSTextField!
@@ -77,7 +78,8 @@ class VCPopover: NSViewController {
     
     override func viewDidLoad() {
         arrCbCoin = [cbBtc, cbEth, cbDash, cbLtc, cbEtc, cbXrp, cbBch, cbXmr, cbQtum]
-        arrCbSite = [cbBithumb, cbCoinone, cbPoloniex, cbOkcoin, cbHuobi, cbBitfinex]
+        //arrCbSite = [cbBithumb, cbCoinone, cbPoloniex, cbOkcoin, cbHuobi, cbBitfinex, cbBittrex]
+        arrCbSite = [cbBithumb, cbCoinone, cbPoloniex, cbOkcoin, cbBitfinex, cbBittrex]//휴오비 빼기
         arrlbCoinTitle = [lbBtcTitle, lbEthTitle, lbDashTitle, lbLtcTitle, lbEtcTitle, lbXrpTitle, lbBchTitle, lbXmrTitle, lbQtumTitle]
         
         addSiteView()
@@ -217,13 +219,18 @@ class VCPopover: NSViewController {
                 self.updateStateViewAfterGetDataFromApi(isSuccess: isSuccess, indexOfView: indexOfSite, arrData: arrResult)
             })
         }
+//        else if(indexOfSite == 4) {
+//            Api.getCoinsStateHuobiByCryptowatch(arrSelectedCoins: MyValue.arrSelectedCoin, complete: {isSuccess, arrResult in
+//                self.updateStateViewAfterGetDataFromApi(isSuccess: isSuccess, indexOfView: indexOfSite, arrData: arrResult)
+//            })
+//        }
         else if(indexOfSite == 4) {
-            Api.getCoinsStateHuobiByCryptowatch(arrSelectedCoins: MyValue.arrSelectedCoin, complete: {isSuccess, arrResult in
+            Api.getCoinsStateBitfinex(arrSelectedCoins: MyValue.arrSelectedCoin, complete: {isSuccess, arrResult in
                 self.updateStateViewAfterGetDataFromApi(isSuccess: isSuccess, indexOfView: indexOfSite, arrData: arrResult)
             })
         }
         else if(indexOfSite == 5) {
-            Api.getCoinsStateBitfinex(arrSelectedCoins: MyValue.arrSelectedCoin, complete: {isSuccess, arrResult in
+            Api.getCoinsStateBittrex(arrSelectedCoins: MyValue.arrSelectedCoin, complete: {isSuccess, arrResult in
                 self.updateStateViewAfterGetDataFromApi(isSuccess: isSuccess, indexOfView: indexOfSite, arrData: arrResult)
             })
         }

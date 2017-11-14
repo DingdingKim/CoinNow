@@ -130,6 +130,7 @@ class Api {
         })
     }
     
+    /*
     //Huobi ["BTC", "LTC"]
     static func getCoinsStateHuobiByCryptowatch(arrSelectedCoins: [String], complete: @escaping (_ isSuccess: Bool, _ arrResult: [InfoCoin]) -> Void){
         
@@ -159,6 +160,7 @@ class Api {
             }
         })
     }
+     */
     
     //Bitfinex ["BTC", "ETH", "DASH", "LTC", "ETC", "XRP", "BCH", "XMR"]
     static func getCoinsStateBitfinex(arrSelectedCoins: [String], complete: @escaping (_ isSuccess: Bool, _ arrResult: [InfoCoin]) -> Void){
@@ -170,15 +172,53 @@ class Api {
             
             for coinName in arrSelectedCoins {
                 guard Site.bitfinex.arrTradableCoin().contains(coinName) else { complete(false, makeResultArrayOfFail()); continue}
+
+                var realCoinName = coinName
                 
                 //DASH -> dsh
-                let dashToDsh = coinName.replacingOccurrences(of: "DASH", with: "dsh")
+                if(coinName == "DASH") {
+                    realCoinName = "dsh"
+                }
+                //QTUM -> QTM
+                else if(coinName == "QTUM") {
+                    realCoinName = "QTM"
+                }
                 
-                Alamofire.request("https://api.bitfinex.com/v1/pubticker/\(coinName == "DASH" ? dashToDsh : coinName)USD", method: .get).responseJSON { (responseData) -> Void in
+                Alamofire.request("https://api.bitfinex.com/v1/pubticker/\(realCoinName)USD", method: .get).responseJSON { (responseData) -> Void in
                     guard let resultValue = responseData.result.value else { complete(false, makeResultArrayOfFail()); return}
                     
                     guard let currentPrice = (JSON(resultValue))["last_price"].string else { complete(false, makeResultArrayOfFail()); return}
                     let exchangedPrice = (Double(currentPrice) ?? CoinPrice.fail.rawValue) * exchangeRate
+                    
+                    let infoCoin = InfoCoin(coin: Coin.valueOf(name: coinName), currentPrice: exchangedPrice)
+                    arrResult.append(infoCoin)
+                    
+                    //callback when finish last item request
+                    if(arrResult.count == Coin.allValues.count) {
+                        //After all request is finished
+                        complete(true, arrResult)
+                    }
+                }
+            }
+        })
+    }
+    
+    //Bittrex ["BTC", "ETH", "DASH", "LTC", "ETC", "XRP", "BCH", "XMR"]
+    static func getCoinsStateBittrex(arrSelectedCoins: [String], complete: @escaping (_ isSuccess: Bool, _ arrResult: [InfoCoin]) -> Void){
+        
+        Api.getExchangeRate(from: .usd, complete: {isSuccess, exchangeRate in
+            guard isSuccess else { complete(false, makeResultArrayOfFail()); return }
+            
+            var arrResult = addEmptyCoin(arrSelectedCoins: arrSelectedCoins, arrTradableCoins: Site.bittrex.arrTradableCoin())
+            
+            for coinName in arrSelectedCoins {
+                guard Site.bittrex.arrTradableCoin().contains(coinName) else { complete(false, makeResultArrayOfFail()); continue}
+                
+                Alamofire.request("https://bittrex.com/api/v1.1/public/getticker?market=USDT-\(coinName == "BCH" ? "BCC" : coinName)", method: .get).responseJSON { (responseData) -> Void in
+                    guard let resultValue = responseData.result.value else { complete(false, makeResultArrayOfFail()); return}
+
+                    guard let currentPrice = (JSON(resultValue))["result"]["Last"].double else { complete(false, makeResultArrayOfFail()); return}
+                    let exchangedPrice = (currentPrice ) * exchangeRate
                     
                     let infoCoin = InfoCoin(coin: Coin.valueOf(name: coinName), currentPrice: exchangedPrice)
                     arrResult.append(infoCoin)

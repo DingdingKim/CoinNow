@@ -88,6 +88,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
                 }
             })
         }
+            /*
         else if(MyValue.mySite == .huobi) {
             Api.getCoinsStateHuobiByCryptowatch(arrSelectedCoins: [MyValue.myCoin.rawValue], complete: {isSuccess, arrResult in
                 for infoCoin in arrResult {
@@ -98,6 +99,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
                 }
             })
         }
+             */
         else if(MyValue.mySite == .bitfinex) {
             Api.getCoinsStateBitfinex(arrSelectedCoins: [MyValue.myCoin.rawValue], complete: {isSuccess, arrResult in
                 for infoCoin in arrResult {
