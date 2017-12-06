@@ -22,29 +22,35 @@
                 <outlet property="cbBithumb" destination="mDp-Lv-fYl" id="oFq-3g-pm8"/>
                 <outlet property="cbBittrex" destination="p36-Vq-ddp" id="rDJ-Pi-KeS"/>
                 <outlet property="cbBtc" destination="5Bn-br-VYE" id="WcW-Rj-rZq"/>
+                <outlet property="cbBtg" destination="HRw-0h-4qQ" id="Fl7-iz-JL4"/>
                 <outlet property="cbCoinone" destination="K9P-ea-9A1" id="dfk-MQ-6Y9"/>
                 <outlet property="cbDash" destination="eHz-8d-TVN" id="df0-Tp-nua"/>
                 <outlet property="cbEtc" destination="3Yf-am-ohV" id="bgg-kl-0d0"/>
                 <outlet property="cbEth" destination="u9B-Kk-t9K" id="9Gn-TG-Q1q"/>
+                <outlet property="cbIota" destination="C6u-lq-BAU" id="L8R-0k-Rkc"/>
                 <outlet property="cbLtc" destination="UbM-5S-LsY" id="trD-8o-VMy"/>
                 <outlet property="cbOkcoin" destination="LHO-Wr-FU4" id="kEr-TY-JPX"/>
                 <outlet property="cbPoloniex" destination="ThZ-91-3ne" id="q2E-gr-nMl"/>
                 <outlet property="cbQtum" destination="LfH-Zo-gDZ" id="6jH-aG-UFv"/>
                 <outlet property="cbXmr" destination="8Hv-a5-2BC" id="q0B-0T-76F"/>
                 <outlet property="cbXrp" destination="hhl-e1-3fz" id="XPr-sM-mYm"/>
+                <outlet property="cbZec" destination="ZAM-3D-FeO" id="R7w-Og-qw1"/>
                 <outlet property="lbBaseCurrency" destination="LqK-U1-Z1l" id="Zxw-bl-zQF"/>
                 <outlet property="lbBchTitle" destination="8FR-Xz-D7z" id="Gtn-xV-tIG"/>
                 <outlet property="lbBtcTitle" destination="4ZI-fr-EIy" id="zPK-U9-Toi"/>
+                <outlet property="lbBtgTitle" destination="L3j-af-1i5" id="s4M-yV-dgZ"/>
                 <outlet property="lbDashTitle" destination="5YM-Gn-FJV" id="dkW-zt-30z"/>
                 <outlet property="lbDingAlert" destination="VUd-Ql-91c" id="8k6-Zr-5St"/>
                 <outlet property="lbEtcTitle" destination="9K2-W4-Mf8" id="Nid-FY-Vyu"/>
                 <outlet property="lbEthTitle" destination="4Ow-WD-mS2" id="IqU-oG-gvf"/>
+                <outlet property="lbIotaTitle" destination="43C-Ga-JFH" id="jwT-T9-xTr"/>
                 <outlet property="lbLine" destination="Wou-lk-jUJ" id="svv-zp-FC3"/>
                 <outlet property="lbLtcTitle" destination="RRh-Vu-P9b" id="UnA-Mi-kUY"/>
                 <outlet property="lbQtumTitle" destination="Yr5-Um-zfu" id="vBP-1w-ECh"/>
                 <outlet property="lbUpdateTime" destination="pD8-71-cuc" id="4v4-Jd-mdK"/>
                 <outlet property="lbXmrTitle" destination="1W2-ce-ovI" id="Uyy-4L-s7r"/>
                 <outlet property="lbXrpTitle" destination="dg4-j9-xSZ" id="93X-S4-mBf"/>
+                <outlet property="lbZecTitle" destination="Tdq-Zu-Mi9" id="9mz-q4-cE7"/>
                 <outlet property="stackViewCoinName" destination="LID-pe-Bxd" id="fIb-KO-tMS"/>
                 <outlet property="stackViewRoot" destination="E8k-QV-wP3" id="PBh-Cd-1n5"/>
                 <outlet property="stackViewSiteCheck" destination="E4r-65-EFF" id="Y8x-je-UFs"/>
@@ -64,7 +70,7 @@
             <autoresizingMask key="autoresizingMask"/>
             <subviews>
                 <button imageHugsTitle="YES" translatesAutoresizingMaskIntoConstraints="NO" id="pce-U1-erj">
-                    <rect key="frame" x="356" y="673" width="85" height="20"/>
+                    <rect key="frame" x="356" y="748" width="85" height="20"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="20" id="c4h-LS-OtQ"/>
                         <constraint firstAttribute="width" constant="85" id="gxr-IZ-8ov"/>
@@ -78,10 +84,10 @@
                     </connections>
                 </button>
                 <stackView distribution="fill" orientation="vertical" alignment="leading" spacing="6" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="E8k-QV-wP3" userLabel="Stack View Root">
-                    <rect key="frame" x="25" y="15" width="396" height="658"/>
+                    <rect key="frame" x="25" y="15" width="396" height="733"/>
                     <subviews>
                         <customView translatesAutoresizingMaskIntoConstraints="NO" id="Lt9-nb-WLc" userLabel="View_Coin in status bar">
-                            <rect key="frame" x="0.0" y="598" width="396" height="60"/>
+                            <rect key="frame" x="0.0" y="673" width="396" height="60"/>
                             <subviews>
                                 <textField verticalHuggingPriority="750" allowsCharacterPickerTouchBarItem="NO" translatesAutoresizingMaskIntoConstraints="NO" id="wix-Pa-lMa">
                                     <rect key="frame" x="-2" y="41" width="129" height="19"/>
@@ -172,7 +178,7 @@
                             </constraints>
                         </customView>
                         <textField hidden="YES" horizontalHuggingPriority="251" verticalHuggingPriority="750" allowsCharacterPickerTouchBarItem="NO" translatesAutoresizingMaskIntoConstraints="NO" id="VUd-Ql-91c">
-                            <rect key="frame" x="-2" y="645" width="400" height="13"/>
+                            <rect key="frame" x="-2" y="720" width="400" height="13"/>
                             <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="이전 버전에서 환율api에 문제가 있어서 앱이 죽어버렸습니다 ㅠ 불편을 드려 죄송합니다." id="khy-Jj-co1">
                                 <font key="font" metaFont="system" size="10"/>
                                 <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
@@ -180,7 +186,7 @@
                             </textFieldCell>
                         </textField>
                         <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" allowsCharacterPickerTouchBarItem="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Wou-lk-jUJ" userLabel="Line">
-                            <rect key="frame" x="0.0" y="591" width="396" height="1"/>
+                            <rect key="frame" x="0.0" y="666" width="396" height="1"/>
                             <constraints>
                                 <constraint firstAttribute="height" constant="1" id="qZg-95-xo4"/>
                             </constraints>
@@ -191,7 +197,7 @@
                             </textFieldCell>
                         </textField>
                         <customView translatesAutoresizingMaskIntoConstraints="NO" id="9Ma-2L-eKd" userLabel="View state title">
-                            <rect key="frame" x="0.0" y="560" width="396" height="25"/>
+                            <rect key="frame" x="0.0" y="635" width="396" height="25"/>
                             <subviews>
                                 <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" allowsCharacterPickerTouchBarItem="YES" translatesAutoresizingMaskIntoConstraints="NO" id="9lg-xr-wyn">
                                     <rect key="frame" x="-2" y="3" width="141" height="19"/>
@@ -261,7 +267,7 @@
                             </constraints>
                         </customView>
                         <customView translatesAutoresizingMaskIntoConstraints="NO" id="8Gr-Ae-ugc">
-                            <rect key="frame" x="0.0" y="504" width="396" height="50"/>
+                            <rect key="frame" x="0.0" y="579" width="396" height="50"/>
                             <subviews>
                                 <stackView distribution="equalSpacing" orientation="horizontal" alignment="top" spacing="0.0" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="C5u-Af-EYb" userLabel="Stack View_CheckCoins">
                                     <rect key="frame" x="0.0" y="25" width="396" height="25"/>
@@ -277,7 +283,7 @@
                                             </connections>
                                         </button>
                                         <button verticalHuggingPriority="750" tag="1" translatesAutoresizingMaskIntoConstraints="NO" id="u9B-Kk-t9K">
-                                            <rect key="frame" x="56" y="4" width="44" height="18"/>
+                                            <rect key="frame" x="54.5" y="4" width="53" height="18"/>
                                             <buttonCell key="cell" type="check" title="ETH" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="wo3-mw-Kta">
                                                 <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                                                 <font key="font" metaFont="smallSystem"/>
@@ -287,7 +293,7 @@
                                             </connections>
                                         </button>
                                         <button verticalHuggingPriority="750" tag="2" translatesAutoresizingMaskIntoConstraints="NO" id="eHz-8d-TVN">
-                                            <rect key="frame" x="113.5" y="4" width="53" height="18"/>
+                                            <rect key="frame" x="119.5" y="4" width="53" height="18"/>
                                             <buttonCell key="cell" type="check" title="DASH" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="WuJ-3P-1at">
                                                 <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                                                 <font key="font" metaFont="smallSystem"/>
@@ -297,7 +303,7 @@
                                             </connections>
                                         </button>
                                         <button verticalHuggingPriority="750" tag="3" translatesAutoresizingMaskIntoConstraints="NO" id="UbM-5S-LsY">
-                                            <rect key="frame" x="180.5" y="4" width="42" height="18"/>
+                                            <rect key="frame" x="185" y="4" width="42" height="18"/>
                                             <buttonCell key="cell" type="check" title="LTC" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="r9A-7M-hqc">
                                                 <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                                                 <font key="font" metaFont="smallSystem"/>
@@ -307,7 +313,7 @@
                                             </connections>
                                         </button>
                                         <button verticalHuggingPriority="750" tag="4" translatesAutoresizingMaskIntoConstraints="NO" id="3Yf-am-ohV">
-                                            <rect key="frame" x="236.5" y="4" width="44" height="18"/>
+                                            <rect key="frame" x="239.5" y="4" width="44" height="18"/>
                                             <buttonCell key="cell" type="check" title="ETC" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="8bK-jd-Dob">
                                                 <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                                                 <font key="font" metaFont="smallSystem"/>
@@ -317,7 +323,7 @@
                                             </connections>
                                         </button>
                                         <button verticalHuggingPriority="750" tag="5" translatesAutoresizingMaskIntoConstraints="NO" id="hhl-e1-3fz">
-                                            <rect key="frame" x="294" y="4" width="44" height="18"/>
+                                            <rect key="frame" x="295.5" y="4" width="44" height="18"/>
                                             <buttonCell key="cell" type="check" title="XRP" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="oqQ-xK-xlT">
                                                 <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                                                 <font key="font" metaFont="smallSystem"/>
@@ -367,7 +373,7 @@
                                     </customSpacing>
                                 </stackView>
                                 <stackView distribution="equalSpacing" orientation="horizontal" alignment="top" spacing="0.0" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" translatesAutoresizingMaskIntoConstraints="NO" id="ddf-mW-g4F" userLabel="Stack View_CheckCoins">
-                                    <rect key="frame" x="0.0" y="0.0" width="110" height="25"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="284.5" height="25"/>
                                     <subviews>
                                         <button verticalHuggingPriority="750" tag="7" translatesAutoresizingMaskIntoConstraints="NO" id="8Hv-a5-2BC">
                                             <rect key="frame" x="-2" y="4" width="47" height="18"/>
@@ -380,7 +386,7 @@
                                             </connections>
                                         </button>
                                         <button verticalHuggingPriority="750" tag="8" translatesAutoresizingMaskIntoConstraints="NO" id="LfH-Zo-gDZ">
-                                            <rect key="frame" x="56" y="4" width="56" height="18"/>
+                                            <rect key="frame" x="54.5" y="4" width="56" height="18"/>
                                             <buttonCell key="cell" type="check" title="QTUM" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="OZp-mx-Zr7">
                                                 <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                                                 <font key="font" metaFont="smallSystem"/>
@@ -389,17 +395,56 @@
                                                 <action selector="changeCheckCoin:" target="-2" id="BVg-mR-s7Q"/>
                                             </connections>
                                         </button>
+                                        <button verticalHuggingPriority="750" tag="9" translatesAutoresizingMaskIntoConstraints="NO" id="ZAM-3D-FeO">
+                                            <rect key="frame" x="119.5" y="4" width="56" height="18"/>
+                                            <buttonCell key="cell" type="check" title="ZEC" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="Gau-Cp-dDz">
+                                                <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                                                <font key="font" metaFont="smallSystem"/>
+                                            </buttonCell>
+                                            <connections>
+                                                <action selector="changeCheckCoin:" target="-2" id="8YC-3y-Twc"/>
+                                            </connections>
+                                        </button>
+                                        <button verticalHuggingPriority="750" tag="10" translatesAutoresizingMaskIntoConstraints="NO" id="HRw-0h-4qQ">
+                                            <rect key="frame" x="185" y="4" width="45" height="18"/>
+                                            <buttonCell key="cell" type="check" title="BTG" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="zYk-vR-RQT">
+                                                <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                                                <font key="font" metaFont="smallSystem"/>
+                                            </buttonCell>
+                                            <connections>
+                                                <action selector="changeCheckCoin:" target="-2" id="ipf-wn-hKT"/>
+                                            </connections>
+                                        </button>
+                                        <button verticalHuggingPriority="750" tag="11" translatesAutoresizingMaskIntoConstraints="NO" id="C6u-lq-BAU">
+                                            <rect key="frame" x="239.5" y="4" width="47" height="18"/>
+                                            <buttonCell key="cell" type="check" title="IOTA" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="PkF-rJ-PV7">
+                                                <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                                                <font key="font" metaFont="smallSystem"/>
+                                            </buttonCell>
+                                            <connections>
+                                                <action selector="changeCheckCoin:" target="-2" id="FR9-N4-VL6"/>
+                                            </connections>
+                                        </button>
                                     </subviews>
                                     <constraints>
                                         <constraint firstAttribute="height" constant="25" id="90B-Ee-zPj"/>
                                         <constraint firstItem="LfH-Zo-gDZ" firstAttribute="centerY" secondItem="ddf-mW-g4F" secondAttribute="centerY" id="EQE-fD-ti0"/>
+                                        <constraint firstItem="HRw-0h-4qQ" firstAttribute="centerY" secondItem="ddf-mW-g4F" secondAttribute="centerY" id="KzG-P2-uom"/>
+                                        <constraint firstItem="C6u-lq-BAU" firstAttribute="centerY" secondItem="ddf-mW-g4F" secondAttribute="centerY" id="ZG8-yC-Wji"/>
+                                        <constraint firstItem="ZAM-3D-FeO" firstAttribute="centerY" secondItem="ddf-mW-g4F" secondAttribute="centerY" id="gvU-UX-cks"/>
                                         <constraint firstItem="8Hv-a5-2BC" firstAttribute="centerY" secondItem="ddf-mW-g4F" secondAttribute="centerY" id="htu-dd-w3Z"/>
                                     </constraints>
                                     <visibilityPriorities>
                                         <integer value="1000"/>
                                         <integer value="1000"/>
+                                        <integer value="1000"/>
+                                        <integer value="1000"/>
+                                        <integer value="1000"/>
                                     </visibilityPriorities>
                                     <customSpacing>
+                                        <real value="3.4028234663852886e+38"/>
+                                        <real value="3.4028234663852886e+38"/>
+                                        <real value="3.4028234663852886e+38"/>
                                         <real value="3.4028234663852886e+38"/>
                                         <real value="3.4028234663852886e+38"/>
                                     </customSpacing>
@@ -407,22 +452,25 @@
                             </subviews>
                             <constraints>
                                 <constraint firstAttribute="bottom" secondItem="ddf-mW-g4F" secondAttribute="bottom" id="6b8-ew-YQN"/>
+                                <constraint firstItem="ZAM-3D-FeO" firstAttribute="leading" secondItem="eHz-8d-TVN" secondAttribute="leading" id="FWz-Y1-38j"/>
                                 <constraint firstAttribute="trailing" secondItem="C5u-Af-EYb" secondAttribute="trailing" id="HID-Yj-Es0"/>
                                 <constraint firstItem="ddf-mW-g4F" firstAttribute="leading" secondItem="8Gr-Ae-ugc" secondAttribute="leading" id="JLU-d9-53y"/>
                                 <constraint firstItem="ddf-mW-g4F" firstAttribute="top" secondItem="C5u-Af-EYb" secondAttribute="bottom" id="b9b-53-gqf"/>
+                                <constraint firstItem="HRw-0h-4qQ" firstAttribute="leading" secondItem="UbM-5S-LsY" secondAttribute="leading" id="cjF-x2-whw"/>
+                                <constraint firstItem="C6u-lq-BAU" firstAttribute="leading" secondItem="3Yf-am-ohV" secondAttribute="leading" id="fxM-vL-0U8"/>
                                 <constraint firstItem="C5u-Af-EYb" firstAttribute="leading" secondItem="8Gr-Ae-ugc" secondAttribute="leading" id="o76-FK-Mmk"/>
                                 <constraint firstItem="C5u-Af-EYb" firstAttribute="top" secondItem="8Gr-Ae-ugc" secondAttribute="top" id="rBm-FU-c1r"/>
                                 <constraint firstItem="LfH-Zo-gDZ" firstAttribute="leading" secondItem="u9B-Kk-t9K" secondAttribute="leading" id="rhI-EP-9fw"/>
                             </constraints>
                         </customView>
                         <customView translatesAutoresizingMaskIntoConstraints="NO" id="Kib-RW-y3K" userLabel="ViewStateTable">
-                            <rect key="frame" x="0.0" y="245" width="396" height="253"/>
+                            <rect key="frame" x="0.0" y="245" width="396" height="328"/>
                             <subviews>
                                 <stackView distribution="fillEqually" orientation="vertical" alignment="leading" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" verticalHuggingPriority="251" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="LID-pe-Bxd">
-                                    <rect key="frame" x="0.0" y="10" width="50" height="243"/>
+                                    <rect key="frame" x="0.0" y="10" width="50" height="318"/>
                                     <subviews>
                                         <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" allowsCharacterPickerTouchBarItem="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Gl7-PO-xLc" userLabel="Nothing">
-                                            <rect key="frame" x="-2" y="225" width="54" height="18"/>
+                                            <rect key="frame" x="-2" y="300" width="54" height="18"/>
                                             <textFieldCell key="cell" lineBreakMode="truncatingTail" sendsActionOnEndEditing="YES" alignment="left" usesSingleLineMode="YES" id="hnv-2G-nGi">
                                                 <font key="font" metaFont="systemBold" size="14"/>
                                                 <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
@@ -430,7 +478,7 @@
                                             </textFieldCell>
                                         </textField>
                                         <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" allowsCharacterPickerTouchBarItem="YES" translatesAutoresizingMaskIntoConstraints="NO" id="4ZI-fr-EIy">
-                                            <rect key="frame" x="-2" y="200" width="54" height="17"/>
+                                            <rect key="frame" x="-2" y="275" width="54" height="17"/>
                                             <textFieldCell key="cell" lineBreakMode="truncatingTail" sendsActionOnEndEditing="YES" alignment="left" title="BTC" usesSingleLineMode="YES" id="62u-ch-joF">
                                                 <font key="font" metaFont="systemSemibold" size="13"/>
                                                 <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
@@ -438,7 +486,7 @@
                                             </textFieldCell>
                                         </textField>
                                         <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" tag="1" setsMaxLayoutWidthAtFirstLayout="YES" allowsCharacterPickerTouchBarItem="YES" translatesAutoresizingMaskIntoConstraints="NO" id="4Ow-WD-mS2">
-                                            <rect key="frame" x="-2" y="175" width="54" height="17"/>
+                                            <rect key="frame" x="-2" y="250" width="54" height="17"/>
                                             <textFieldCell key="cell" lineBreakMode="truncatingTail" sendsActionOnEndEditing="YES" alignment="left" title="ETH" usesSingleLineMode="YES" id="2kA-Me-m8t">
                                                 <font key="font" metaFont="systemSemibold" size="13"/>
                                                 <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
@@ -446,7 +494,7 @@
                                             </textFieldCell>
                                         </textField>
                                         <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" tag="2" setsMaxLayoutWidthAtFirstLayout="YES" allowsCharacterPickerTouchBarItem="YES" translatesAutoresizingMaskIntoConstraints="NO" id="5YM-Gn-FJV">
-                                            <rect key="frame" x="-2" y="150" width="54" height="17"/>
+                                            <rect key="frame" x="-2" y="225" width="54" height="17"/>
                                             <textFieldCell key="cell" lineBreakMode="truncatingTail" sendsActionOnEndEditing="YES" alignment="left" title="DASH" usesSingleLineMode="YES" id="PoI-Gw-0Ul">
                                                 <font key="font" metaFont="systemSemibold" size="13"/>
                                                 <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
@@ -454,7 +502,7 @@
                                             </textFieldCell>
                                         </textField>
                                         <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" tag="3" setsMaxLayoutWidthAtFirstLayout="YES" allowsCharacterPickerTouchBarItem="YES" translatesAutoresizingMaskIntoConstraints="NO" id="RRh-Vu-P9b">
-                                            <rect key="frame" x="-2" y="125" width="54" height="17"/>
+                                            <rect key="frame" x="-2" y="200" width="54" height="17"/>
                                             <textFieldCell key="cell" lineBreakMode="truncatingTail" sendsActionOnEndEditing="YES" alignment="left" title="LTC" usesSingleLineMode="YES" id="xmx-NL-LzO">
                                                 <font key="font" metaFont="systemSemibold" size="13"/>
                                                 <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
@@ -462,7 +510,7 @@
                                             </textFieldCell>
                                         </textField>
                                         <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" tag="4" setsMaxLayoutWidthAtFirstLayout="YES" allowsCharacterPickerTouchBarItem="YES" translatesAutoresizingMaskIntoConstraints="NO" id="9K2-W4-Mf8">
-                                            <rect key="frame" x="-2" y="100" width="54" height="17"/>
+                                            <rect key="frame" x="-2" y="175" width="54" height="17"/>
                                             <textFieldCell key="cell" lineBreakMode="truncatingTail" sendsActionOnEndEditing="YES" alignment="left" title="ETC" usesSingleLineMode="YES" id="WLZ-BC-Glo">
                                                 <font key="font" metaFont="systemSemibold" size="13"/>
                                                 <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
@@ -470,7 +518,7 @@
                                             </textFieldCell>
                                         </textField>
                                         <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" tag="5" setsMaxLayoutWidthAtFirstLayout="YES" allowsCharacterPickerTouchBarItem="YES" translatesAutoresizingMaskIntoConstraints="NO" id="dg4-j9-xSZ">
-                                            <rect key="frame" x="-2" y="75" width="54" height="17"/>
+                                            <rect key="frame" x="-2" y="150" width="54" height="17"/>
                                             <textFieldCell key="cell" lineBreakMode="truncatingTail" sendsActionOnEndEditing="YES" alignment="left" title="XRP" usesSingleLineMode="YES" id="kig-Ji-XMt">
                                                 <font key="font" metaFont="systemSemibold" size="13"/>
                                                 <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
@@ -478,7 +526,7 @@
                                             </textFieldCell>
                                         </textField>
                                         <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" tag="6" setsMaxLayoutWidthAtFirstLayout="YES" allowsCharacterPickerTouchBarItem="YES" translatesAutoresizingMaskIntoConstraints="NO" id="8FR-Xz-D7z">
-                                            <rect key="frame" x="-2" y="50" width="54" height="17"/>
+                                            <rect key="frame" x="-2" y="125" width="54" height="17"/>
                                             <textFieldCell key="cell" lineBreakMode="truncatingTail" sendsActionOnEndEditing="YES" alignment="left" title="BCH" usesSingleLineMode="YES" id="Iux-bd-RwE">
                                                 <font key="font" metaFont="systemSemibold" size="13"/>
                                                 <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
@@ -486,7 +534,7 @@
                                             </textFieldCell>
                                         </textField>
                                         <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" tag="7" setsMaxLayoutWidthAtFirstLayout="YES" allowsCharacterPickerTouchBarItem="YES" translatesAutoresizingMaskIntoConstraints="NO" id="1W2-ce-ovI">
-                                            <rect key="frame" x="-2" y="25" width="54" height="17"/>
+                                            <rect key="frame" x="-2" y="100" width="54" height="17"/>
                                             <textFieldCell key="cell" lineBreakMode="truncatingTail" sendsActionOnEndEditing="YES" alignment="left" title="XMR" usesSingleLineMode="YES" id="Cfy-jn-VDh">
                                                 <font key="font" metaFont="systemSemibold" size="13"/>
                                                 <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
@@ -494,8 +542,32 @@
                                             </textFieldCell>
                                         </textField>
                                         <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" tag="8" setsMaxLayoutWidthAtFirstLayout="YES" allowsCharacterPickerTouchBarItem="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Yr5-Um-zfu">
-                                            <rect key="frame" x="-2" y="0.0" width="54" height="17"/>
+                                            <rect key="frame" x="-2" y="75" width="54" height="17"/>
                                             <textFieldCell key="cell" lineBreakMode="truncatingTail" sendsActionOnEndEditing="YES" alignment="left" title="QTUM" usesSingleLineMode="YES" id="yXt-tu-mwc">
+                                                <font key="font" metaFont="systemSemibold" size="13"/>
+                                                <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                                <color key="backgroundColor" red="0.0" green="0.81568627449999997" blue="0.28627450980000002" alpha="1" colorSpace="deviceRGB"/>
+                                            </textFieldCell>
+                                        </textField>
+                                        <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" tag="9" setsMaxLayoutWidthAtFirstLayout="YES" allowsCharacterPickerTouchBarItem="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Tdq-Zu-Mi9">
+                                            <rect key="frame" x="-2" y="50" width="54" height="17"/>
+                                            <textFieldCell key="cell" lineBreakMode="truncatingTail" sendsActionOnEndEditing="YES" alignment="left" title="ZEC" usesSingleLineMode="YES" id="tw1-GP-DGE">
+                                                <font key="font" metaFont="systemSemibold" size="13"/>
+                                                <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                                <color key="backgroundColor" red="0.0" green="0.81568627449999997" blue="0.28627450980000002" alpha="1" colorSpace="deviceRGB"/>
+                                            </textFieldCell>
+                                        </textField>
+                                        <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" tag="10" setsMaxLayoutWidthAtFirstLayout="YES" allowsCharacterPickerTouchBarItem="YES" translatesAutoresizingMaskIntoConstraints="NO" id="L3j-af-1i5">
+                                            <rect key="frame" x="-2" y="25" width="54" height="17"/>
+                                            <textFieldCell key="cell" lineBreakMode="truncatingTail" sendsActionOnEndEditing="YES" alignment="left" title="BTG" usesSingleLineMode="YES" id="CYZ-Pt-aXD">
+                                                <font key="font" metaFont="systemSemibold" size="13"/>
+                                                <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                                <color key="backgroundColor" red="0.0" green="0.81568627449999997" blue="0.28627450980000002" alpha="1" colorSpace="deviceRGB"/>
+                                            </textFieldCell>
+                                        </textField>
+                                        <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" tag="11" setsMaxLayoutWidthAtFirstLayout="YES" allowsCharacterPickerTouchBarItem="YES" translatesAutoresizingMaskIntoConstraints="NO" id="43C-Ga-JFH">
+                                            <rect key="frame" x="-2" y="0.0" width="54" height="17"/>
+                                            <textFieldCell key="cell" lineBreakMode="truncatingTail" sendsActionOnEndEditing="YES" alignment="left" title="IOTA" usesSingleLineMode="YES" id="USl-QQ-IdD">
                                                 <font key="font" metaFont="systemSemibold" size="13"/>
                                                 <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                                                 <color key="backgroundColor" red="0.0" green="0.81568627449999997" blue="0.28627450980000002" alpha="1" colorSpace="deviceRGB"/>
@@ -505,9 +577,12 @@
                                     <constraints>
                                         <constraint firstAttribute="trailing" secondItem="8FR-Xz-D7z" secondAttribute="trailing" id="8CY-ea-PoI"/>
                                         <constraint firstAttribute="trailing" secondItem="Gl7-PO-xLc" secondAttribute="trailing" id="A5o-Xp-Ge4"/>
+                                        <constraint firstAttribute="trailing" secondItem="L3j-af-1i5" secondAttribute="trailing" id="Cay-co-1Qm"/>
                                         <constraint firstAttribute="trailing" secondItem="RRh-Vu-P9b" secondAttribute="trailing" id="EQe-Sr-ncI"/>
                                         <constraint firstAttribute="trailing" secondItem="5YM-Gn-FJV" secondAttribute="trailing" id="LBj-Uj-1QL"/>
+                                        <constraint firstAttribute="trailing" secondItem="43C-Ga-JFH" secondAttribute="trailing" id="PB6-zb-0Ub"/>
                                         <constraint firstAttribute="trailing" secondItem="4ZI-fr-EIy" secondAttribute="trailing" id="aQJ-8u-Dod"/>
+                                        <constraint firstAttribute="trailing" secondItem="Tdq-Zu-Mi9" secondAttribute="trailing" id="alz-VK-CP7"/>
                                         <constraint firstAttribute="trailing" secondItem="dg4-j9-xSZ" secondAttribute="trailing" id="ddg-D5-qco"/>
                                         <constraint firstAttribute="trailing" secondItem="1W2-ce-ovI" secondAttribute="trailing" id="gMO-b2-mI9"/>
                                         <constraint firstAttribute="trailing" secondItem="Yr5-Um-zfu" secondAttribute="trailing" id="lu9-uP-1cw"/>
@@ -525,8 +600,14 @@
                                         <integer value="1000"/>
                                         <integer value="1000"/>
                                         <integer value="1000"/>
+                                        <integer value="1000"/>
+                                        <integer value="1000"/>
+                                        <integer value="1000"/>
                                     </visibilityPriorities>
                                     <customSpacing>
+                                        <real value="3.4028234663852886e+38"/>
+                                        <real value="3.4028234663852886e+38"/>
+                                        <real value="3.4028234663852886e+38"/>
                                         <real value="3.4028234663852886e+38"/>
                                         <real value="3.4028234663852886e+38"/>
                                         <real value="3.4028234663852886e+38"/>
@@ -540,7 +621,7 @@
                                     </customSpacing>
                                 </stackView>
                                 <stackView distribution="fillEqually" orientation="horizontal" alignment="top" spacing="0.0" horizontalStackHuggingPriority="250" verticalStackHuggingPriority="249.99998474121094" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="DZW-Ye-x59" userLabel="Stack View_Sites">
-                                    <rect key="frame" x="50" y="10" width="346" height="243"/>
+                                    <rect key="frame" x="50" y="10" width="346" height="318"/>
                                 </stackView>
                             </subviews>
                             <constraints>
@@ -657,10 +738,10 @@
                             </connections>
                         </button>
                         <customView translatesAutoresizingMaskIntoConstraints="NO" id="NXn-AB-4RR">
-                            <rect key="frame" x="0.0" y="157" width="393" height="20"/>
+                            <rect key="frame" x="0.0" y="157" width="396" height="20"/>
                             <subviews>
                                 <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" allowsCharacterPickerTouchBarItem="NO" translatesAutoresizingMaskIntoConstraints="NO" id="IQf-ja-7ac">
-                                    <rect key="frame" x="212" y="5" width="103" height="11"/>
+                                    <rect key="frame" x="215" y="5" width="103" height="11"/>
                                     <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Made by Dingding Kim" id="8tM-WA-HW8">
                                         <font key="font" metaFont="miniSystem"/>
                                         <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
@@ -668,7 +749,7 @@
                                     </textFieldCell>
                                 </textField>
                                 <button translatesAutoresizingMaskIntoConstraints="NO" id="tKF-7c-ZiL">
-                                    <rect key="frame" x="313" y="0.0" width="80" height="20"/>
+                                    <rect key="frame" x="316" y="0.0" width="80" height="20"/>
                                     <constraints>
                                         <constraint firstAttribute="height" constant="20" id="Ccg-1b-Qdj"/>
                                         <constraint firstAttribute="width" constant="80" id="JYo-HE-99j"/>

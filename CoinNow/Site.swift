@@ -36,19 +36,19 @@ enum Site: String {
     func arrTradableCoin() -> [String] {
         switch self {
         case .bithumb:
-            return ["BTC", "ETH", "DASH", "LTC", "ETC", "XRP", "BCH", "XMR", "QTUM"]
+            return ["BTC", "ETH", "DASH", "LTC", "ETC", "XRP", "BCH", "XMR", "QTUM", "ZEC", "BTG"]
         case .coinone:
-            return ["BTC", "ETH", "ETC", "XRP", "BCH", "QTUM"]
+            return ["BTC", "ETH", "ETC", "XRP", "BCH", "QTUM", "IOTA"]
         case .poloniex:
-            return ["BTC", "ETH", "DASH", "LTC", "ETC", "XRP", "BCH", "XMR"]
+            return ["BTC", "ETH", "DASH", "LTC", "ETC", "XRP", "BCH", "XMR", "ZEC"]
         case .okcoin:
             return ["BTC", "ETH", "LTC"]
 //        case .huobi:
 //            return ["BTC", "LTC"]
         case .bitfinex:
-            return ["BTC", "ETH", "DASH", "LTC", "ETC", "XRP", "BCH", "XMR", "QTUM"]
+            return ["BTC", "ETH", "DASH", "LTC", "ETC", "XRP", "BCH", "XMR", "QTUM", "ZEC", "BTG", "IOTA"]
         case .bittrex:
-            return ["BTC", "ETH", "DASH", "LTC", "ETC", "XRP", "BCH", "XMR"]//비트렉스는 비캐를 BCC라고 부름.호출하는데서 BCH를 BCC로 바꿔주겠음
+            return ["BTC", "ETH", "DASH", "LTC", "ETC", "XRP", "BCH", "XMR", "ZEC", "BTG"]//비트렉스는 비캐를 BCC라고 부름.호출하는데서 BCH를 BCC로 바꿔주겠음
         }
     }
     

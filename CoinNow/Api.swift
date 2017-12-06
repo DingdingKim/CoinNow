@@ -15,7 +15,7 @@ class Api {
     static let API_STATUS_CODE_SUCCESS_COINONE = "0"
     static let API_STATUS_CODE_SUCCESS_DING = 200
     
-    //Bithumb ["BTC", "ETH", "DASH", "LTC", "ETC", "XRP", "BCH", "XMR"]
+    //Bithumb ["BTC", "ETH", "DASH", "LTC", "ETC", "XRP", "BCH", "XMR", "ZEC", "BTG"]
     static func getCoinsStateBithumb(arrSelectedCoins: [String], complete: @escaping (_ isSuccess: Bool, _ arrResult: [InfoCoin]) -> Void){
         
         //After get exchange rate then get price and exchange the price to base currency
@@ -46,7 +46,7 @@ class Api {
         })
     }
     
-    //Coinone ["BTC", "ETH", "ETC", "XRP", "BCH", "QTUM"]
+    //Coinone ["BTC", "ETH", "ETC", "XRP", "BCH", "QTUM", "IOTA"]
     static func getCoinsStateCoinone(arrSelectedCoins: [String], complete: @escaping (_ isSuccess: Bool, _ arrResult: [InfoCoin]) -> Void){
         
         Api.getExchangeRate(from: .krw, complete: {isSuccess, exchangeRate in
@@ -182,6 +182,10 @@ class Api {
                 //QTUM -> QTM
                 else if(coinName == "QTUM") {
                     realCoinName = "QTM"
+                }
+                //IOTA -> IOT
+                else if(coinName == "IOTA") {
+                    realCoinName = "IOT"
                 }
                 
                 Alamofire.request("https://api.bitfinex.com/v1/pubticker/\(realCoinName)USD", method: .get).responseJSON { (responseData) -> Void in

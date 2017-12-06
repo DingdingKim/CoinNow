@@ -40,6 +40,9 @@ class VCPopover: NSViewController {
     @IBOutlet weak var cbBch: NSButton!
     @IBOutlet weak var cbXmr: NSButton!
     @IBOutlet weak var cbQtum: NSButton!
+    @IBOutlet weak var cbZec: NSButton!
+    @IBOutlet weak var cbBtg: NSButton!
+    @IBOutlet weak var cbIota: NSButton!
     
     @IBOutlet weak var cbBithumb: NSButton!
     @IBOutlet weak var cbCoinone: NSButton!
@@ -58,6 +61,9 @@ class VCPopover: NSViewController {
     @IBOutlet var lbBchTitle: NSTextField!
     @IBOutlet var lbXmrTitle: NSTextField!
     @IBOutlet var lbQtumTitle: NSTextField!
+    @IBOutlet var lbZecTitle: NSTextField!
+    @IBOutlet var lbBtgTitle: NSTextField!
+    @IBOutlet var lbIotaTitle: NSTextField!
     
     @IBOutlet weak var stackViewSites: NSStackView!
     @IBOutlet weak var stackViewCoinName: NSStackView!
@@ -77,10 +83,10 @@ class VCPopover: NSViewController {
     var countUpdatedSite: Int = 0
     
     override func viewDidLoad() {
-        arrCbCoin = [cbBtc, cbEth, cbDash, cbLtc, cbEtc, cbXrp, cbBch, cbXmr, cbQtum]
+        arrCbCoin = [cbBtc, cbEth, cbDash, cbLtc, cbEtc, cbXrp, cbBch, cbXmr, cbQtum, cbZec, cbBtg, cbIota]
         //arrCbSite = [cbBithumb, cbCoinone, cbPoloniex, cbOkcoin, cbHuobi, cbBitfinex, cbBittrex]
         arrCbSite = [cbBithumb, cbCoinone, cbPoloniex, cbOkcoin, cbBitfinex, cbBittrex]//휴오비 빼기
-        arrlbCoinTitle = [lbBtcTitle, lbEthTitle, lbDashTitle, lbLtcTitle, lbEtcTitle, lbXrpTitle, lbBchTitle, lbXmrTitle, lbQtumTitle]
+        arrlbCoinTitle = [lbBtcTitle, lbEthTitle, lbDashTitle, lbLtcTitle, lbEtcTitle, lbXrpTitle, lbBchTitle, lbXmrTitle, lbQtumTitle, lbZecTitle, lbBtgTitle, lbIotaTitle]
         
         addSiteView()
         

@@ -10,8 +10,8 @@ import Foundation
 import Cocoa
 
 enum Coin: String {
-    case btc = "BTC", eth = "ETH", dash = "DASH", ltc = "LTC", etc = "ETC", xrp = "XRP", bch = "BCH", xmr = "XMR", qtum = "QTUM"
-    static let allValues = ["BTC", "ETH", "DASH", "LTC", "ETC", "XRP", "BCH", "XMR", "QTUM"]
+    case btc = "BTC", eth = "ETH", dash = "DASH", ltc = "LTC", etc = "ETC", xrp = "XRP", bch = "BCH", xmr = "XMR", qtum = "QTUM", zec = "ZEC", btg = "BTG", iota = "IOTA"
+    static let allValues = ["BTC", "ETH", "DASH", "LTC", "ETC", "XRP", "BCH", "XMR", "QTUM", "ZEC", "BTG", "IOTA"]
     
     func index() -> Int {
         switch self {
@@ -33,6 +33,12 @@ enum Coin: String {
             return 7
         case .qtum:
             return 8
+        case .zec:
+            return 9
+        case .btg:
+            return 10
+        case .iota:
+            return 11
         }
     }
     
@@ -79,6 +85,12 @@ enum Coin: String {
             return .xmr
         case qtum.rawValue:
             return .qtum
+        case zec.rawValue:
+            return .zec
+        case btg.rawValue:
+            return .btg
+        case iota.rawValue:
+            return .iota
         default:
             return .btc
         }
