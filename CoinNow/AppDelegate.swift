@@ -110,6 +110,26 @@ class AppDelegate: NSObject, NSApplicationDelegate {
                 }
             })
         }
+        else if(MyValue.mySite == .bittrex) {
+            Api.getCoinsStateBittrex(arrSelectedCoins: [MyValue.myCoin.rawValue], complete: {isSuccess, arrResult in
+                for infoCoin in arrResult {
+                    if(infoCoin.coin == MyValue.myCoin) {
+                        self.setStatusLabelTitle(title: "\(infoCoin.coin.rawValue) \(Double(infoCoin.currentPrice).withCommas()) ")
+                        break
+                    }
+                }
+            })
+        }
+        else if(MyValue.mySite == .upbit) {
+            Api.getCoinsStateUpbit(arrSelectedCoins: [MyValue.myCoin.rawValue], complete: {isSuccess, arrResult in
+                for infoCoin in arrResult {
+                    if(infoCoin.coin == MyValue.myCoin) {
+                        self.setStatusLabelTitle(title: "\(infoCoin.coin.rawValue) \(Double(infoCoin.currentPrice).withCommas()) ")
+                        break
+                    }
+                }
+            })
+        }
     }
     
     public func setStatusLabelTitle(title: String) {

@@ -9,6 +9,7 @@
 import Foundation
 import Alamofire
 import SwiftyJSON
+import Kanna
 
 class Api {
     static let API_STATUS_CODE_SUCCESS_BITHUMB = "0000"
@@ -222,6 +223,35 @@ class Api {
                     guard let resultValue = responseData.result.value else { complete(false, makeResultArrayOfFail()); return}
 
                     guard let currentPrice = (JSON(resultValue))["result"]["Last"].double else { complete(false, makeResultArrayOfFail()); return}
+                    let exchangedPrice = (currentPrice ) * exchangeRate
+                    
+                    let infoCoin = InfoCoin(coin: Coin.valueOf(name: coinName), currentPrice: exchangedPrice)
+                    arrResult.append(infoCoin)
+                    
+                    //callback when finish last item request
+                    if(arrResult.count == Coin.allValues.count) {
+                        //After all request is finished
+                        complete(true, arrResult)
+                    }
+                }
+            }
+        })
+    }
+    
+    //Upbit 다이쪄
+    static func getCoinsStateUpbit(arrSelectedCoins: [String], complete: @escaping (_ isSuccess: Bool, _ arrResult: [InfoCoin]) -> Void){
+        
+        Api.getExchangeRate(from: .krw, complete: {isSuccess, exchangeRate in
+            guard isSuccess else { complete(false, makeResultArrayOfFail()); return }
+            var arrResult = addEmptyCoin(arrSelectedCoins: arrSelectedCoins, arrTradableCoins: Site.upbit.arrTradableCoin())
+
+            for coinName in arrSelectedCoins {
+                guard Site.upbit.arrTradableCoin().contains(coinName) else { complete(false, makeResultArrayOfFail()); continue}
+                
+                Alamofire.request("https://crix-api-endpoint.upbit.com/v1/crix/trades/ticks?code=CRIX.UPBIT.KRW-\(coinName == "BCH" ? "BCC" : coinName)&count=1", method: .get).responseJSON { (responseData) -> Void in
+                    guard let resultValue = responseData.result.value else { complete(false, makeResultArrayOfFail()); return}
+                    guard let jsonArrayTick = (JSON(resultValue)).array else { complete(false, makeResultArrayOfFail()); return}
+                    guard let currentPrice = jsonArrayTick[0]["tradePrice"].double else { complete(false, makeResultArrayOfFail()); return}
                     let exchangedPrice = (currentPrice ) * exchangeRate
                     
                     let infoCoin = InfoCoin(coin: Coin.valueOf(name: coinName), currentPrice: exchangedPrice)

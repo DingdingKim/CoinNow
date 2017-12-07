@@ -11,8 +11,8 @@ import Foundation
 enum Site: String {
     //휴오비가 데이터를 제대로 못 가져와서 일단 막아놓음
     //case bithumb = "Bithumb", coinone = "Coinone", poloniex = "Poloniex", okcoin = "OKCoin", huobi = "Huobi", bitfinex = "Bitfinex", bittrex = "Bittrex"
-    case bithumb = "Bithumb", coinone = "Coinone", poloniex = "Poloniex", okcoin = "OKCoin", bitfinex = "Bitfinex", bittrex = "Bittrex"
-    static let allValues = ["Bithumb", "Coinone", "Poloniex", "OKCoin", "Bitfinex", "Bittrex"]
+    case bithumb = "Bithumb", coinone = "Coinone", poloniex = "Poloniex", okcoin = "OKCoin", bitfinex = "Bitfinex", bittrex = "Bittrex", upbit = "Upbit"
+    static let allValues = ["Bithumb", "Coinone", "Poloniex", "OKCoin", "Bitfinex", "Bittrex", "Upbit"]
     
     func baseCurrency() -> BaseCurrency {
         switch self {
@@ -30,6 +30,8 @@ enum Site: String {
             return .usd
         case .bittrex:
             return .usd
+        case .upbit:
+            return .krw
         }
     }
     
@@ -49,6 +51,8 @@ enum Site: String {
             return ["BTC", "ETH", "DASH", "LTC", "ETC", "XRP", "BCH", "XMR", "QTUM", "ZEC", "BTG", "IOTA"]
         case .bittrex:
             return ["BTC", "ETH", "DASH", "LTC", "ETC", "XRP", "BCH", "XMR", "ZEC", "BTG"]//비트렉스는 비캐를 BCC라고 부름.호출하는데서 BCH를 BCC로 바꿔주겠음
+        case .upbit:
+            return ["BTC", "ETH", "DASH", "LTC", "ETC", "XRP", "BCH", "XMR", "QTUM", "ZEC", "BTG", "EMC2"]
         }
     }
     
@@ -68,6 +72,8 @@ enum Site: String {
             return .bitfinex
         case bittrex.rawValue:
             return .bittrex
+        case upbit.rawValue:
+            return .upbit
         default:
             return .bithumb
         }

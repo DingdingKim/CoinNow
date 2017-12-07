@@ -43,6 +43,7 @@ class VCPopover: NSViewController {
     @IBOutlet weak var cbZec: NSButton!
     @IBOutlet weak var cbBtg: NSButton!
     @IBOutlet weak var cbIota: NSButton!
+    @IBOutlet weak var cbEmc2: NSButton!
     
     @IBOutlet weak var cbBithumb: NSButton!
     @IBOutlet weak var cbCoinone: NSButton!
@@ -51,6 +52,7 @@ class VCPopover: NSViewController {
 //    @IBOutlet weak var cbHuobi: NSButton!
     @IBOutlet weak var cbBitfinex: NSButton!
     @IBOutlet weak var cbBittrex: NSButton!
+    @IBOutlet weak var cbUpbit: NSButton!
     
     @IBOutlet var lbBtcTitle: NSTextField!
     @IBOutlet var lbEthTitle: NSTextField!
@@ -64,6 +66,7 @@ class VCPopover: NSViewController {
     @IBOutlet var lbZecTitle: NSTextField!
     @IBOutlet var lbBtgTitle: NSTextField!
     @IBOutlet var lbIotaTitle: NSTextField!
+    @IBOutlet var lbEmc2Title: NSTextField!
     
     @IBOutlet weak var stackViewSites: NSStackView!
     @IBOutlet weak var stackViewCoinName: NSStackView!
@@ -83,10 +86,10 @@ class VCPopover: NSViewController {
     var countUpdatedSite: Int = 0
     
     override func viewDidLoad() {
-        arrCbCoin = [cbBtc, cbEth, cbDash, cbLtc, cbEtc, cbXrp, cbBch, cbXmr, cbQtum, cbZec, cbBtg, cbIota]
+        arrCbCoin = [cbBtc, cbEth, cbDash, cbLtc, cbEtc, cbXrp, cbBch, cbXmr, cbQtum, cbZec, cbBtg, cbIota, cbEmc2]
         //arrCbSite = [cbBithumb, cbCoinone, cbPoloniex, cbOkcoin, cbHuobi, cbBitfinex, cbBittrex]
-        arrCbSite = [cbBithumb, cbCoinone, cbPoloniex, cbOkcoin, cbBitfinex, cbBittrex]//휴오비 빼기
-        arrlbCoinTitle = [lbBtcTitle, lbEthTitle, lbDashTitle, lbLtcTitle, lbEtcTitle, lbXrpTitle, lbBchTitle, lbXmrTitle, lbQtumTitle, lbZecTitle, lbBtgTitle, lbIotaTitle]
+        arrCbSite = [cbBithumb, cbCoinone, cbPoloniex, cbOkcoin, cbBitfinex, cbBittrex, cbUpbit]//휴오비 빼기
+        arrlbCoinTitle = [lbBtcTitle, lbEthTitle, lbDashTitle, lbLtcTitle, lbEtcTitle, lbXrpTitle, lbBchTitle, lbXmrTitle, lbQtumTitle, lbZecTitle, lbBtgTitle, lbIotaTitle, lbEmc2Title]
         
         addSiteView()
         
@@ -237,6 +240,12 @@ class VCPopover: NSViewController {
         }
         else if(indexOfSite == 5) {
             Api.getCoinsStateBittrex(arrSelectedCoins: MyValue.arrSelectedCoin, complete: {isSuccess, arrResult in
+                self.updateStateViewAfterGetDataFromApi(isSuccess: isSuccess, indexOfView: indexOfSite, arrData: arrResult)
+            })
+        }
+        else if(indexOfSite == 6) {
+            Api.getCoinsStateUpbit(arrSelectedCoins: MyValue.arrSelectedCoin, complete: {isSuccess, arrResult in
+                //print("야\(arrResult)")
                 self.updateStateViewAfterGetDataFromApi(isSuccess: isSuccess, indexOfView: indexOfSite, arrData: arrResult)
             })
         }

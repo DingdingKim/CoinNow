@@ -5,4 +5,5 @@ target 'CoinNow' do
   # Pods for CoinState
   pod 'Alamofire', '~> 4.0'
   pod 'SwiftyJSON'
+  pod 'Kanna', '~> 2.1.0'
 end
