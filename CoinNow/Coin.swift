@@ -10,8 +10,9 @@ import Foundation
 import Cocoa
 
 enum Coin: String {
-    case btc = "BTC", eth = "ETH", dash = "DASH", ltc = "LTC", etc = "ETC", xrp = "XRP", bch = "BCH", xmr = "XMR", qtum = "QTUM", zec = "ZEC", btg = "BTG", iota = "IOTA", emc2 = "EMC2"
-    static let allValues = ["BTC", "ETH", "DASH", "LTC", "ETC", "XRP", "BCH", "XMR", "QTUM", "ZEC", "BTG", "IOTA", "EMC2"]
+    case btc = "BTC", eth = "ETH", dash = "DASH", ltc = "LTC", etc = "ETC", xrp = "XRP", bch = "BCH", xmr = "XMR", qtum = "QTUM", zec = "ZEC", btg = "BTG", iota = "IOTA", emc2 = "EMC2", eos = "EOS", ada = "ADA", snt = "SNT", neo = "NEO", xlm = "XLM", xem = "XEM", strat = "STRAT", powr = "POWR", tix = "TIX", steem = "STEEM", mer = "MER", mtl = "MTL", sbd = "SBD", omg = "OMG", storj = "STORJ", kmd = "KMD", ark = "ARK", lsk = "LSK", grs = "GRS", pivx = "PIVX", waves = "WAVES", vtc = "VTC", ardr = "ARDR";
+    static let allValues = ["BTC", "ETH", "DASH", "LTC", "ETC", "XRP", "BCH", "XMR", "QTUM", "ZEC", "BTG", "IOTA", "EMC2", "EOS", "ADA", "SNT", "NEO", "XLM", "XEM", "STRAT", "POWR", "TIX", "STEEM", "MER", "MTL", "SBD", "OMG", "STORJ", "KMD", "ARK", "LSK", "GRS", "PIVX", "WAVES", "VTC", "ARDR"]
+    static let defaultSelectedValues = ["BTC", "ETH", "DASH", "LTC", "ETC", "XRP", "BCH", "XMR"]
     
     func index() -> Int {
         switch self {
@@ -41,6 +42,52 @@ enum Coin: String {
             return 11
         case .emc2:
             return 12
+        case .eos:
+            return 13
+        case .ada:
+            return 14
+        case .snt:
+            return 15
+        case .neo:
+            return 16
+        case .xlm:
+            return 17
+        case .xem:
+            return 18
+        case .strat:
+            return 19
+        case .powr:
+            return 20
+        case .tix:
+            return 21
+        case .steem:
+            return 22
+        case .mer:
+            return 23
+        case .mtl:
+            return 24
+        case .sbd:
+            return 25
+        case .omg:
+            return 26
+        case .storj:
+            return 27
+        case .kmd:
+            return 28
+        case .ark:
+            return 29
+        case .lsk:
+            return 30
+        case .grs:
+            return 31
+        case .pivx:
+            return 32
+        case .waves:
+            return 33
+        case .vtc:
+            return 34
+        case .ardr:
+            return 35
         }
     }
     
@@ -95,6 +142,52 @@ enum Coin: String {
             return .iota
         case emc2.rawValue:
             return .emc2
+        case eos.rawValue:
+            return .eos
+        case ada.rawValue:
+            return .ada
+        case snt.rawValue:
+            return .snt
+        case neo.rawValue:
+            return .neo
+        case xlm.rawValue:
+            return .xlm
+        case xem.rawValue:
+            return .xem
+        case strat.rawValue:
+            return .strat
+        case powr.rawValue:
+            return .powr
+        case tix.rawValue:
+            return .tix
+        case steem.rawValue:
+            return .steem
+        case mer.rawValue:
+            return .mer
+        case mtl.rawValue:
+            return .mtl
+        case sbd.rawValue:
+            return .sbd
+        case omg.rawValue:
+            return .omg
+        case storj.rawValue:
+            return .storj
+        case kmd.rawValue:
+            return .kmd
+        case ark.rawValue:
+            return .ark
+        case lsk.rawValue:
+            return .lsk
+        case grs.rawValue:
+            return .grs
+        case pivx.rawValue:
+            return .pivx
+        case waves.rawValue:
+            return .waves
+        case vtc.rawValue:
+            return .vtc
+        case ardr.rawValue:
+            return .ardr
         default:
             return .btc
         }

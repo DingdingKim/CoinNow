@@ -45,10 +45,34 @@ class VCPopover: NSViewController {
     @IBOutlet weak var cbIota: NSButton!
     @IBOutlet weak var cbEmc2: NSButton!
     
+    @IBOutlet weak var cbEos: NSButton!
+    @IBOutlet weak var cbAda: NSButton!
+    @IBOutlet weak var cbSnt: NSButton!
+    @IBOutlet weak var cbNeo: NSButton!
+    @IBOutlet weak var cbXlm: NSButton!
+    @IBOutlet weak var cbXem: NSButton!
+    @IBOutlet weak var cbStrat: NSButton!
+    @IBOutlet weak var cbPowr: NSButton!
+    @IBOutlet weak var cbTix: NSButton!
+    @IBOutlet weak var cbSteem: NSButton!
+    @IBOutlet weak var cbMer: NSButton!
+    @IBOutlet weak var cbMtl: NSButton!
+    @IBOutlet weak var cbSbd: NSButton!
+    @IBOutlet weak var cbOmg: NSButton!
+    @IBOutlet weak var cbStorj: NSButton!
+    @IBOutlet weak var cbKmd: NSButton!
+    @IBOutlet weak var cbArk: NSButton!
+    @IBOutlet weak var cbLsk: NSButton!
+    @IBOutlet weak var cbGrs: NSButton!
+    @IBOutlet weak var cbPivx: NSButton!
+    @IBOutlet weak var cbWaves: NSButton!
+    @IBOutlet weak var cbVtc: NSButton!
+    @IBOutlet weak var cbArdr: NSButton!
+    
     @IBOutlet weak var cbBithumb: NSButton!
     @IBOutlet weak var cbCoinone: NSButton!
     @IBOutlet weak var cbPoloniex: NSButton!
-    @IBOutlet weak var cbOkcoin: NSButton!
+//    @IBOutlet weak var cbOkcoin: NSButton!
 //    @IBOutlet weak var cbHuobi: NSButton!
     @IBOutlet weak var cbBitfinex: NSButton!
     @IBOutlet weak var cbBittrex: NSButton!
@@ -67,6 +91,29 @@ class VCPopover: NSViewController {
     @IBOutlet var lbBtgTitle: NSTextField!
     @IBOutlet var lbIotaTitle: NSTextField!
     @IBOutlet var lbEmc2Title: NSTextField!
+    @IBOutlet var lbEos: NSTextField!
+    @IBOutlet var lbAda: NSTextField!
+    @IBOutlet var lbSnt: NSTextField!
+    @IBOutlet var lbNeo: NSTextField!
+    @IBOutlet var lbXlm: NSTextField!
+    @IBOutlet var lbXem: NSTextField!
+    @IBOutlet var lbStrat: NSTextField!
+    @IBOutlet var lbPowr: NSTextField!
+    @IBOutlet var lbTix: NSTextField!
+    @IBOutlet var lbSteem: NSTextField!
+    @IBOutlet var lbMer: NSTextField!
+    @IBOutlet var lbMtl: NSTextField!
+    @IBOutlet var lbSbd: NSTextField!
+    @IBOutlet var lbOmg: NSTextField!
+    @IBOutlet var lbStorj: NSTextField!
+    @IBOutlet var lbKmd: NSTextField!
+    @IBOutlet var lbArk: NSTextField!
+    @IBOutlet var lbLsk: NSTextField!
+    @IBOutlet var lbGrs: NSTextField!
+    @IBOutlet var lbPivx: NSTextField!
+    @IBOutlet var lbWaves: NSTextField!
+    @IBOutlet var lbVtc: NSTextField!
+    @IBOutlet var lbArdr: NSTextField!
     
     @IBOutlet weak var stackViewSites: NSStackView!
     @IBOutlet weak var stackViewCoinName: NSStackView!
@@ -75,6 +122,7 @@ class VCPopover: NSViewController {
     @IBOutlet weak var viewDonateToggle: NSView!
     @IBOutlet weak var viewDonate: NSView!
     @IBOutlet weak var lbDingAlert: NSTextField!//alert message from Dingding to user
+    @IBOutlet weak var cbShowIcon: NSButton!
     
     var arrCbCoin = [NSButton]()
     var arrCbSite = [NSButton]()
@@ -86,10 +134,12 @@ class VCPopover: NSViewController {
     var countUpdatedSite: Int = 0
     
     override func viewDidLoad() {
-        arrCbCoin = [cbBtc, cbEth, cbDash, cbLtc, cbEtc, cbXrp, cbBch, cbXmr, cbQtum, cbZec, cbBtg, cbIota, cbEmc2]
+        arrCbCoin = [cbBtc, cbEth, cbDash, cbLtc, cbEtc, cbXrp, cbBch, cbXmr, cbQtum, cbZec, cbBtg, cbIota, cbEmc2,
+                     cbEos, cbAda, cbSnt, cbNeo, cbXlm, cbXem, cbStrat, cbPowr, cbTix, cbSteem, cbMer, cbMtl, cbSbd, cbOmg, cbStorj, cbKmd, cbArk, cbLsk, cbGrs, cbPivx, cbWaves, cbVtc, cbArdr]
         //arrCbSite = [cbBithumb, cbCoinone, cbPoloniex, cbOkcoin, cbHuobi, cbBitfinex, cbBittrex]
-        arrCbSite = [cbBithumb, cbCoinone, cbPoloniex, cbOkcoin, cbBitfinex, cbBittrex, cbUpbit]//휴오비 빼기
-        arrlbCoinTitle = [lbBtcTitle, lbEthTitle, lbDashTitle, lbLtcTitle, lbEtcTitle, lbXrpTitle, lbBchTitle, lbXmrTitle, lbQtumTitle, lbZecTitle, lbBtgTitle, lbIotaTitle, lbEmc2Title]
+        arrCbSite = [cbBithumb, cbCoinone, cbPoloniex, cbBitfinex, cbBittrex, cbUpbit]//휴오비 빼기
+        arrlbCoinTitle = [lbBtcTitle, lbEthTitle, lbDashTitle, lbLtcTitle, lbEtcTitle, lbXrpTitle, lbBchTitle, lbXmrTitle, lbQtumTitle, lbZecTitle, lbBtgTitle, lbIotaTitle, lbEmc2Title,
+                          lbEos, lbAda, lbSnt, lbNeo, lbXlm, lbXem, lbStrat, lbPowr, lbTix, lbSteem, lbMer, lbMtl, lbSbd, lbOmg, lbStorj, lbKmd, lbArk, lbLsk, lbGrs, lbPivx, lbWaves, lbVtc, lbArdr]
         
         addSiteView()
         
@@ -106,7 +156,7 @@ class VCPopover: NSViewController {
         updateCoinState()
         
         if(self.isDarkMode()) {
-            (NSApplication.shared().delegate as! AppDelegate).statusItem.image = NSImage(named: "icon_white")
+            (NSApplication.shared().delegate as! AppDelegate).statusItem.image = MyValue.isShowStatusbarIcon ? NSImage(named: "icon_white") : NSImage(named: "icon_none")
             btDonate.image = NSImage.init(named: "ic_expand_more_white")
             btRefresh.image = NSImage(named: "ic_autorenew_white")
             lbLine.backgroundColor = NSColor.white.withAlphaComponent(0.3)
@@ -114,7 +164,7 @@ class VCPopover: NSViewController {
             btMinimode.image = NSImage.init(named: self.isDarkMode() ? "ic_fullscreen_exit_white" : "ic_fullscreen_exit_black")
         }
         else {
-            (NSApplication.shared().delegate as! AppDelegate).statusItem.image = NSImage(named: "icon_black")
+            (NSApplication.shared().delegate as! AppDelegate).statusItem.image = MyValue.isShowStatusbarIcon ? NSImage(named: "icon_black") : NSImage(named: "icon_none")
             btDonate.image = NSImage.init(named: "ic_expand_more_black")
             btRefresh.image = NSImage(named: "ic_autorenew_black")
             lbLine.backgroundColor = NSColor.darkGray.withAlphaComponent(0.3)
@@ -129,6 +179,8 @@ class VCPopover: NSViewController {
     
     //Setup popup buttons
     func initView() {
+        //MyValue.clear() //For test
+        
         viewDonateToggle.isHidden = true
         viewDonate.isHidden = true
         
@@ -147,6 +199,7 @@ class VCPopover: NSViewController {
         btStatusCoin.selectItem(withTitle: MyValue.myCoin.rawValue)
         btStatusSite.selectItem(withTitle: MyValue.mySite.rawValue)
         btBaseCurrency.selectItem(withTitle: MyValue.myBaseCurrency.rawValue)
+        cbShowIcon.state = MyValue.isShowStatusbarIcon ? NSOnState : NSOffState
         
         //Check Button
         for cb in arrCbCoin {
@@ -175,6 +228,7 @@ class VCPopover: NSViewController {
     func addSiteView() {
         for siteName in Site.allValues {
             let view = ModelSite(frame: NSRect(x: 0, y: 0, width: 0, height: 0), title: siteName)
+            
             self.stackViewSites.addArrangedSubview(view.view)
             
             arrSiteView.append(view)
@@ -185,7 +239,13 @@ class VCPopover: NSViewController {
             }
         }
         
-        arrSiteView[0].hideSeparator()
+        //첫번째 더해지는 애는 앞 라인을 숨긴다
+        for viewSite in arrSiteView {
+            if(!viewSite.isHidden) {
+                viewSite.hideSeparator()
+                break;
+            }
+        }
     }
     
     //Update coins sate in popover view
@@ -223,27 +283,27 @@ class VCPopover: NSViewController {
                 self.updateStateViewAfterGetDataFromApi(isSuccess: isSuccess, indexOfView: indexOfSite, arrData: arrResult)
             })
         }
-        else if(indexOfSite == 3) {
-            Api.getCoinsStateOkcoin(arrSelectedCoins: MyValue.arrSelectedCoin, complete: {isSuccess, arrResult in
-                self.updateStateViewAfterGetDataFromApi(isSuccess: isSuccess, indexOfView: indexOfSite, arrData: arrResult)
-            })
-        }
+//        else if(indexOfSite == 3) {
+//            Api.getCoinsStateOkcoin(arrSelectedCoins: MyValue.arrSelectedCoin, complete: {isSuccess, arrResult in
+//                self.updateStateViewAfterGetDataFromApi(isSuccess: isSuccess, indexOfView: indexOfSite, arrData: arrResult)
+//            })
+//        }
 //        else if(indexOfSite == 4) {
 //            Api.getCoinsStateHuobiByCryptowatch(arrSelectedCoins: MyValue.arrSelectedCoin, complete: {isSuccess, arrResult in
 //                self.updateStateViewAfterGetDataFromApi(isSuccess: isSuccess, indexOfView: indexOfSite, arrData: arrResult)
 //            })
 //        }
-        else if(indexOfSite == 4) {
+        else if(indexOfSite == 3) {
             Api.getCoinsStateBitfinex(arrSelectedCoins: MyValue.arrSelectedCoin, complete: {isSuccess, arrResult in
                 self.updateStateViewAfterGetDataFromApi(isSuccess: isSuccess, indexOfView: indexOfSite, arrData: arrResult)
             })
         }
-        else if(indexOfSite == 5) {
+        else if(indexOfSite == 4) {
             Api.getCoinsStateBittrex(arrSelectedCoins: MyValue.arrSelectedCoin, complete: {isSuccess, arrResult in
                 self.updateStateViewAfterGetDataFromApi(isSuccess: isSuccess, indexOfView: indexOfSite, arrData: arrResult)
             })
         }
-        else if(indexOfSite == 6) {
+        else if(indexOfSite == 5) {
             Api.getCoinsStateUpbit(arrSelectedCoins: MyValue.arrSelectedCoin, complete: {isSuccess, arrResult in
                 //print("야\(arrResult)")
                 self.updateStateViewAfterGetDataFromApi(isSuccess: isSuccess, indexOfView: indexOfSite, arrData: arrResult)
@@ -303,6 +363,10 @@ class VCPopover: NSViewController {
     
     //change coin(will update) check state
     @IBAction func changeCheckCoin(_ sender: NSButton) {
+        if(MyValue.arrSelectedCoin.count > 15) {
+            sender.state = NSOffState
+        }
+        
         let isChecked = sender.state == NSOnState
         
         //Hide coin name label
@@ -335,6 +399,14 @@ class VCPopover: NSViewController {
             }
         }
         MyValue.arrSelectedSite = arrSelected
+        
+        //첫번째 더해지는 애는 앞 라인을 숨긴다
+        for viewSite in arrSiteView {
+            if(!viewSite.isHidden) {
+                viewSite.hideSeparator()
+                break;
+            }
+        }
     }
     
     //Change Update per sec
@@ -421,6 +493,23 @@ class VCPopover: NSViewController {
         let pasteboard = NSPasteboard.general()
         pasteboard.declareTypes([NSPasteboardTypeString], owner: nil)
         pasteboard.setString(address, forType: NSPasteboardTypeString)
+    }
+    
+    //Show icon in status bar
+    @IBAction func clickShowStatusbarIcon(_ sender: NSButton) {
+        MyValue.isShowStatusbarIcon = sender.state == NSOnState
+        
+        if(MyValue.isShowStatusbarIcon) {
+            if(UserDefaults.standard.string(forKey: "AppleInterfaceStyle") ?? "Light" == "Dark") {
+                (NSApplication.shared().delegate as! AppDelegate).statusItem.image = NSImage(named: "icon_white")
+            }
+            else {
+                (NSApplication.shared().delegate as! AppDelegate).statusItem.image = NSImage(named: "icon_black")
+            }
+        }
+        else {
+            (NSApplication.shared().delegate as! AppDelegate).statusItem.image = NSImage(named: "icon_none")
+        }
     }
     
     //Terminate App

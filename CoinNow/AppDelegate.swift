@@ -34,12 +34,18 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         popover.behavior = .transient//close popover when click outside
         
         //For os is dark mode
-        if(UserDefaults.standard.string(forKey: "AppleInterfaceStyle") ?? "Light" == "Dark") {
-            self.statusItem.image = NSImage(named: "icon_white")
+        if(MyValue.isShowStatusbarIcon) {
+            if(UserDefaults.standard.string(forKey: "AppleInterfaceStyle") ?? "Light" == "Dark") {
+                self.statusItem.image = NSImage(named: "icon_white")
+            }
+            else {
+                self.statusItem.image = NSImage(named: "icon_black")
+            }
         }
         else {
-            self.statusItem.image = NSImage(named: "icon_black")
+            self.statusItem.image = NSImage(named: "icon_none")
         }
+        
         self.statusItem.button?.action = #selector(AppDelegate.togglePopover(_:))
         popover.contentViewController = VCPopover(nibName: "VCPopover", bundle: nil)
     }
@@ -78,6 +84,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
                 }
             })
         }
+            /*
         else if(MyValue.mySite == .okcoin) {
             Api.getCoinsStateOkcoin(arrSelectedCoins: [MyValue.myCoin.rawValue], complete: {isSuccess, arrResult in
                 for infoCoin in arrResult {
@@ -88,7 +95,6 @@ class AppDelegate: NSObject, NSApplicationDelegate {
                 }
             })
         }
-            /*
         else if(MyValue.mySite == .huobi) {
             Api.getCoinsStateHuobiByCryptowatch(arrSelectedCoins: [MyValue.myCoin.rawValue], complete: {isSuccess, arrResult in
                 for infoCoin in arrResult {

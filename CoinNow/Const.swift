@@ -29,6 +29,7 @@ struct Const {
         static let MY_SITE = "MY_SITE" //Trading site that show in status bar
         static let MY_BASE_CURRENCY = "MY_BASE_CURRENCY"
         static let UPDATE_PER = "UPDATE_PER" //type is String(keys of dicUpdatePerSec)
+        static let IS_SHOW_ICON = "IS_SHOW_ICON" //Show icon in statusbar
         
         //will update site and coin
         static let SELECTED_SITES = "SELECTED_SITES"

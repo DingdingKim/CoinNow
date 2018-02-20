@@ -101,6 +101,7 @@ class Api {
         })
     }
     
+    /*
     //OkCoin ["BTC", "ETH", "LTC"]
     static func getCoinsStateOkcoin(arrSelectedCoins: [String], complete: @escaping (_ isSuccess: Bool, _ arrResult: [InfoCoin]) -> Void){
         
@@ -131,7 +132,6 @@ class Api {
         })
     }
     
-    /*
     //Huobi ["BTC", "LTC"]
     static func getCoinsStateHuobiByCryptowatch(arrSelectedCoins: [String], complete: @escaping (_ isSuccess: Bool, _ arrResult: [InfoCoin]) -> Void){
         

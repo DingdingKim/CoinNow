@@ -8,7 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		1FA6BEFCAF295EDD9D40BE92 /* Pods_CoinNow.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FC71B95B1EFD5F5A565D27C8 /* Pods_CoinNow.framework */; };
-		751FD28C1F4F299D00B6991D /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 751FD28B1F4F299D00B6991D /* GoogleService-Info.plist */; };
 		7522BF111F5733580070561D /* SecretApi.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7522BF101F5733580070561D /* SecretApi.swift */; };
 		7522BF131F586ECA0070561D /* CoinPrice.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7522BF121F586ECA0070561D /* CoinPrice.swift */; };
 		755E39211F081FA400CA6BBC /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 755E39201F081FA400CA6BBC /* AppDelegate.swift */; };
@@ -26,11 +25,11 @@
 		75E654A11F175C9F00230402 /* Coin.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75E654A01F175C9F00230402 /* Coin.swift */; };
 		75E654A31F1761A400230402 /* MyValue.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75E654A21F1761A400230402 /* MyValue.swift */; };
 		75E654A51F17950200230402 /* BaseCurrency.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75E654A41F17950200230402 /* BaseCurrency.swift */; };
+		75F3DDBB2002326F00714324 /* VCPopoverNew.xib in Resources */ = {isa = PBXBuildFile; fileRef = 75F3DDBA2002326F00714324 /* VCPopoverNew.xib */; };
 		75F538251F1946F200884EAA /* PopoverContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75F538241F1946F200884EAA /* PopoverContentView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		751FD28B1F4F299D00B6991D /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		7522BF101F5733580070561D /* SecretApi.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SecretApi.swift; sourceTree = "<group>"; };
 		7522BF121F586ECA0070561D /* CoinPrice.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CoinPrice.swift; sourceTree = "<group>"; };
 		755E391D1F081FA400CA6BBC /* CoinNow.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CoinNow.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -53,6 +52,7 @@
 		75E654A01F175C9F00230402 /* Coin.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Coin.swift; sourceTree = "<group>"; };
 		75E654A21F1761A400230402 /* MyValue.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MyValue.swift; sourceTree = "<group>"; };
 		75E654A41F17950200230402 /* BaseCurrency.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BaseCurrency.swift; sourceTree = "<group>"; };
+		75F3DDBA2002326F00714324 /* VCPopoverNew.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = VCPopoverNew.xib; sourceTree = "<group>"; };
 		75F538241F1946F200884EAA /* PopoverContentView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PopoverContentView.swift; sourceTree = "<group>"; };
 		F212CE6EE9DF95734B9FD749 /* Pods-CoinNow.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CoinNow.debug.xcconfig"; path = "Pods/Target Support Files/Pods-CoinNow/Pods-CoinNow.debug.xcconfig"; sourceTree = "<group>"; };
 		F3BC805D8FF828DC94118A9A /* Pods-CoinNow.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CoinNow.release.xcconfig"; path = "Pods/Target Support Files/Pods-CoinNow/Pods-CoinNow.release.xcconfig"; sourceTree = "<group>"; };
@@ -101,11 +101,11 @@
 		755E391F1F081FA400CA6BBC /* CoinNow */ = {
 			isa = PBXGroup;
 			children = (
-				751FD28B1F4F299D00B6991D /* GoogleService-Info.plist */,
 				75E654581F0A4E5300230402 /* CoinNow.entitlements */,
 				755E39201F081FA400CA6BBC /* AppDelegate.swift */,
 				755E392F1F08206E00CA6BBC /* VCPopover.swift */,
 				755E39301F08206E00CA6BBC /* VCPopover.xib */,
+				75F3DDBA2002326F00714324 /* VCPopoverNew.xib */,
 				75E654971F10C46B00230402 /* ModelSite.swift */,
 				75E654951F10BEFE00230402 /* ModelSite.xib */,
 				755E39331F08207200CA6BBC /* Info */,
@@ -230,7 +230,7 @@
 			files = (
 				75E654961F10BEFE00230402 /* ModelSite.xib in Resources */,
 				755E39251F081FA400CA6BBC /* Assets.xcassets in Resources */,
-				751FD28C1F4F299D00B6991D /* GoogleService-Info.plist in Resources */,
+				75F3DDBB2002326F00714324 /* VCPopoverNew.xib in Resources */,
 				755E39321F08206E00CA6BBC /* VCPopover.xib in Resources */,
 				755E39281F081FA400CA6BBC /* Main.storyboard in Resources */,
 			);

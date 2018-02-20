@@ -10,11 +10,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "CoinNow/PopoverContentView.swift"
-            timestampString = "521750301.305122"
+            timestampString = "540784446.896387"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "31"
-            endingLineNumber = "31"
+            startingLineNumber = "28"
+            endingLineNumber = "28"
             landmarkName = "draw(_:)"
             landmarkType = "7">
          </BreakpointContent>

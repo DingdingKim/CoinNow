@@ -24,9 +24,6 @@ class PopoverContentView:NSView {
     }
 }
 
-
-
-
 class PopoverBackgroundView:NSView {
     override func draw(_ dirtyRect: NSRect) {
         NSColor.black.withAlphaComponent(0.0).set()

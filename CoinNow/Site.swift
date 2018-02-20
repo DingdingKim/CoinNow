@@ -11,8 +11,9 @@ import Foundation
 enum Site: String {
     //휴오비가 데이터를 제대로 못 가져와서 일단 막아놓음
     //case bithumb = "Bithumb", coinone = "Coinone", poloniex = "Poloniex", okcoin = "OKCoin", huobi = "Huobi", bitfinex = "Bitfinex", bittrex = "Bittrex"
-    case bithumb = "Bithumb", coinone = "Coinone", poloniex = "Poloniex", okcoin = "OKCoin", bitfinex = "Bitfinex", bittrex = "Bittrex", upbit = "Upbit"
-    static let allValues = ["Bithumb", "Coinone", "Poloniex", "OKCoin", "Bitfinex", "Bittrex", "Upbit"]
+    case bithumb = "Bithumb", coinone = "Coinone", poloniex = "Poloniex", bitfinex = "Bitfinex", bittrex = "Bittrex", upbit = "Upbit"
+    static let allValues = ["Bithumb", "Coinone", "Poloniex", "Bitfinex", "Bittrex", "Upbit"]
+    static let defaultSelectedValues = ["Bithumb", "Poloniex", "Bittrex", "Upbit"]
     
     func baseCurrency() -> BaseCurrency {
         switch self {
@@ -22,10 +23,6 @@ enum Site: String {
             return .krw
         case .poloniex:
             return .usd
-        case .okcoin:
-            return .cny
-//        case .huobi:
-//            return .cny
         case .bitfinex:
             return .usd
         case .bittrex:
@@ -38,21 +35,17 @@ enum Site: String {
     func arrTradableCoin() -> [String] {
         switch self {
         case .bithumb:
-            return ["BTC", "ETH", "DASH", "LTC", "ETC", "XRP", "BCH", "XMR", "QTUM", "ZEC", "BTG"]
+            return ["BTC", "ETH", "DASH", "LTC", "ETC", "XRP", "BCH", "XMR", "QTUM", "ZEC", "BTG", "EOS"]
         case .coinone:
-            return ["BTC", "ETH", "ETC", "XRP", "BCH", "QTUM", "IOTA"]
+            return ["BTC", "ETH", "ETC", "XRP", "BCH", "QTUM", "IOTA", "LTC", "BTG"]
         case .poloniex:
             return ["BTC", "ETH", "DASH", "LTC", "ETC", "XRP", "BCH", "XMR", "ZEC"]
-        case .okcoin:
-            return ["BTC", "ETH", "LTC"]
-//        case .huobi:
-//            return ["BTC", "LTC"]
         case .bitfinex:
-            return ["BTC", "ETH", "DASH", "LTC", "ETC", "XRP", "BCH", "XMR", "QTUM", "ZEC", "BTG", "IOTA"]
+            return ["BTC", "ETH", "DASH", "LTC", "ETC", "XRP", "BCH", "XMR", "QTUM", "ZEC", "BTG", "IOTA", "SNT", "NEO", "OMG"]
         case .bittrex:
-            return ["BTC", "ETH", "DASH", "LTC", "ETC", "XRP", "BCH", "XMR", "ZEC", "BTG"]//비트렉스는 비캐를 BCC라고 부름.호출하는데서 BCH를 BCC로 바꿔주겠음
+            return ["BTC", "ETH", "DASH", "LTC", "ETC", "XRP", "BCH", "XMR", "ZEC", "BTG", "ADA", "NEO", "OMG"]//비트렉스는 비캐를 BCC라고 부름.호출하는데서 BCH를 BCC로 바꿔주겠음
         case .upbit:
-            return ["BTC", "ETH", "DASH", "LTC", "ETC", "XRP", "BCH", "XMR", "QTUM", "ZEC", "BTG", "EMC2"]
+            return ["BTC", "ETH", "DASH", "LTC", "ETC", "XRP", "BCH", "XMR", "QTUM", "ZEC", "BTG", "EMC2", "ADA", "SNT", "NEO", "XLM", "XEM", "STRAT", "POWR", "TIX", "STEEM", "MER", "MTL", "SBD", "OMG", "STORJ", "KMD", "ARK", "LSK", "GRS", "PIVX", "WAVES", "VTC", "ARDR"]
         }
     }
     
@@ -64,10 +57,6 @@ enum Site: String {
             return .coinone
         case poloniex.rawValue:
             return .poloniex
-        case okcoin.rawValue:
-            return .okcoin
-//        case huobi.rawValue:
-//            return .huobi
         case bitfinex.rawValue:
             return .bitfinex
         case bittrex.rawValue:
