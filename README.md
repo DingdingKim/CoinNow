@@ -3,23 +3,14 @@ CoinNow (For macOS)
 
 ## Introduction
 
-Provide current price of cryptocurrency(BTC, ETH, DASH, LTC, ETC, XRP, BCH, XMR, QTUM) in real time from Bithumb, Coinone, Poloniex, OKCoin, Huobi, Bitfinex.
+Provide current price of cryptocurrency
+Market : Upbit, Bithumb, Coinone, Poloniex, Bitfinex, Bittrex
+Coin   : coins in upbit KRW market, BTC, ETH, DASH, LTC, ETC, XRP, BCH, XMR, QTUM, EOS, IOTA
 
-## 🔔🌟 Update 1.4.3 (2017.09.01) 🌟🔔
-
-- XMR, QTUM (Only Coinone) has been added.
-- Bitfinex has been added.
-- Other minor bug fixes and performance improvements. 
-- Refactoring code .. ing... Press ⭐️! Welcome PR!
-
-## 🔔🌟 Update 1.4.1 (2017.08.31) 🌟🔔
-
-- Appstore update. 1.4.3 (will update soon. Now in review)
-- Fixed a bug where mini mode did not work properly
-- Improved ticker data loading speed. It is slow for the first time after the app runs, and then ~ Very fast! Hehe
-- No longer use Yahoo api. Get data from my api server.
-  The data is updated by Dingding. So not realtime ... 
-- PLEASE Do not call my api(exchange rate) too often. I have no money for running large server. 🤑
+## 🔔🌟 Update 1.6.1 (2018.02.20) 🌟🔔
+- 영어로 적기가 너무 힘들어요ㅠ 기능은 문제 없지만 중간중간 한글로 주석달린 부분도 있고 정리되지 못한 부분들이 있을 수 있습니다ㅠ 죄송합니다 ㅠ 차차 정리할게요 ㅠ
+- 첨에 무료로 배포하고 기부로 수익을 조금이나마 내볼참이었는데 기부금은 0원이고ㅜ 무료 서버도 간당간당하고해서ㅜ 지금은 앱스토어에서 유료로 판매하고 있습니다ㅜ
+  유료로 전환한 뒤로는 깃헙 업뎃을 안하고있다가ㅠ 깃헙에 올린다고 앱결제율에 크게 영향이 있을것같지도않아서 앞으로 앱스토어 업데이트 할때마다 깃헙에도 푸시할 예정입니다! 
 
 ## Demo
 
