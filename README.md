@@ -29,24 +29,6 @@ You can install this app in AppStore! Search 'CoinNow'
 - [ ] Add other coin
 - [ ] Alarm at target price
 
-## Donation
-
-You love this project ? DONATE to me 😄 Thank you ! ❤️
-
-🍗 🍕 🍔 ☕ 🍻 😍 💃 💕
-
-If you :heart: this, you could send me a bit coin :D
-
-| Coin | Address|
-|------|:--------:|
-| BTC | 1JbmDy892gKGYMaWU5D9V11Qd9zsTXijZg |
-| ETH | 0x8c38c68ccd6a0f9c8e4f9996da53cba61016b4ed | 
-| DASH | XcZVkpJ3AWP5PeVhd78d85w8TGbsfWfjsk |
-| LTC | LbknpNGdpnDW6NRc4sbkFeu8yhvoFdo4yn |
-| ETC | 0x68d3e549bfe631ec4f4916070d8fdb6c9bed669c |
-| XRP | rsG1sNifXJxGS2nDQ9zHyoe1S5APrtwpjV (DT 1000581537) |
-| BCH | 16QPpstvKgGAY6Gfcfao2DeFfSyWLWtM5L |
-
 ## To users ❤️ (Update note ..Not important 😅)
 As coins and exchanges increase, it's too narrow to fit in the popup.
 How do you at a glance! Do not be mad! neatly! I'm worried about whether I can show you!
