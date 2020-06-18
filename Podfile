@@ -3,7 +3,7 @@ target 'CoinNow' do
   use_frameworks!
 
   # Pods for CoinState
-  pod 'Alamofire'
+  pod 'Alamofire', '~> 4.0'
   pod 'SwiftyJSON'
-  pod 'Kanna'
+  pod 'Kanna', '~> 2.1.0'
 end
