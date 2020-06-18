@@ -16,7 +16,7 @@ struct MyValue {
             UserDefaults.standard.set(updatePer, forKey: Const.UserDefaultKey.UPDATE_PER)
             UserDefaults.standard.synchronize()
             
-            (NSApplication.shared().delegate as! AppDelegate).setTimerSec(updatePer: updatePer)
+            (NSApplication.shared.delegate as! AppDelegate).setTimerSec(updatePer: updatePer)
             //debugPrint("updatePer >> didSet \(updatePer)")
         }
     }
@@ -27,7 +27,7 @@ struct MyValue {
             UserDefaults.standard.set(myCoin.rawValue, forKey: Const.UserDefaultKey.MY_COIN)
             UserDefaults.standard.synchronize()
             
-            (NSApplication.shared().delegate as! AppDelegate).updateStatusLabel(willShowLoadingText: false)
+            (NSApplication.shared.delegate as! AppDelegate).updateStatusLabel(willShowLoadingText: false)
             //debugPrint("myCoin >> didSet \(myCoin.rawValue)")
         }
     }
@@ -38,7 +38,7 @@ struct MyValue {
             UserDefaults.standard.set(mySite.rawValue, forKey: Const.UserDefaultKey.MY_SITE)
             UserDefaults.standard.synchronize()
             
-            (NSApplication.shared().delegate as! AppDelegate).updateStatusLabel(willShowLoadingText: false)
+            (NSApplication.shared.delegate as! AppDelegate).updateStatusLabel(willShowLoadingText: false)
             //debugPrint("mySite >> didSet \(mySite.rawValue)")
         }
     }
@@ -51,7 +51,7 @@ struct MyValue {
             
             NotificationCenter.default.post(name: NSNotification.Name(rawValue: "VCPopover.updateCoinState"), object: nil)
 
-            (NSApplication.shared().delegate as! AppDelegate).updateStatusLabel(willShowLoadingText: false)
+            (NSApplication.shared.delegate as! AppDelegate).updateStatusLabel(willShowLoadingText: false)
             //debugPrint("myBaseCurrency >> didSet \(myBaseCurrency.rawValue)")
         }
     }

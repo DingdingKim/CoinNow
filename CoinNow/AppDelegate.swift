@@ -11,7 +11,7 @@ import Cocoa
 @NSApplicationMain
 class AppDelegate: NSObject, NSApplicationDelegate {
     
-    let statusItem = NSStatusBar.system().statusItem(withLength: -1)
+    let statusItem = NSStatusBar.system.statusItem(withLength: -1)
     private let popover = NSPopover()
     
     private static var timer = Timer()
@@ -51,7 +51,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     }
     
     //Set label that show my coin state at status bar
-    public func updateStatusLabel(willShowLoadingText: Bool) {
+    @objc public func updateStatusLabel(willShowLoadingText: Bool) {
         //print("Update Status Label : \(MyValue.mySite) / \(MyValue.myCoin.rawValue) / \(MyValue.myBaseCurrency.rawValue)")
         
         if(MyValue.mySite == .bithumb){
@@ -150,7 +150,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         AppDelegate.timer = Timer.scheduledTimer(timeInterval: Const.dicUpdatePerSec[updatePer] ?? Const.DEFAULT_UPDATE_PER.double, target: self, selector: #selector(updateStatusLabel), userInfo: nil, repeats: true)
     }
     
-    func togglePopover(_ sender: AnyObject?) {
+    @objc func togglePopover(_ sender: AnyObject?) {
         if popover.isShown {
             popover.performClose(sender)
         }

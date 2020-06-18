@@ -147,7 +147,7 @@ class VCPopover: NSViewController {
         
         //Need to update in outside
         NotificationCenter.default.addObserver(self, selector: #selector(VCPopover.updateCoinState), name: NSNotification.Name(rawValue: "VCPopover.updateCoinState"), object: nil)
-        NSRunningApplication.current().activate(options: NSApplicationActivationOptions.activateIgnoringOtherApps)
+        NSRunningApplication.current.activate(options: NSApplication.ActivationOptions.activateIgnoringOtherApps)
     }
     
     override func viewWillAppear() {
@@ -156,7 +156,7 @@ class VCPopover: NSViewController {
         updateCoinState()
         
         if(self.isDarkMode()) {
-            (NSApplication.shared().delegate as! AppDelegate).statusItem.image = MyValue.isShowStatusbarIcon ? NSImage(named: "icon_white") : NSImage(named: "icon_none")
+            (NSApplication.shared.delegate as! AppDelegate).statusItem.image = MyValue.isShowStatusbarIcon ? NSImage(named: "icon_white") : NSImage(named: "icon_none")
             btDonate.image = NSImage.init(named: "ic_expand_more_white")
             btRefresh.image = NSImage(named: "ic_autorenew_white")
             lbLine.backgroundColor = NSColor.white.withAlphaComponent(0.3)
@@ -164,13 +164,13 @@ class VCPopover: NSViewController {
             btMinimode.image = NSImage.init(named: self.isDarkMode() ? "ic_fullscreen_exit_white" : "ic_fullscreen_exit_black")
         }
         else {
-            (NSApplication.shared().delegate as! AppDelegate).statusItem.image = MyValue.isShowStatusbarIcon ? NSImage(named: "icon_black") : NSImage(named: "icon_none")
+            (NSApplication.shared.delegate as! AppDelegate).statusItem.image = MyValue.isShowStatusbarIcon ? NSImage(named: "icon_black") : NSImage(named: "icon_none")
             btDonate.image = NSImage.init(named: "ic_expand_more_black")
             btRefresh.image = NSImage(named: "ic_autorenew_black")
             lbLine.backgroundColor = NSColor.darkGray.withAlphaComponent(0.3)
             btMinimode.image = NSImage.init(named: "ic_fullscreen_black")
         }
-        NSRunningApplication.current().activate(options: NSApplicationActivationOptions.activateIgnoringOtherApps)
+        NSRunningApplication.current.activate(options: NSApplication.ActivationOptions.activateIgnoringOtherApps)
 
         //From Secret Api!
         getDingdingAlertMessage()
@@ -199,11 +199,12 @@ class VCPopover: NSViewController {
         btStatusCoin.selectItem(withTitle: MyValue.myCoin.rawValue)
         btStatusSite.selectItem(withTitle: MyValue.mySite.rawValue)
         btBaseCurrency.selectItem(withTitle: MyValue.myBaseCurrency.rawValue)
-        cbShowIcon.state = MyValue.isShowStatusbarIcon ? NSOnState : NSOffState
+        
+        cbShowIcon.state = MyValue.isShowStatusbarIcon ? .on : .off
         
         //Check Button
         for cb in arrCbCoin {
-            cb.state = MyValue.arrSelectedCoin.contains(cb.title) ? NSOnState : NSOffState
+            cb.state = MyValue.arrSelectedCoin.contains(cb.title) ? .on : .off
             
             //Hide not selected coin view
             if(!MyValue.arrSelectedCoin.contains(cb.title)) {
@@ -215,7 +216,7 @@ class VCPopover: NSViewController {
             }
         }
         for cb in arrCbSite {
-            cb.state = MyValue.arrSelectedSite.contains(cb.title) ? NSOnState : NSOffState
+            cb.state = MyValue.arrSelectedSite.contains(cb.title) ? .on : .off
             
             //Hide not selected site view
             if(!MyValue.arrSelectedSite.contains(cb.title)) {
@@ -249,19 +250,19 @@ class VCPopover: NSViewController {
     }
     
     //Update coins sate in popover view
-    func updateCoinState() {
+    @objc func updateCoinState() {
         lbUpdateTime.stringValue = Const.DEFAULT_LOADING_TEXT
         
         //Calculate count of selected site
         for cb in arrCbSite {
-            if(cb.state == NSOnState) {
+            if(cb.state == .on) {
                 countUpdatedSite += 1
             }
         }
         
         //Update only selected site
         for cb in arrCbSite {
-            if(cb.state == NSOnState) {
+            if(cb.state == .on) {
                 getCoinStateFromApi(indexOfSite: arrCbSite.index(of: cb)!)
             }
         }
@@ -333,23 +334,23 @@ class VCPopover: NSViewController {
     
     //Alert message from Dingding(developer this app)
     func getDingdingAlertMessage() {
-        SecretApi.getDingAlertMessage(complete: {isSuccess, message in
-            if(isSuccess){
-                self.lbDingAlert.isHidden = false
-                self.lbDingAlert.stringValue = message
-            }
-            else {
-                self.lbDingAlert.isHidden = true
-            }
-        })
+//        SecretApi.getDingAlertMessage(complete: {isSuccess, message in
+//            if(isSuccess){
+//                self.lbDingAlert.isHidden = false
+//                self.lbDingAlert.stringValue = message
+//            }
+//            else {
+//                self.lbDingAlert.isHidden = true
+//            }
+//        })
     }
     
     //🤑🤑🤑😢😢😢
     func isShowDonateLayout() {
-        SecretApi.isShowDonateLayout(complete: {isSuccess, result in
-            guard let isWillShow = Bool(result), isSuccess else {self.toggleDonateView(false); return}
-            self.toggleDonateView(isWillShow)
-        })
+//        SecretApi.isShowDonateLayout(complete: {isSuccess, result in
+//            guard let isWillShow = Bool(result), isSuccess else {self.toggleDonateView(false); return}
+//            self.toggleDonateView(isWillShow)
+//        })
     }
     
     func toggleDonateView(_ isShow: Bool) {
@@ -364,10 +365,10 @@ class VCPopover: NSViewController {
     //change coin(will update) check state
     @IBAction func changeCheckCoin(_ sender: NSButton) {
         if(MyValue.arrSelectedCoin.count > 15) {
-            sender.state = NSOffState
+            sender.state = .off
         }
         
-        let isChecked = sender.state == NSOnState
+        let isChecked = sender.state == .on
         
         //Hide coin name label
         arrlbCoinTitle[sender.tag].isHidden = !isChecked
@@ -379,7 +380,7 @@ class VCPopover: NSViewController {
         
         var arrSelected = [String]()
         for cb in arrCbCoin {
-            if(cb.state == NSOnState){
+            if(cb.state == .on){
                 arrSelected.append(Coin.allValues[cb.tag])
             }
         }
@@ -388,13 +389,13 @@ class VCPopover: NSViewController {
     
     //change site check state
     @IBAction func changeCheckSite(_ sender: NSButton) {
-        let isChecked = sender.state == NSOnState
+        let isChecked = sender.state == .on
         
         stackViewSites.subviews[sender.tag].isHidden = !isChecked
         
         var arrSelected = [String]()
         for cb in arrCbSite {
-            if(cb.state == NSOnState){
+            if(cb.state == .on){
                 arrSelected.append(Site.allValues[cb.tag])
             }
         }
@@ -490,31 +491,31 @@ class VCPopover: NSViewController {
     @IBAction func clickCopyDonateAddress(_ sender: NSButton) {
         let address = Coin.donateAddress(index: sender.tag)
         
-        let pasteboard = NSPasteboard.general()
-        pasteboard.declareTypes([NSPasteboardTypeString], owner: nil)
-        pasteboard.setString(address, forType: NSPasteboardTypeString)
+        let pasteboard = NSPasteboard.general
+        pasteboard.declareTypes([NSPasteboard.PasteboardType.string], owner: nil)
+        pasteboard.setString(address, forType: NSPasteboard.PasteboardType.string)
     }
     
     //Show icon in status bar
     @IBAction func clickShowStatusbarIcon(_ sender: NSButton) {
-        MyValue.isShowStatusbarIcon = sender.state == NSOnState
+        MyValue.isShowStatusbarIcon = sender.state == .on
         
         if(MyValue.isShowStatusbarIcon) {
             if(UserDefaults.standard.string(forKey: "AppleInterfaceStyle") ?? "Light" == "Dark") {
-                (NSApplication.shared().delegate as! AppDelegate).statusItem.image = NSImage(named: "icon_white")
+                (NSApplication.shared.delegate as! AppDelegate).statusItem.image = NSImage(named: "icon_white")
             }
             else {
-                (NSApplication.shared().delegate as! AppDelegate).statusItem.image = NSImage(named: "icon_black")
+                (NSApplication.shared.delegate as! AppDelegate).statusItem.image = NSImage(named: "icon_black")
             }
         }
         else {
-            (NSApplication.shared().delegate as! AppDelegate).statusItem.image = NSImage(named: "icon_none")
+            (NSApplication.shared.delegate as! AppDelegate).statusItem.image = NSImage(named: "icon_none")
         }
     }
     
     //Terminate App
     @IBAction func clickQuit(_ sender: NSButton) {
-        (NSApplication.shared().delegate as! AppDelegate).terminateTimer()
+        (NSApplication.shared.delegate as! AppDelegate).terminateTimer()
         NSApp.terminate(self)
     }
     
@@ -528,7 +529,7 @@ class VCPopover: NSViewController {
             spinAnimation.repeatCount = Float.infinity
             spinAnimation.isRemovedOnCompletion = false
             //spinAnimation.fillMode = kCAFillModeForwards
-            spinAnimation.timingFunction = CAMediaTimingFunction (name: kCAMediaTimingFunctionLinear)
+            spinAnimation.timingFunction = CAMediaTimingFunction (name: CAMediaTimingFunctionName.linear)
             
             btRefresh.layer?.anchorPoint = CGPoint(x: btRefresh.bounds.width/2, y: btRefresh.bounds.height/2)
             btRefresh.layer?.add(spinAnimation, forKey: "transform.rotation.z")
