@@ -33,13 +33,13 @@ struct MyValue {
     }
     
     //상태바 코인의 사이트
-    static var mySite: Site = Site.valueOf(name: UserDefaults.standard.string(forKey: Const.UserDefaultKey.MY_SITE) ?? Const.DEFAULT_MY_SITE) {
+    static var myMarket: Market = Market.valueOf(name: UserDefaults.standard.string(forKey: Const.UserDefaultKey.MY_MARKET) ?? Const.DEFAULT_MY_MARKET) {
         didSet {
-            UserDefaults.standard.set(mySite.rawValue, forKey: Const.UserDefaultKey.MY_SITE)
+            UserDefaults.standard.set(myMarket.rawValue, forKey: Const.UserDefaultKey.MY_MARKET)
             UserDefaults.standard.synchronize()
             
             (NSApplication.shared.delegate as! AppDelegate).updateStatusLabel(willShowLoadingText: false)
-            //debugPrint("mySite >> didSet \(mySite.rawValue)")
+            //debugPrint("myMarket >> didSet \(myMarket.rawValue)")
         }
     }
     
@@ -69,14 +69,14 @@ struct MyValue {
     }
     
     //선택된 사이트들
-    static var arrSelectedSite: [String] = UserDefaults.standard.stringArray(forKey: Const.UserDefaultKey.SELECTED_SITES) ?? Site.defaultSelectedValues {
+    static var arrSelectedMarket: [String] = UserDefaults.standard.stringArray(forKey: Const.UserDefaultKey.SELECTED_MARKETS) ?? Market.defaultSelectedValues {
         didSet {
-            UserDefaults.standard.set(arrSelectedSite, forKey: Const.UserDefaultKey.SELECTED_SITES)
+            UserDefaults.standard.set(arrSelectedMarket, forKey: Const.UserDefaultKey.SELECTED_MARKETS)
             UserDefaults.standard.synchronize()
             
             NotificationCenter.default.post(name: NSNotification.Name(rawValue: "VCPopover.updateCoinState"), object: nil)
             
-            //debugPrint("arrSelectedSite >> didSet \(arrSelectedSite)")
+            //debugPrint("arrSelectedMarket >> didSet \(arrSelectedMarket)")
         }
     }
     
@@ -89,7 +89,7 @@ struct MyValue {
     }
     
     //상태바에 번개 아이콘 표시 여부
-    static var isShowStatusbarIcon: Bool = UserDefaults.standard.bool(forKey: Const.UserDefaultKey.IS_SHOW_ICON) ?? false {
+    static var isShowStatusbarIcon: Bool = UserDefaults.standard.bool(forKey: Const.UserDefaultKey.IS_SHOW_ICON) {
         didSet {
             UserDefaults.standard.set(isShowStatusbarIcon, forKey: Const.UserDefaultKey.IS_SHOW_ICON)
             UserDefaults.standard.synchronize()
@@ -102,9 +102,9 @@ struct MyValue {
         UserDefaults.standard.removeObject(forKey: Const.UserDefaultKey.IS_SIMPLE_MODE)
         UserDefaults.standard.removeObject(forKey: Const.UserDefaultKey.MY_BASE_CURRENCY)
         UserDefaults.standard.removeObject(forKey: Const.UserDefaultKey.MY_COIN)
-        UserDefaults.standard.removeObject(forKey: Const.UserDefaultKey.MY_SITE)
+        UserDefaults.standard.removeObject(forKey: Const.UserDefaultKey.MY_MARKET)
         UserDefaults.standard.removeObject(forKey: Const.UserDefaultKey.SELECTED_COINS)
-        UserDefaults.standard.removeObject(forKey: Const.UserDefaultKey.SELECTED_SITES)
+        UserDefaults.standard.removeObject(forKey: Const.UserDefaultKey.SELECTED_MARKETS)
         UserDefaults.standard.removeObject(forKey: Const.UserDefaultKey.UPDATE_PER)
         UserDefaults.standard.synchronize()
         

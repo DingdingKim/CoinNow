@@ -18,13 +18,12 @@
 		755E393A1F08208000CA6BBC /* Const.swift in Sources */ = {isa = PBXBuildFile; fileRef = 755E39361F08208000CA6BBC /* Const.swift */; };
 		755E393B1F08208000CA6BBC /* Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 755E39371F08208000CA6BBC /* Extension.swift */; };
 		755E39401F08208600CA6BBC /* InfoCoin.swift in Sources */ = {isa = PBXBuildFile; fileRef = 755E393E1F08208600CA6BBC /* InfoCoin.swift */; };
-		75E654961F10BEFE00230402 /* ModelSite.xib in Resources */ = {isa = PBXBuildFile; fileRef = 75E654951F10BEFE00230402 /* ModelSite.xib */; };
-		75E654981F10C46B00230402 /* ModelSite.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75E654971F10C46B00230402 /* ModelSite.swift */; };
-		75E6549F1F175B8400230402 /* Site.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75E6549E1F175B8400230402 /* Site.swift */; };
+		75E654961F10BEFE00230402 /* ModelMarket.xib in Resources */ = {isa = PBXBuildFile; fileRef = 75E654951F10BEFE00230402 /* ModelMarket.xib */; };
+		75E654981F10C46B00230402 /* ModelMarket.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75E654971F10C46B00230402 /* ModelMarket.swift */; };
+		75E6549F1F175B8400230402 /* Market.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75E6549E1F175B8400230402 /* Market.swift */; };
 		75E654A11F175C9F00230402 /* Coin.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75E654A01F175C9F00230402 /* Coin.swift */; };
 		75E654A31F1761A400230402 /* MyValue.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75E654A21F1761A400230402 /* MyValue.swift */; };
 		75E654A51F17950200230402 /* BaseCurrency.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75E654A41F17950200230402 /* BaseCurrency.swift */; };
-		75F3DDBB2002326F00714324 /* VCPopoverNew.xib in Resources */ = {isa = PBXBuildFile; fileRef = 75F3DDBA2002326F00714324 /* VCPopoverNew.xib */; };
 		75F538251F1946F200884EAA /* PopoverContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75F538241F1946F200884EAA /* PopoverContentView.swift */; };
 /* End PBXBuildFile section */
 
@@ -42,15 +41,14 @@
 		755E39371F08208000CA6BBC /* Extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Extension.swift; sourceTree = "<group>"; };
 		755E393E1F08208600CA6BBC /* InfoCoin.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InfoCoin.swift; sourceTree = "<group>"; };
 		75E654581F0A4E5300230402 /* CoinNow.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = CoinNow.entitlements; sourceTree = "<group>"; };
-		75E654951F10BEFE00230402 /* ModelSite.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ModelSite.xib; sourceTree = "<group>"; };
-		75E654971F10C46B00230402 /* ModelSite.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ModelSite.swift; sourceTree = "<group>"; };
+		75E654951F10BEFE00230402 /* ModelMarket.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ModelMarket.xib; sourceTree = "<group>"; };
+		75E654971F10C46B00230402 /* ModelMarket.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ModelMarket.swift; sourceTree = "<group>"; };
 		75E654991F1684E200230402 /* NanumSquareL.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = NanumSquareL.ttf; sourceTree = "<group>"; };
 		75E6549A1F1684E200230402 /* NanumSquareR.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = NanumSquareR.ttf; sourceTree = "<group>"; };
-		75E6549E1F175B8400230402 /* Site.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Site.swift; sourceTree = "<group>"; };
+		75E6549E1F175B8400230402 /* Market.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Market.swift; sourceTree = "<group>"; };
 		75E654A01F175C9F00230402 /* Coin.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Coin.swift; sourceTree = "<group>"; };
 		75E654A21F1761A400230402 /* MyValue.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MyValue.swift; sourceTree = "<group>"; };
 		75E654A41F17950200230402 /* BaseCurrency.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BaseCurrency.swift; sourceTree = "<group>"; };
-		75F3DDBA2002326F00714324 /* VCPopoverNew.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = VCPopoverNew.xib; sourceTree = "<group>"; };
 		75F538241F1946F200884EAA /* PopoverContentView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PopoverContentView.swift; sourceTree = "<group>"; };
 		F212CE6EE9DF95734B9FD749 /* Pods-CoinNow.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CoinNow.debug.xcconfig"; path = "Pods/Target Support Files/Pods-CoinNow/Pods-CoinNow.debug.xcconfig"; sourceTree = "<group>"; };
 		F3BC805D8FF828DC94118A9A /* Pods-CoinNow.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CoinNow.release.xcconfig"; path = "Pods/Target Support Files/Pods-CoinNow/Pods-CoinNow.release.xcconfig"; sourceTree = "<group>"; };
@@ -103,9 +101,8 @@
 				755E39201F081FA400CA6BBC /* AppDelegate.swift */,
 				755E392F1F08206E00CA6BBC /* VCPopover.swift */,
 				755E39301F08206E00CA6BBC /* VCPopover.xib */,
-				75F3DDBA2002326F00714324 /* VCPopoverNew.xib */,
-				75E654971F10C46B00230402 /* ModelSite.swift */,
-				75E654951F10BEFE00230402 /* ModelSite.xib */,
+				75E654971F10C46B00230402 /* ModelMarket.swift */,
+				75E654951F10BEFE00230402 /* ModelMarket.xib */,
 				755E39331F08207200CA6BBC /* Info */,
 				755E39341F08207700CA6BBC /* Util */,
 				75E6549B1F1684E700230402 /* Resources */,
@@ -120,7 +117,7 @@
 			isa = PBXGroup;
 			children = (
 				755E393E1F08208600CA6BBC /* InfoCoin.swift */,
-				75E6549E1F175B8400230402 /* Site.swift */,
+				75E6549E1F175B8400230402 /* Market.swift */,
 				75E654A01F175C9F00230402 /* Coin.swift */,
 				75E654A41F17950200230402 /* BaseCurrency.swift */,
 				75E654A21F1761A400230402 /* MyValue.swift */,
@@ -186,7 +183,7 @@
 			isa = PBXProject;
 			attributes = {
 				LastSwiftUpdateCheck = 0830;
-				LastUpgradeCheck = 0830;
+				LastUpgradeCheck = 1340;
 				ORGANIZATIONNAME = DingdingKim;
 				TargetAttributes = {
 					755E391C1F081FA400CA6BBC = {
@@ -225,9 +222,8 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				75E654961F10BEFE00230402 /* ModelSite.xib in Resources */,
+				75E654961F10BEFE00230402 /* ModelMarket.xib in Resources */,
 				755E39251F081FA400CA6BBC /* Assets.xcassets in Resources */,
-				75F3DDBB2002326F00714324 /* VCPopoverNew.xib in Resources */,
 				755E39321F08206E00CA6BBC /* VCPopover.xib in Resources */,
 				755E39281F081FA400CA6BBC /* Main.storyboard in Resources */,
 			);
@@ -282,10 +278,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				7522BF131F586ECA0070561D /* CoinPrice.swift in Sources */,
-				75E654981F10C46B00230402 /* ModelSite.swift in Sources */,
+				75E654981F10C46B00230402 /* ModelMarket.swift in Sources */,
 				755E393B1F08208000CA6BBC /* Extension.swift in Sources */,
 				755E39391F08208000CA6BBC /* Api.swift in Sources */,
-				75E6549F1F175B8400230402 /* Site.swift in Sources */,
+				75E6549F1F175B8400230402 /* Market.swift in Sources */,
 				75E654A31F1761A400230402 /* MyValue.swift in Sources */,
 				755E393A1F08208000CA6BBC /* Const.swift in Sources */,
 				755E39311F08206E00CA6BBC /* VCPopover.swift in Sources */,
@@ -315,21 +311,31 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_MODULES = YES;
 				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
 				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
 				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN_ENUM_CONVERSION = YES;
 				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
@@ -365,21 +371,31 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_MODULES = YES;
 				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
 				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
 				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN_ENUM_CONVERSION = YES;
 				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
@@ -412,6 +428,7 @@
 				CODE_SIGN_IDENTITY = "Mac Developer";
 				COMBINE_HIDPI_IMAGES = YES;
 				DEVELOPMENT_TEAM = G27DY99B8F;
+				ENABLE_HARDENED_RUNTIME = YES;
 				INFOPLIST_FILE = CoinNow/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
 				MACOSX_DEPLOYMENT_TARGET = 10.11;
@@ -431,6 +448,7 @@
 				CODE_SIGN_IDENTITY = "Mac Developer";
 				COMBINE_HIDPI_IMAGES = YES;
 				DEVELOPMENT_TEAM = G27DY99B8F;
+				ENABLE_HARDENED_RUNTIME = YES;
 				INFOPLIST_FILE = CoinNow/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
 				MACOSX_DEPLOYMENT_TARGET = 10.11;

@@ -1,5 +1,5 @@
 //
-//  Site.swift
+//  Market.swift
 //  CoinNow
 //
 //  Created by DingMac on 2017. 7. 13..
@@ -8,7 +8,7 @@
 
 import Foundation
 
-enum Site: String {
+enum Market: String {
     //휴오비가 데이터를 제대로 못 가져와서 일단 막아놓음
     //case bithumb = "Bithumb", coinone = "Coinone", poloniex = "Poloniex", okcoin = "OKCoin", huobi = "Huobi", bitfinex = "Bitfinex", bittrex = "Bittrex"
     case bithumb = "Bithumb", coinone = "Coinone", poloniex = "Poloniex", bitfinex = "Bitfinex", bittrex = "Bittrex", upbit = "Upbit"
@@ -22,11 +22,11 @@ enum Site: String {
         case .coinone:
             return .krw
         case .poloniex:
-            return .usd
+            return .usdt
         case .bitfinex:
-            return .usd
+            return .usdt
         case .bittrex:
-            return .usd
+            return .usdt
         case .upbit:
             return .krw
         }
@@ -49,7 +49,7 @@ enum Site: String {
         }
     }
     
-    static func valueOf(name: String) -> Site {
+    static func valueOf(name: String) -> Market {
         switch name {
         case bithumb.rawValue:
             return .bithumb

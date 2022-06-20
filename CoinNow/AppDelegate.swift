@@ -52,9 +52,9 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     
     //Set label that show my coin state at status bar
     @objc public func updateStatusLabel(willShowLoadingText: Bool) {
-        //print("Update Status Label : \(MyValue.mySite) / \(MyValue.myCoin.rawValue) / \(MyValue.myBaseCurrency.rawValue)")
+        //print("Update Status Label : \(MyValue.myMarket) / \(MyValue.myCoin.rawValue) / \(MyValue.myBaseCurrency.rawValue)")
         
-        if(MyValue.mySite == .bithumb){
+        if(MyValue.myMarket == .bithumb){
             Api.getCoinsStateBithumb(arrSelectedCoins: [MyValue.myCoin.rawValue], complete: {isSuccess, arrResult in
                 for infoCoin in arrResult {
                     if(infoCoin.coin == MyValue.myCoin) {
@@ -64,7 +64,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
                 }
             })
         }
-        else if(MyValue.mySite == .coinone) {
+        else if(MyValue.myMarket == .coinone) {
             Api.getCoinsStateCoinone(arrSelectedCoins: [MyValue.myCoin.rawValue], complete: {isSuccess, arrResult in
                 for infoCoin in arrResult {
                     if(infoCoin.coin == MyValue.myCoin) {
@@ -74,59 +74,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
                 }
             })
         }
-        else if(MyValue.mySite == .poloniex) {
-            Api.getCoinsStatePoloniex(arrSelectedCoins: [MyValue.myCoin.rawValue], complete: {isSuccess, arrResult in
-                for infoCoin in arrResult {
-                    if(infoCoin.coin == MyValue.myCoin) {
-                        self.setStatusLabelTitle(title: "\(infoCoin.coin.rawValue) \(Double(infoCoin.currentPrice).withCommas()) ")
-                        break
-                    }
-                }
-            })
-        }
-            /*
-        else if(MyValue.mySite == .okcoin) {
-            Api.getCoinsStateOkcoin(arrSelectedCoins: [MyValue.myCoin.rawValue], complete: {isSuccess, arrResult in
-                for infoCoin in arrResult {
-                    if(infoCoin.coin == MyValue.myCoin) {
-                        self.setStatusLabelTitle(title: "\(infoCoin.coin.rawValue) \(Double(infoCoin.currentPrice).withCommas()) ")
-                        break
-                    }
-                }
-            })
-        }
-        else if(MyValue.mySite == .huobi) {
-            Api.getCoinsStateHuobiByCryptowatch(arrSelectedCoins: [MyValue.myCoin.rawValue], complete: {isSuccess, arrResult in
-                for infoCoin in arrResult {
-                    if(infoCoin.coin == MyValue.myCoin) {
-                        self.setStatusLabelTitle(title: "\(infoCoin.coin.rawValue) \(Double(infoCoin.currentPrice).withCommas()) ")
-                        break
-                    }
-                }
-            })
-        }
-             */
-        else if(MyValue.mySite == .bitfinex) {
-            Api.getCoinsStateBitfinex(arrSelectedCoins: [MyValue.myCoin.rawValue], complete: {isSuccess, arrResult in
-                for infoCoin in arrResult {
-                    if(infoCoin.coin == MyValue.myCoin) {
-                        self.setStatusLabelTitle(title: "\(infoCoin.coin.rawValue) \(Double(infoCoin.currentPrice).withCommas()) ")
-                        break
-                    }
-                }
-            })
-        }
-        else if(MyValue.mySite == .bittrex) {
-            Api.getCoinsStateBittrex(arrSelectedCoins: [MyValue.myCoin.rawValue], complete: {isSuccess, arrResult in
-                for infoCoin in arrResult {
-                    if(infoCoin.coin == MyValue.myCoin) {
-                        self.setStatusLabelTitle(title: "\(infoCoin.coin.rawValue) \(Double(infoCoin.currentPrice).withCommas()) ")
-                        break
-                    }
-                }
-            })
-        }
-        else if(MyValue.mySite == .upbit) {
+        else if(MyValue.myMarket == .upbit) {
             Api.getCoinsStateUpbit(arrSelectedCoins: [MyValue.myCoin.rawValue], complete: {isSuccess, arrResult in
                 for infoCoin in arrResult {
                     if(infoCoin.coin == MyValue.myCoin) {

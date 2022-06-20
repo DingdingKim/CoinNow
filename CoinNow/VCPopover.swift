@@ -17,7 +17,7 @@ class VCPopover: NSViewController {
     
     @IBOutlet weak var btStatusUpdatePer: NSPopUpButton!
     @IBOutlet weak var btStatusCoin: NSPopUpButton!
-    @IBOutlet weak var btStatusSite: NSPopUpButton!
+    @IBOutlet weak var btStatusMarket: NSPopUpButton!
     
     @IBOutlet weak var lbLine: NSTextField!
     
@@ -27,9 +27,7 @@ class VCPopover: NSViewController {
     @IBOutlet weak var btRefresh: NSButton!
     
     @IBOutlet weak var viewCoinCheck: NSView!
-//    @IBOutlet weak var stackViewCoinCheck1: NSStackView!
-//    @IBOutlet weak var stackViewCoinCheck2: NSStackView!
-    @IBOutlet weak var stackViewSiteCheck: NSStackView!
+    @IBOutlet weak var stackViewMarketCheck: NSStackView!
     
     @IBOutlet weak var cbBtc: NSButton!
     @IBOutlet weak var cbEth: NSButton!
@@ -69,14 +67,10 @@ class VCPopover: NSViewController {
     @IBOutlet weak var cbVtc: NSButton!
     @IBOutlet weak var cbArdr: NSButton!
     
+    @IBOutlet weak var cbUpbit: NSButton!
     @IBOutlet weak var cbBithumb: NSButton!
     @IBOutlet weak var cbCoinone: NSButton!
-    @IBOutlet weak var cbPoloniex: NSButton!
-//    @IBOutlet weak var cbOkcoin: NSButton!
-//    @IBOutlet weak var cbHuobi: NSButton!
-    @IBOutlet weak var cbBitfinex: NSButton!
-    @IBOutlet weak var cbBittrex: NSButton!
-    @IBOutlet weak var cbUpbit: NSButton!
+    @IBOutlet weak var cbBinance: NSButton!
     
     @IBOutlet var lbBtcTitle: NSTextField!
     @IBOutlet var lbEthTitle: NSTextField!
@@ -115,7 +109,7 @@ class VCPopover: NSViewController {
     @IBOutlet var lbVtc: NSTextField!
     @IBOutlet var lbArdr: NSTextField!
     
-    @IBOutlet weak var stackViewSites: NSStackView!
+    @IBOutlet weak var stackViewMarkets: NSStackView!
     @IBOutlet weak var stackViewCoinName: NSStackView!
     
     @IBOutlet weak var btDonate: NSButton!
@@ -125,23 +119,22 @@ class VCPopover: NSViewController {
     @IBOutlet weak var cbShowIcon: NSButton!
     
     var arrCbCoin = [NSButton]()
-    var arrCbSite = [NSButton]()
+    var arrCbMarket = [NSButton]()
     
     var arrlbCoinTitle = [NSTextField]()
     
-    var arrSiteView = [ModelSite]()
+    var arrMarketView = [ModelMarket]()
     
-    var countUpdatedSite: Int = 0
+    var countUpdatedMarket: Int = 0
     
     override func viewDidLoad() {
         arrCbCoin = [cbBtc, cbEth, cbDash, cbLtc, cbEtc, cbXrp, cbBch, cbXmr, cbQtum, cbZec, cbBtg, cbIota, cbEmc2,
                      cbEos, cbAda, cbSnt, cbNeo, cbXlm, cbXem, cbStrat, cbPowr, cbTix, cbSteem, cbMer, cbMtl, cbSbd, cbOmg, cbStorj, cbKmd, cbArk, cbLsk, cbGrs, cbPivx, cbWaves, cbVtc, cbArdr]
-        //arrCbSite = [cbBithumb, cbCoinone, cbPoloniex, cbOkcoin, cbHuobi, cbBitfinex, cbBittrex]
-        arrCbSite = [cbBithumb, cbCoinone, cbPoloniex, cbBitfinex, cbBittrex, cbUpbit]//휴오비 빼기
+        arrCbMarket = [cbUpbit, cbBithumb, cbCoinone, cbBinance]
         arrlbCoinTitle = [lbBtcTitle, lbEthTitle, lbDashTitle, lbLtcTitle, lbEtcTitle, lbXrpTitle, lbBchTitle, lbXmrTitle, lbQtumTitle, lbZecTitle, lbBtgTitle, lbIotaTitle, lbEmc2Title,
                           lbEos, lbAda, lbSnt, lbNeo, lbXlm, lbXem, lbStrat, lbPowr, lbTix, lbSteem, lbMer, lbMtl, lbSbd, lbOmg, lbStorj, lbKmd, lbArk, lbLsk, lbGrs, lbPivx, lbWaves, lbVtc, lbArdr]
         
-        addSiteView()
+        addMarketView()
         
         initView()
         
@@ -192,12 +185,12 @@ class VCPopover: NSViewController {
         //Popup Button
         btStatusUpdatePer.addItems(withTitles: Array(Const.dicUpdatePerSec.keys))
         btStatusCoin.addItems(withTitles: Coin.allValues)
-        btStatusSite.addItems(withTitles: Site.allValues)
+        btStatusMarket.addItems(withTitles: Market.allValues)
         btBaseCurrency.addItems(withTitles: BaseCurrency.allValues)
         
         btStatusUpdatePer.selectItem(withTitle: MyValue.updatePer)
         btStatusCoin.selectItem(withTitle: MyValue.myCoin.rawValue)
-        btStatusSite.selectItem(withTitle: MyValue.mySite.rawValue)
+        btStatusMarket.selectItem(withTitle: MyValue.myMarket.rawValue)
         btBaseCurrency.selectItem(withTitle: MyValue.myBaseCurrency.rawValue)
         cbShowIcon.state = MyValue.isShowStatusbarIcon ? .on : .off
         
@@ -209,40 +202,40 @@ class VCPopover: NSViewController {
             if(!MyValue.arrSelectedCoin.contains(cb.title)) {
                 arrlbCoinTitle[cb.tag].isHidden = true
                 
-                for index in 0...arrSiteView.count-1 {
-                    arrSiteView[index].setVisibilityLabel(position: cb.tag, isHidden: true)
+                for index in 0...arrMarketView.count-1 {
+                    arrMarketView[index].setVisibilityLabel(position: cb.tag, isHidden: true)
                 }
             }
         }
-        for cb in arrCbSite {
-            cb.state = MyValue.arrSelectedSite.contains(cb.title) ? .on : .off
+        for cb in arrCbMarket {
+            cb.state = MyValue.arrSelectedMarket.contains(cb.title) ? .on : .off
             
-            //Hide not selected site view
-            if(!MyValue.arrSelectedSite.contains(cb.title)) {
-                stackViewSites.subviews[cb.tag].isHidden = true
+            //Hide not selected market view
+            if(!MyValue.arrSelectedMarket.contains(cb.title)) {
+                stackViewMarkets.subviews[cb.tag].isHidden = true
             }
         }
     }
     
-    //Add exchange site view
-    func addSiteView() {
-        for siteName in Site.allValues {
-            let view = ModelSite(frame: NSRect(x: 0, y: 0, width: 0, height: 0), title: siteName)
+    //Add exchange market view
+    func addMarketView() {
+        for marketName in Market.allValues {
+            let view = ModelMarket(frame: NSRect(x: 0, y: 0, width: 0, height: 0), title: marketName)
             
-            self.stackViewSites.addArrangedSubview(view.view)
+            self.stackViewMarkets.addArrangedSubview(view.view)
             
-            arrSiteView.append(view)
+            arrMarketView.append(view)
             
-            //Hide not selected site view
-            if(!MyValue.arrSelectedSite.contains(siteName)) {
+            //Hide not selected market view
+            if(!MyValue.arrSelectedMarket.contains(marketName)) {
                 view.isHidden = true
             }
         }
         
         //첫번째 더해지는 애는 앞 라인을 숨긴다
-        for viewSite in arrSiteView {
-            if(!viewSite.isHidden) {
-                viewSite.hideSeparator()
+        for viewMarket in arrMarketView {
+            if(!viewMarket.isHidden) {
+                viewMarket.hideSeparator()
                 break;
             }
         }
@@ -252,68 +245,43 @@ class VCPopover: NSViewController {
     @objc func updateCoinState() {
         lbUpdateTime.stringValue = Const.DEFAULT_LOADING_TEXT
         
-        //Calculate count of selected site
-        for cb in arrCbSite {
+        //Calculate count of selected market
+        for cb in arrCbMarket {
             if(cb.state == .on) {
-                countUpdatedSite += 1
+                countUpdatedMarket += 1
             }
         }
         
-        //Update only selected site
-        for cb in arrCbSite {
+        //Update only selected market
+        for cb in arrCbMarket {
             if(cb.state == .on) {
-                getCoinStateFromApi(indexOfSite: arrCbSite.index(of: cb)!)
+                getCoinStateFromApi(indexOfMarket: arrCbMarket.firstIndex(of: cb)!)
             }
         }
     }
     
-    func getCoinStateFromApi(indexOfSite: Int) {
-        if(indexOfSite == 0){
+    func getCoinStateFromApi(indexOfMarket: Int) {
+        if(indexOfMarket == 0){
             Api.getCoinsStateBithumb(arrSelectedCoins: MyValue.arrSelectedCoin, complete: {isSuccess, arrResult in
-                self.updateStateViewAfterGetDataFromApi(isSuccess: isSuccess, indexOfView: indexOfSite, arrData: arrResult)
+                self.updateStateViewAfterGetDataFromApi(isSuccess: isSuccess, indexOfView: indexOfMarket, arrData: arrResult)
             })
         }
-        else if(indexOfSite == 1) {
+        else if(indexOfMarket == 1) {
             Api.getCoinsStateCoinone(arrSelectedCoins: MyValue.arrSelectedCoin, complete: {isSuccess, arrResult in
-                self.updateStateViewAfterGetDataFromApi(isSuccess: isSuccess, indexOfView: indexOfSite, arrData: arrResult)
+                self.updateStateViewAfterGetDataFromApi(isSuccess: isSuccess, indexOfView: indexOfMarket, arrData: arrResult)
             })
         }
-        else if(indexOfSite == 2) {
-            Api.getCoinsStatePoloniex(arrSelectedCoins: MyValue.arrSelectedCoin, complete: {isSuccess, arrResult in
-                self.updateStateViewAfterGetDataFromApi(isSuccess: isSuccess, indexOfView: indexOfSite, arrData: arrResult)
-            })
-        }
-//        else if(indexOfSite == 3) {
-//            Api.getCoinsStateOkcoin(arrSelectedCoins: MyValue.arrSelectedCoin, complete: {isSuccess, arrResult in
-//                self.updateStateViewAfterGetDataFromApi(isSuccess: isSuccess, indexOfView: indexOfSite, arrData: arrResult)
-//            })
-//        }
-//        else if(indexOfSite == 4) {
-//            Api.getCoinsStateHuobiByCryptowatch(arrSelectedCoins: MyValue.arrSelectedCoin, complete: {isSuccess, arrResult in
-//                self.updateStateViewAfterGetDataFromApi(isSuccess: isSuccess, indexOfView: indexOfSite, arrData: arrResult)
-//            })
-//        }
-        else if(indexOfSite == 3) {
-            Api.getCoinsStateBitfinex(arrSelectedCoins: MyValue.arrSelectedCoin, complete: {isSuccess, arrResult in
-                self.updateStateViewAfterGetDataFromApi(isSuccess: isSuccess, indexOfView: indexOfSite, arrData: arrResult)
-            })
-        }
-        else if(indexOfSite == 4) {
-            Api.getCoinsStateBittrex(arrSelectedCoins: MyValue.arrSelectedCoin, complete: {isSuccess, arrResult in
-                self.updateStateViewAfterGetDataFromApi(isSuccess: isSuccess, indexOfView: indexOfSite, arrData: arrResult)
-            })
-        }
-        else if(indexOfSite == 5) {
+        else if(indexOfMarket == 2) {
             Api.getCoinsStateUpbit(arrSelectedCoins: MyValue.arrSelectedCoin, complete: {isSuccess, arrResult in
                 //print("야\(arrResult)")
-                self.updateStateViewAfterGetDataFromApi(isSuccess: isSuccess, indexOfView: indexOfSite, arrData: arrResult)
+                self.updateStateViewAfterGetDataFromApi(isSuccess: isSuccess, indexOfView: indexOfMarket, arrData: arrResult)
             })
         }
     }
     
     func updateStateViewAfterGetDataFromApi(isSuccess: Bool, indexOfView: Int, arrData: [InfoCoin]) {
         if(isSuccess){
-            self.arrSiteView[indexOfView].updateCoinState(arrData: arrData)
+            self.arrMarketView[indexOfView].updateCoinState(arrData: arrData)
             
             //Set update time
             //self.lbUpdateTime.stringValue = Date().todayString(format: "yyyy.MM.dd HH:mm:ss")
@@ -322,12 +290,12 @@ class VCPopover: NSViewController {
             //Set update fail time
             //self.lbUpdateTime.stringValue = Date().todayString(format: "yyyy.MM.dd HH:mm:ss") + "last update is failed"
         }
-        countUpdatedSite -= 1
+        countUpdatedMarket -= 1
         
-        if(countUpdatedSite <= 0){
+        if(countUpdatedMarket <= 0){
             //toggleRefreshButtonAnimation(isRotate: false)
             lbUpdateTime.stringValue = Date().todayString(format: "yyyy.MM.dd HH:mm:ss")
-            countUpdatedSite = 0
+            countUpdatedMarket = 0
         }
     }
     
@@ -373,8 +341,8 @@ class VCPopover: NSViewController {
         arrlbCoinTitle[sender.tag].isHidden = !isChecked
         
         //Hide price label in model view
-        for index in 0...arrSiteView.count-1 {
-            arrSiteView[index].setVisibilityLabel(position: sender.tag, isHidden: !isChecked)
+        for index in 0...arrMarketView.count-1 {
+            arrMarketView[index].setVisibilityLabel(position: sender.tag, isHidden: !isChecked)
         }
         
         var arrSelected = [String]()
@@ -386,24 +354,24 @@ class VCPopover: NSViewController {
         MyValue.arrSelectedCoin = arrSelected
     }
     
-    //change site check state
-    @IBAction func changeCheckSite(_ sender: NSButton) {
+    //change market check state
+    @IBAction func changeCheckMarket(_ sender: NSButton) {
         let isChecked = sender.state == .on
         
-        stackViewSites.subviews[sender.tag].isHidden = !isChecked
+        stackViewMarkets.subviews[sender.tag].isHidden = !isChecked
         
         var arrSelected = [String]()
-        for cb in arrCbSite {
+        for cb in arrCbMarket {
             if(cb.state == .on){
-                arrSelected.append(Site.allValues[cb.tag])
+                arrSelected.append(Market.allValues[cb.tag])
             }
         }
-        MyValue.arrSelectedSite = arrSelected
+        MyValue.arrSelectedMarket = arrSelected
         
         //첫번째 더해지는 애는 앞 라인을 숨긴다
-        for viewSite in arrSiteView {
-            if(!viewSite.isHidden) {
-                viewSite.hideSeparator()
+        for viewMarket in arrMarketView {
+            if(!viewMarket.isHidden) {
+                viewMarket.hideSeparator()
                 break;
             }
         }
@@ -419,16 +387,16 @@ class VCPopover: NSViewController {
         MyValue.myCoin = Coin.valueOf(name: sender.titleOfSelectedItem!)
     }
     
-    //Change trading site
-    @IBAction func changeMySite(_ sender: NSPopUpButton) {
-        MyValue.mySite = Site.valueOf(name: sender.titleOfSelectedItem!)
+    //Change trading market
+    @IBAction func changeMyMarket(_ sender: NSPopUpButton) {
+        MyValue.myMarket = Market.valueOf(name: sender.titleOfSelectedItem!)
         
-        //Update coin list for selected site
+        //Update coin list for selected market
         btStatusCoin.removeAllItems()
-        btStatusCoin.addItems(withTitles: Site.valueOf(name: sender.title).arrTradableCoin())
+        btStatusCoin.addItems(withTitles: Market.valueOf(name: sender.title).arrTradableCoin())
         
-        //Current my coin is not tradable in changed site. So change my coin to first coin of tradable coins in my site.
-        if(!Site.valueOf(name: sender.title).arrTradableCoin().contains(MyValue.myCoin.rawValue)) {
+        //Current my coin is not tradable in changed market. So change my coin to first coin of tradable coins in my market.
+        if(!Market.valueOf(name: sender.title).arrTradableCoin().contains(MyValue.myCoin.rawValue)) {
             btStatusCoin.selectItem(at: 0)
             
             MyValue.myCoin = Coin.valueOf(name: btStatusCoin.titleOfSelectedItem!)
@@ -451,7 +419,7 @@ class VCPopover: NSViewController {
         if(MyValue.isSimpleMode) {
             viewStatusSetting.isHidden = true
             viewCoinCheck.isHidden = true
-            stackViewSiteCheck.isHidden = true
+            stackViewMarketCheck.isHidden = true
             lbLine.isHidden = true
             lbBaseCurrency.isHidden = true
             btBaseCurrency.isHidden = true

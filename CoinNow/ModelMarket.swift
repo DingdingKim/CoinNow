@@ -1,5 +1,5 @@
 //
-//  ModelSite.swift
+//  ModelMarket.swift
 //  CoinNow
 //
 //  Created by DingMac on 2017. 7. 8..
@@ -10,11 +10,11 @@ import Foundation
 import Cocoa
 
 @IBDesignable
-class ModelSite: NSView {
+class ModelMarket: NSView {
     @IBOutlet var view: NSView!
     
     @IBOutlet weak var stackViewCoins: NSStackView! //Root view of coin textfield
-    @IBOutlet weak var lbTitle: NSTextField! //Site name
+    @IBOutlet weak var lbTitle: NSTextField! //Market name
     @IBOutlet weak var lbLine: NSTextField! // Seperator
     
     init(frame frameRect: NSRect, title: String) {
@@ -40,7 +40,7 @@ class ModelSite: NSView {
     }
     
     func initView() {
-        Bundle.main.loadNibNamed("ModelSite", owner: self, topLevelObjects: nil)
+        Bundle.main.loadNibNamed("ModelMarket", owner: self, topLevelObjects: nil)
         self.view.frame = self.bounds
         self.addSubview(self.view)
     }
