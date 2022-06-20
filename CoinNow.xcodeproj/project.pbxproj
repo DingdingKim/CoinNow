@@ -8,7 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		1FA6BEFCAF295EDD9D40BE92 /* Pods_CoinNow.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FC71B95B1EFD5F5A565D27C8 /* Pods_CoinNow.framework */; };
-		7522BF111F5733580070561D /* SecretApi.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7522BF101F5733580070561D /* SecretApi.swift */; };
 		7522BF131F586ECA0070561D /* CoinPrice.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7522BF121F586ECA0070561D /* CoinPrice.swift */; };
 		755E39211F081FA400CA6BBC /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 755E39201F081FA400CA6BBC /* AppDelegate.swift */; };
 		755E39251F081FA400CA6BBC /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 755E39241F081FA400CA6BBC /* Assets.xcassets */; };
@@ -30,7 +29,6 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		7522BF101F5733580070561D /* SecretApi.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SecretApi.swift; sourceTree = "<group>"; };
 		7522BF121F586ECA0070561D /* CoinPrice.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CoinPrice.swift; sourceTree = "<group>"; };
 		755E391D1F081FA400CA6BBC /* CoinNow.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CoinNow.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		755E39201F081FA400CA6BBC /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -135,7 +133,6 @@
 			isa = PBXGroup;
 			children = (
 				755E39351F08208000CA6BBC /* Api.swift */,
-				7522BF101F5733580070561D /* SecretApi.swift */,
 				755E39361F08208000CA6BBC /* Const.swift */,
 				755E39371F08208000CA6BBC /* Extension.swift */,
 				75F538241F1946F200884EAA /* PopoverContentView.swift */,
@@ -171,8 +168,7 @@
 				755E39191F081FA400CA6BBC /* Sources */,
 				755E391A1F081FA400CA6BBC /* Frameworks */,
 				755E391B1F081FA400CA6BBC /* Resources */,
-				348BCBDE40E2113BD52A5E71 /* [CP] Embed Pods Frameworks */,
-				7A722FF694C8FD0CD7E2E9CF /* [CP] Copy Pods Resources */,
+				F38CFD9C39B1AB39632D5DC6 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -210,6 +206,7 @@
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
 			knownRegions = (
+				English,
 				en,
 				Base,
 			);
@@ -239,49 +236,42 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		348BCBDE40E2113BD52A5E71 /* [CP] Embed Pods Frameworks */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "[CP] Embed Pods Frameworks";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-CoinNow/Pods-CoinNow-frameworks.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-		7A722FF694C8FD0CD7E2E9CF /* [CP] Copy Pods Resources */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "[CP] Copy Pods Resources";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-CoinNow/Pods-CoinNow-resources.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
 		8520BBF7B14E12A678777CAF /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
 			);
 			name = "[CP] Check Pods Manifest.lock";
 			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-CoinNow-checkManifestLockResult.txt",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		F38CFD9C39B1AB39632D5DC6 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-CoinNow/Pods-CoinNow-frameworks.sh",
+				"${BUILT_PRODUCTS_DIR}/Alamofire/Alamofire.framework",
+				"${BUILT_PRODUCTS_DIR}/SwiftyJSON/SwiftyJSON.framework",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputPaths = (
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Alamofire.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SwiftyJSON.framework",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-CoinNow/Pods-CoinNow-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 /* End PBXShellScriptBuildPhase section */
@@ -292,7 +282,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				7522BF131F586ECA0070561D /* CoinPrice.swift in Sources */,
-				7522BF111F5733580070561D /* SecretApi.swift in Sources */,
 				75E654981F10C46B00230402 /* ModelSite.swift in Sources */,
 				755E393B1F08208000CA6BBC /* Extension.swift in Sources */,
 				755E39391F08208000CA6BBC /* Api.swift in Sources */,
@@ -429,7 +418,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.dingding.CoinNow;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
-				SWIFT_VERSION = 3.0;
+				SWIFT_VERSION = 5.0;
 			};
 			name = Debug;
 		};
@@ -448,7 +437,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.dingding.CoinNow;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
-				SWIFT_VERSION = 3.0;
+				SWIFT_VERSION = 5.0;
 			};
 			name = Release;
 		};

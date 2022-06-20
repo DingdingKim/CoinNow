@@ -1,7 +1,7 @@
 //
 //  Response.swift
 //
-//  Copyright (c) 2014-2016 Alamofire Software Foundation (http://alamofire.org/)
+//  Copyright (c) 2014 Alamofire Software Foundation (http://alamofire.org/)
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -131,15 +131,19 @@ extension DataResponse: CustomStringConvertible, CustomDebugStringConvertible {
     /// The debug textual representation used when written to an output stream, which includes the URL request, the URL
     /// response, the server data, the response serialization result and the timeline.
     public var debugDescription: String {
-        var output: [String] = []
+        let requestDescription = request.map { "\($0.httpMethod ?? "GET") \($0)"} ?? "nil"
+        let requestBody = request?.httpBody.map { String(decoding: $0, as: UTF8.self) } ?? "None"
+        let responseDescription = response.map { "\($0)" } ?? "nil"
+        let responseBody = data.map { String(decoding: $0, as: UTF8.self) } ?? "None"
 
-        output.append(request != nil ? "[Request]: \(request!.httpMethod ?? "GET") \(request!)" : "[Request]: nil")
-        output.append(response != nil ? "[Response]: \(response!)" : "[Response]: nil")
-        output.append("[Data]: \(data?.count ?? 0) bytes")
-        output.append("[Result]: \(result.debugDescription)")
-        output.append("[Timeline]: \(timeline.debugDescription)")
-
-        return output.joined(separator: "\n")
+        return """
+        [Request]: \(requestDescription)
+        [Request Body]: \n\(requestBody)
+        [Response]: \(responseDescription)
+        [Response Body]: \n\(responseBody)
+        [Result]: \(result)
+        [Timeline]: \(timeline.debugDescription)
+        """
     }
 }
 
@@ -192,6 +196,55 @@ extension DataResponse {
             response: self.response,
             data: data,
             result: result.flatMap(transform),
+            timeline: timeline
+        )
+
+        response._metrics = _metrics
+
+        return response
+    }
+
+    /// Evaluates the specified closure when the `DataResponse` is a failure, passing the unwrapped error as a parameter.
+    ///
+    /// Use the `mapError` function with a closure that does not throw. For example:
+    ///
+    ///     let possibleData: DataResponse<Data> = ...
+    ///     let withMyError = possibleData.mapError { MyError.error($0) }
+    ///
+    /// - Parameter transform: A closure that takes the error of the instance.
+    /// - Returns: A `DataResponse` instance containing the result of the transform.
+    public func mapError<E: Error>(_ transform: (Error) -> E) -> DataResponse {
+        var response = DataResponse(
+            request: request,
+            response: self.response,
+            data: data,
+            result: result.mapError(transform),
+            timeline: timeline
+        )
+
+        response._metrics = _metrics
+
+        return response
+    }
+
+    /// Evaluates the specified closure when the `DataResponse` is a failure, passing the unwrapped error as a parameter.
+    ///
+    /// Use the `flatMapError` function with a closure that may throw an error. For example:
+    ///
+    ///     let possibleData: DataResponse<Data> = ...
+    ///     let possibleObject = possibleData.flatMapError {
+    ///         try someFailableFunction(taking: $0)
+    ///     }
+    ///
+    /// - Parameter transform: A throwing closure that takes the error of the instance.
+    ///
+    /// - Returns: A `DataResponse` instance containing the result of the transform.
+    public func flatMapError<E: Error>(_ transform: (Error) throws -> E) -> DataResponse {
+        var response = DataResponse(
+            request: request,
+            response: self.response,
+            data: data,
+            result: result.flatMapError(transform),
             timeline: timeline
         )
 
@@ -335,17 +388,20 @@ extension DownloadResponse: CustomStringConvertible, CustomDebugStringConvertibl
     /// response, the temporary and destination URLs, the resume data, the response serialization result and the
     /// timeline.
     public var debugDescription: String {
-        var output: [String] = []
+        let requestDescription = request.map { "\($0.httpMethod ?? "GET") \($0)"} ?? "nil"
+        let requestBody = request?.httpBody.map { String(decoding: $0, as: UTF8.self) } ?? "None"
+        let responseDescription = response.map { "\($0)" } ?? "nil"
 
-        output.append(request != nil ? "[Request]: \(request!.httpMethod ?? "GET") \(request!)" : "[Request]: nil")
-        output.append(response != nil ? "[Response]: \(response!)" : "[Response]: nil")
-        output.append("[TemporaryURL]: \(temporaryURL?.path ?? "nil")")
-        output.append("[DestinationURL]: \(destinationURL?.path ?? "nil")")
-        output.append("[ResumeData]: \(resumeData?.count ?? 0) bytes")
-        output.append("[Result]: \(result.debugDescription)")
-        output.append("[Timeline]: \(timeline.debugDescription)")
-
-        return output.joined(separator: "\n")
+        return """
+        [Request]: \(requestDescription)
+        [Request Body]: \n\(requestBody)
+        [Response]: \(responseDescription)
+        [TemporaryURL]: \(temporaryURL?.path ?? "nil")
+        [DestinationURL]: \(destinationURL?.path ?? "nil")
+        [ResumeData]: \(resumeData?.count ?? 0) bytes
+        [Result]: \(result)
+        [Timeline]: \(timeline.debugDescription)
+        """
     }
 }
 
@@ -402,6 +458,59 @@ extension DownloadResponse {
             destinationURL: destinationURL,
             resumeData: resumeData,
             result: result.flatMap(transform),
+            timeline: timeline
+        )
+
+        response._metrics = _metrics
+
+        return response
+    }
+
+    /// Evaluates the specified closure when the `DownloadResponse` is a failure, passing the unwrapped error as a parameter.
+    ///
+    /// Use the `mapError` function with a closure that does not throw. For example:
+    ///
+    ///     let possibleData: DownloadResponse<Data> = ...
+    ///     let withMyError = possibleData.mapError { MyError.error($0) }
+    ///
+    /// - Parameter transform: A closure that takes the error of the instance.
+    /// - Returns: A `DownloadResponse` instance containing the result of the transform.
+    public func mapError<E: Error>(_ transform: (Error) -> E) -> DownloadResponse {
+        var response = DownloadResponse(
+            request: request,
+            response: self.response,
+            temporaryURL: temporaryURL,
+            destinationURL: destinationURL,
+            resumeData: resumeData,
+            result: result.mapError(transform),
+            timeline: timeline
+        )
+
+        response._metrics = _metrics
+
+        return response
+    }
+
+    /// Evaluates the specified closure when the `DownloadResponse` is a failure, passing the unwrapped error as a parameter.
+    ///
+    /// Use the `flatMapError` function with a closure that may throw an error. For example:
+    ///
+    ///     let possibleData: DownloadResponse<Data> = ...
+    ///     let possibleObject = possibleData.flatMapError {
+    ///         try someFailableFunction(taking: $0)
+    ///     }
+    ///
+    /// - Parameter transform: A throwing closure that takes the error of the instance.
+    ///
+    /// - Returns: A `DownloadResponse` instance containing the result of the transform.
+    public func flatMapError<E: Error>(_ transform: (Error) throws -> E) -> DownloadResponse {
+        var response = DownloadResponse(
+            request: request,
+            response: self.response,
+            temporaryURL: temporaryURL,
+            destinationURL: destinationURL,
+            resumeData: resumeData,
+            result: result.flatMapError(transform),
             timeline: timeline
         )
 

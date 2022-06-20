@@ -9,7 +9,6 @@
 import Foundation
 import Alamofire
 import SwiftyJSON
-import Kanna
 
 class Api {
     static let API_STATUS_CODE_SUCCESS_BITHUMB = "0000"

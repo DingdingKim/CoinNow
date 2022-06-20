@@ -9,11 +9,6 @@
 			<key>isShown</key>
 			<false/>
 		</dict>
-		<key>Kanna.xcscheme</key>
-		<dict>
-			<key>isShown</key>
-			<false/>
-		</dict>
 		<key>Pods-CoinNow.xcscheme</key>
 		<dict>
 			<key>isShown</key>
@@ -26,46 +21,6 @@
 		</dict>
 	</dict>
 	<key>SuppressBuildableAutocreation</key>
-	<dict>
-		<key>4D10E4FF5A483B852B47CCA0B994E340</key>
-		<dict>
-			<key>primary</key>
-			<true/>
-		</dict>
-		<key>88E9EC28B8B46C3631E6B242B50F4442</key>
-		<dict>
-			<key>primary</key>
-			<true/>
-		</dict>
-<<<<<<< HEAD
-		<key>D18CD8763F966B4646101FBE741089F6</key>
-=======
-		<key>4D10E4FF5A483B852B47CCA0B994E340</key>
-		<dict>
-			<key>primary</key>
-			<true/>
-		</dict>
-		<key>6580179BEBA7BE6120006F32D850B861</key>
->>>>>>> 991bb5ce9b192bd735f5c10b623e42f83d35eddf
-		<dict>
-			<key>primary</key>
-			<true/>
-		</dict>
-		<key>FC8A91083A5896EC79C107E3E2FBB56C</key>
-		<dict>
-			<key>primary</key>
-			<true/>
-		</dict>
-		<key>D18CD8763F966B4646101FBE741089F6</key>
-		<dict>
-			<key>primary</key>
-			<true/>
-		</dict>
-		<key>FC8A91083A5896EC79C107E3E2FBB56C</key>
-		<dict>
-			<key>primary</key>
-			<true/>
-		</dict>
-	</dict>
+	<dict/>
 </dict>
 </plist>
