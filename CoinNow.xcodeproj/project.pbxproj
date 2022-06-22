@@ -8,7 +8,10 @@
 
 /* Begin PBXBuildFile section */
 		1FA6BEFCAF295EDD9D40BE92 /* Pods_CoinNow.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FC71B95B1EFD5F5A565D27C8 /* Pods_CoinNow.framework */; };
-		7522BF131F586ECA0070561D /* CoinPrice.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7522BF121F586ECA0070561D /* CoinPrice.swift */; };
+		75021374286227C60078453E /* ItemTick.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75021372286227C60078453E /* ItemTick.swift */; };
+		75021375286227C60078453E /* ItemTick.xib in Resources */ = {isa = PBXBuildFile; fileRef = 75021373286227C60078453E /* ItemTick.xib */; };
+		755129F32862F8E800EC3CDF /* upbit.png in Resources */ = {isa = PBXBuildFile; fileRef = 755129F12862F8E800EC3CDF /* upbit.png */; };
+		755129F42862F8E800EC3CDF /* binance.png in Resources */ = {isa = PBXBuildFile; fileRef = 755129F22862F8E800EC3CDF /* binance.png */; };
 		755E39211F081FA400CA6BBC /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 755E39201F081FA400CA6BBC /* AppDelegate.swift */; };
 		755E39251F081FA400CA6BBC /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 755E39241F081FA400CA6BBC /* Assets.xcassets */; };
 		755E39281F081FA400CA6BBC /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 755E39261F081FA400CA6BBC /* Main.storyboard */; };
@@ -17,18 +20,20 @@
 		755E39391F08208000CA6BBC /* Api.swift in Sources */ = {isa = PBXBuildFile; fileRef = 755E39351F08208000CA6BBC /* Api.swift */; };
 		755E393A1F08208000CA6BBC /* Const.swift in Sources */ = {isa = PBXBuildFile; fileRef = 755E39361F08208000CA6BBC /* Const.swift */; };
 		755E393B1F08208000CA6BBC /* Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 755E39371F08208000CA6BBC /* Extension.swift */; };
-		755E39401F08208600CA6BBC /* InfoCoin.swift in Sources */ = {isa = PBXBuildFile; fileRef = 755E393E1F08208600CA6BBC /* InfoCoin.swift */; };
-		75E654961F10BEFE00230402 /* ModelMarket.xib in Resources */ = {isa = PBXBuildFile; fileRef = 75E654951F10BEFE00230402 /* ModelMarket.xib */; };
-		75E654981F10C46B00230402 /* ModelMarket.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75E654971F10C46B00230402 /* ModelMarket.swift */; };
-		75E6549F1F175B8400230402 /* Market.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75E6549E1F175B8400230402 /* Market.swift */; };
+		755E39401F08208600CA6BBC /* Tick.swift in Sources */ = {isa = PBXBuildFile; fileRef = 755E393E1F08208600CA6BBC /* Tick.swift */; };
+		75CEB1A42861FD260088DB22 /* ItemCoin.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75CEB1A22861FD260088DB22 /* ItemCoin.swift */; };
+		75CEB1A52861FD260088DB22 /* ItemCoin.xib in Resources */ = {isa = PBXBuildFile; fileRef = 75CEB1A32861FD260088DB22 /* ItemCoin.xib */; };
+		75E6549F1F175B8400230402 /* Site.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75E6549E1F175B8400230402 /* Site.swift */; };
 		75E654A11F175C9F00230402 /* Coin.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75E654A01F175C9F00230402 /* Coin.swift */; };
 		75E654A31F1761A400230402 /* MyValue.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75E654A21F1761A400230402 /* MyValue.swift */; };
-		75E654A51F17950200230402 /* BaseCurrency.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75E654A41F17950200230402 /* BaseCurrency.swift */; };
 		75F538251F1946F200884EAA /* PopoverContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75F538241F1946F200884EAA /* PopoverContentView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		7522BF121F586ECA0070561D /* CoinPrice.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CoinPrice.swift; sourceTree = "<group>"; };
+		75021372286227C60078453E /* ItemTick.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItemTick.swift; sourceTree = "<group>"; };
+		75021373286227C60078453E /* ItemTick.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ItemTick.xib; sourceTree = "<group>"; };
+		755129F12862F8E800EC3CDF /* upbit.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = upbit.png; sourceTree = "<group>"; };
+		755129F22862F8E800EC3CDF /* binance.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = binance.png; sourceTree = "<group>"; };
 		755E391D1F081FA400CA6BBC /* CoinNow.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CoinNow.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		755E39201F081FA400CA6BBC /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		755E39241F081FA400CA6BBC /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -39,16 +44,15 @@
 		755E39351F08208000CA6BBC /* Api.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Api.swift; sourceTree = "<group>"; };
 		755E39361F08208000CA6BBC /* Const.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Const.swift; sourceTree = "<group>"; };
 		755E39371F08208000CA6BBC /* Extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Extension.swift; sourceTree = "<group>"; };
-		755E393E1F08208600CA6BBC /* InfoCoin.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InfoCoin.swift; sourceTree = "<group>"; };
+		755E393E1F08208600CA6BBC /* Tick.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Tick.swift; sourceTree = "<group>"; };
+		75CEB1A22861FD260088DB22 /* ItemCoin.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItemCoin.swift; sourceTree = "<group>"; };
+		75CEB1A32861FD260088DB22 /* ItemCoin.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ItemCoin.xib; sourceTree = "<group>"; };
 		75E654581F0A4E5300230402 /* CoinNow.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = CoinNow.entitlements; sourceTree = "<group>"; };
-		75E654951F10BEFE00230402 /* ModelMarket.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ModelMarket.xib; sourceTree = "<group>"; };
-		75E654971F10C46B00230402 /* ModelMarket.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ModelMarket.swift; sourceTree = "<group>"; };
 		75E654991F1684E200230402 /* NanumSquareL.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = NanumSquareL.ttf; sourceTree = "<group>"; };
 		75E6549A1F1684E200230402 /* NanumSquareR.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = NanumSquareR.ttf; sourceTree = "<group>"; };
-		75E6549E1F175B8400230402 /* Market.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Market.swift; sourceTree = "<group>"; };
+		75E6549E1F175B8400230402 /* Site.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Site.swift; sourceTree = "<group>"; };
 		75E654A01F175C9F00230402 /* Coin.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Coin.swift; sourceTree = "<group>"; };
 		75E654A21F1761A400230402 /* MyValue.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MyValue.swift; sourceTree = "<group>"; };
-		75E654A41F17950200230402 /* BaseCurrency.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BaseCurrency.swift; sourceTree = "<group>"; };
 		75F538241F1946F200884EAA /* PopoverContentView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PopoverContentView.swift; sourceTree = "<group>"; };
 		F212CE6EE9DF95734B9FD749 /* Pods-CoinNow.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CoinNow.debug.xcconfig"; path = "Pods/Target Support Files/Pods-CoinNow/Pods-CoinNow.debug.xcconfig"; sourceTree = "<group>"; };
 		F3BC805D8FF828DC94118A9A /* Pods-CoinNow.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CoinNow.release.xcconfig"; path = "Pods/Target Support Files/Pods-CoinNow/Pods-CoinNow.release.xcconfig"; sourceTree = "<group>"; };
@@ -101,9 +105,11 @@
 				755E39201F081FA400CA6BBC /* AppDelegate.swift */,
 				755E392F1F08206E00CA6BBC /* VCPopover.swift */,
 				755E39301F08206E00CA6BBC /* VCPopover.xib */,
-				75E654971F10C46B00230402 /* ModelMarket.swift */,
-				75E654951F10BEFE00230402 /* ModelMarket.xib */,
-				755E39331F08207200CA6BBC /* Info */,
+				75CEB1A22861FD260088DB22 /* ItemCoin.swift */,
+				75CEB1A32861FD260088DB22 /* ItemCoin.xib */,
+				75021372286227C60078453E /* ItemTick.swift */,
+				75021373286227C60078453E /* ItemTick.xib */,
+				755E39331F08207200CA6BBC /* Model */,
 				755E39341F08207700CA6BBC /* Util */,
 				75E6549B1F1684E700230402 /* Resources */,
 				755E39241F081FA400CA6BBC /* Assets.xcassets */,
@@ -113,17 +119,15 @@
 			path = CoinNow;
 			sourceTree = "<group>";
 		};
-		755E39331F08207200CA6BBC /* Info */ = {
+		755E39331F08207200CA6BBC /* Model */ = {
 			isa = PBXGroup;
 			children = (
-				755E393E1F08208600CA6BBC /* InfoCoin.swift */,
-				75E6549E1F175B8400230402 /* Market.swift */,
+				75E6549E1F175B8400230402 /* Site.swift */,
 				75E654A01F175C9F00230402 /* Coin.swift */,
-				75E654A41F17950200230402 /* BaseCurrency.swift */,
+				755E393E1F08208600CA6BBC /* Tick.swift */,
 				75E654A21F1761A400230402 /* MyValue.swift */,
-				7522BF121F586ECA0070561D /* CoinPrice.swift */,
 			);
-			name = Info;
+			name = Model;
 			sourceTree = "<group>";
 		};
 		755E39341F08207700CA6BBC /* Util */ = {
@@ -140,6 +144,8 @@
 		75E6549B1F1684E700230402 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				755129F22862F8E800EC3CDF /* binance.png */,
+				755129F12862F8E800EC3CDF /* upbit.png */,
 				75E654991F1684E200230402 /* NanumSquareL.ttf */,
 				75E6549A1F1684E200230402 /* NanumSquareR.ttf */,
 			);
@@ -166,6 +172,7 @@
 				755E391A1F081FA400CA6BBC /* Frameworks */,
 				755E391B1F081FA400CA6BBC /* Resources */,
 				F38CFD9C39B1AB39632D5DC6 /* [CP] Embed Pods Frameworks */,
+				75F86F7A2862FE640048132C /* ShellScript */,
 			);
 			buildRules = (
 			);
@@ -189,7 +196,7 @@
 					755E391C1F081FA400CA6BBC = {
 						CreatedOnToolsVersion = 8.3.3;
 						DevelopmentTeam = G27DY99B8F;
-						ProvisioningStyle = Automatic;
+						ProvisioningStyle = Manual;
 						SystemCapabilities = {
 							com.apple.Sandbox = {
 								enabled = 0;
@@ -222,9 +229,12 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				75E654961F10BEFE00230402 /* ModelMarket.xib in Resources */,
 				755E39251F081FA400CA6BBC /* Assets.xcassets in Resources */,
+				755129F32862F8E800EC3CDF /* upbit.png in Resources */,
+				75021375286227C60078453E /* ItemTick.xib in Resources */,
+				75CEB1A52861FD260088DB22 /* ItemCoin.xib in Resources */,
 				755E39321F08206E00CA6BBC /* VCPopover.xib in Resources */,
+				755129F42862F8E800EC3CDF /* binance.png in Resources */,
 				755E39281F081FA400CA6BBC /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -232,6 +242,23 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
+		75F86F7A2862FE640048132C /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "# Type a script or drag a script file from your workspace to insert its path.\nxattr -cr ~/Library/Developer/Xcode/DerivedData || echo Clear\n";
+		};
 		8520BBF7B14E12A678777CAF /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -277,19 +304,18 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				7522BF131F586ECA0070561D /* CoinPrice.swift in Sources */,
-				75E654981F10C46B00230402 /* ModelMarket.swift in Sources */,
 				755E393B1F08208000CA6BBC /* Extension.swift in Sources */,
 				755E39391F08208000CA6BBC /* Api.swift in Sources */,
-				75E6549F1F175B8400230402 /* Market.swift in Sources */,
+				75E6549F1F175B8400230402 /* Site.swift in Sources */,
+				75CEB1A42861FD260088DB22 /* ItemCoin.swift in Sources */,
 				75E654A31F1761A400230402 /* MyValue.swift in Sources */,
 				755E393A1F08208000CA6BBC /* Const.swift in Sources */,
 				755E39311F08206E00CA6BBC /* VCPopover.swift in Sources */,
-				755E39401F08208600CA6BBC /* InfoCoin.swift in Sources */,
+				755E39401F08208600CA6BBC /* Tick.swift in Sources */,
+				75021374286227C60078453E /* ItemTick.swift in Sources */,
 				75F538251F1946F200884EAA /* PopoverContentView.swift in Sources */,
 				75E654A11F175C9F00230402 /* Coin.swift in Sources */,
 				755E39211F081FA400CA6BBC /* AppDelegate.swift in Sources */,
-				75E654A51F17950200230402 /* BaseCurrency.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -425,7 +451,8 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = CoinNow/CoinNow.entitlements;
-				CODE_SIGN_IDENTITY = "Mac Developer";
+				CODE_SIGN_IDENTITY = "Apple Development";
+				CODE_SIGN_STYLE = Manual;
 				COMBINE_HIDPI_IMAGES = YES;
 				DEVELOPMENT_TEAM = G27DY99B8F;
 				ENABLE_HARDENED_RUNTIME = YES;
@@ -445,9 +472,10 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = CoinNow/CoinNow.entitlements;
-				CODE_SIGN_IDENTITY = "Mac Developer";
+				CODE_SIGN_IDENTITY = "Apple Development";
+				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
-				DEVELOPMENT_TEAM = G27DY99B8F;
+				DEVELOPMENT_TEAM = "";
 				ENABLE_HARDENED_RUNTIME = YES;
 				INFOPLIST_FILE = CoinNow/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";

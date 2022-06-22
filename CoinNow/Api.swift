@@ -11,100 +11,65 @@ import Alamofire
 import SwiftyJSON
 
 class Api {
-    static let API_STATUS_CODE_SUCCESS_BITHUMB = "0000"
-    static let API_STATUS_CODE_SUCCESS_COINONE = "0"
     static let API_STATUS_CODE_SUCCESS_DING = 200
     
-    static func getCoinsStateBithumb(arrSelectedCoins: [String], complete: @escaping (_ isSuccess: Bool, _ arrResult: [InfoCoin]) -> Void) {
-        var arrResult = addEmptyCoin(arrSelectedCoins: arrSelectedCoins, arrTradableCoins: Market.bithumb.arrTradableCoin())
-        
-        Alamofire.request("https://api.bithumb.com/public/ticker/ALL", method: .get).responseJSON { (responseData) -> Void in
-            guard let resultValue = responseData.result.value else { complete(false, makeResultArrayOfFail()); return }
-            let resultValuseJson = (JSON(resultValue))
-            
-            guard resultValuseJson["status"].stringValue == API_STATUS_CODE_SUCCESS_BITHUMB else { complete(false, makeResultArrayOfFail()); return }
-            
-            for coinName in arrSelectedCoins {
-                //Add only tradable coins
-                guard Market.bithumb.arrTradableCoin().contains(coinName) else { complete(false, makeResultArrayOfFail()); continue}
+    //내 코인 가격
+    //marketAndCode: KRW-BTC
+    static func getMyCoinTick(marketAndCode: String, complete: @escaping (_ isSuccess: Bool, _ results: String?) -> Void) {
+        print("유알엘: https://api.upbit.com/v1/ticker?markets=\(marketAndCode)")
+        if MyValue.mySite == .upbit {
+            Alamofire.request("https://api.upbit.com/v1/ticker?markets=\(marketAndCode)", method: .get).responseJSON { (responseData) -> Void in
+                guard let resultValue = responseData.result.value else { complete(false, nil); return}
+                guard let resultTicks = (JSON(resultValue)).array, resultTicks.count > 0 else { complete(false, nil); return}
+                guard let currentPrice = resultTicks[0]["trade_price"].double else { complete(false, nil); return}
                 
-                guard let currentPrice = resultValuseJson["data"][coinName]["closing_price"].string else { complete(false, makeResultArrayOfFail()); continue }
-                
-                let infoCoin = InfoCoin(coin: Coin.valueOf(name: coinName), currentPrice: (Double(currentPrice) ?? CoinPrice.fail.rawValue))
-                arrResult.append(infoCoin)
+                complete(true, currentPrice.withCommas())
             }
-            complete(true, arrResult)
         }
+        else if MyValue.mySite == .binance {
+            // TODO 바낸 구현
+        }
+        
+        complete(false, "-")
     }
     
-    static func getCoinsStateCoinone(arrSelectedCoins: [String], complete: @escaping (_ isSuccess: Bool, _ arrResult: [InfoCoin]) -> Void){
-        var arrResult = addEmptyCoin(arrSelectedCoins: arrSelectedCoins, arrTradableCoins: Market.coinone.arrTradableCoin())
+    //Upbit 현재 가격
+    static func getUpbitTicks(selectedCoins: [Coin], complete: @escaping (_ isSuccess: Bool, _ results: [Tick]) -> Void){
+        var ticks = [Tick]()
         
-        Alamofire.request("https://api.coinone.co.kr/ticker/?currency=all", method: .get).responseJSON { (responseData) -> Void in
-            guard let resultValue = responseData.result.value else { complete(false, makeResultArrayOfFail()); return }
-            let resultValuseJson = (JSON(resultValue))
-            
-            guard resultValuseJson["errorCode"].stringValue == API_STATUS_CODE_SUCCESS_COINONE else { complete(false, makeResultArrayOfFail()); return }
-            
-            for coinName in arrSelectedCoins {
-                guard Market.coinone.arrTradableCoin().contains(coinName) else { complete(false, makeResultArrayOfFail()); continue}
-                
-                guard let currentPrice = resultValuseJson[coinName.lowercased()]["last"].string else { complete(false, makeResultArrayOfFail()); continue}
-                
-                let infoCoin = InfoCoin(coin: Coin.valueOf(name: coinName), currentPrice: (Double(currentPrice) ?? CoinPrice.fail.rawValue))
-                arrResult.append(infoCoin)
-            }
-            complete(true, arrResult)
-        }
-    }
-    
-    //Upbit 다이쪄
-    static func getCoinsStateUpbit(arrSelectedCoins: [String], complete: @escaping (_ isSuccess: Bool, _ arrResult: [InfoCoin]) -> Void){
-        var arrResult = addEmptyCoin(arrSelectedCoins: arrSelectedCoins, arrTradableCoins: Market.upbit.arrTradableCoin())
+        let marketAndCodeList = selectedCoins.map{ $0.marketAndCode }.joined(separator: ",")
 
-        for coinName in arrSelectedCoins {
-            guard Market.upbit.arrTradableCoin().contains(coinName) else { complete(false, makeResultArrayOfFail()); continue}
+        print("유알엘: https://api.upbit.com/v1/ticker?markets=\(marketAndCodeList)")
+        Alamofire.request("https://api.upbit.com/v1/ticker?markets=\(marketAndCodeList)", method: .get).responseJSON { (responseData) -> Void in
+            guard let resultValue = responseData.result.value else { complete(false, []); return}
+            guard let resultTicks = (JSON(resultValue)).array else { complete(false, []); return}
+            //guard let currentPrice = resultTicks[0]["trade_price"].double else { complete(false, []); return}
             
-            Alamofire.request("https://api.upbit.com/v1/ticker?markets=KRW-\(coinName == "BCH" ? "BCC" : coinName)", method: .get).responseJSON { (responseData) -> Void in
-                guard let resultValue = responseData.result.value else { complete(false, makeResultArrayOfFail()); return}
-                guard let jsonArrayTick = (JSON(resultValue)).array else { complete(false, makeResultArrayOfFail()); return}
-                guard let currentPrice = jsonArrayTick[0]["trade_price"].double else { complete(false, makeResultArrayOfFail()); return}
-                
-                let infoCoin = InfoCoin(coin: Coin.valueOf(name: coinName), currentPrice: currentPrice)
-                arrResult.append(infoCoin)
-                
-                //callback when finish last item request
-                if(arrResult.count == Coin.allValues.count) {
-                    //After all request is finished
-                    complete(true, arrResult)
+            for coin in selectedCoins {
+                for tick in resultTicks {
+                    if tick["market"].stringValue == coin.marketAndCode {
+                        ticks.append(Tick(coin: coin, currentPrice: tick["trade_price"].doubleValue))
+                    }
                 }
             }
+            
+            complete(true, ticks)
         }
     }
     
-    //Add empty object(Not selected coins and Not tradable coins in that market)
-    static func addEmptyCoin(arrSelectedCoins: [String], arrTradableCoins: [String]) -> [InfoCoin] {
-        var arrResult = [InfoCoin]()
+    //Upbit 코인 다 가져오기
+    static func getUpbitCoins(complete: @escaping (_ isSuccess: Bool, _ results: [Coin]) -> Void) {
+        var coins = [Coin]()
         
-        for coinName in Coin.allValues {
-            if(!arrSelectedCoins.contains(coinName) || !arrTradableCoins.contains(coinName)) {
-                let infoCoin = InfoCoin(coin: Coin.valueOf(name: coinName), currentPrice: CoinPrice.noValue.rawValue)
-                arrResult.append(infoCoin)
+        Alamofire.request("https://api.upbit.com/v1/market/all", method: .get).responseJSON { (responseData) -> Void in
+            guard let resultValue = responseData.result.value else { complete(false, []); return}
+            guard let resultCoins = (JSON(resultValue)).array else { complete(false, []); return}
+            
+            for coin in resultCoins {
+                coins.append(Coin(from: .upbit, data: coin))
             }
+            
+            complete(true, coins)
         }
-        
-        return arrResult
-    }
-    
-    //currentPrice == -1 is Fail
-    static func makeResultArrayOfFail() -> [InfoCoin] {
-        var arrResult = [InfoCoin]()
-        
-        for coinName in Coin.allValues {
-            let infoCoin = InfoCoin(coin: Coin.valueOf(name: coinName), currentPrice: CoinPrice.fail.rawValue)
-            arrResult.append(infoCoin)
-        }
-        
-        return arrResult
     }
 }

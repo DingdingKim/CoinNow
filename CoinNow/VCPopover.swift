@@ -13,104 +13,18 @@ class VCPopover: NSViewController {
     
     @IBOutlet weak var btMinimode: NSButton!
     @IBOutlet weak var viewStatusSetting: NSView!
-    @IBOutlet weak var viewStateTable: NSView!
     
     @IBOutlet weak var btStatusUpdatePer: NSPopUpButton!
+    @IBOutlet weak var btStatusSite: NSPopUpButton!
     @IBOutlet weak var btStatusCoin: NSPopUpButton!
-    @IBOutlet weak var btStatusMarket: NSPopUpButton!
     
     @IBOutlet weak var lbLine: NSTextField!
     
-    @IBOutlet weak var lbBaseCurrency: NSTextField!
-    @IBOutlet weak var btBaseCurrency: NSPopUpButton!
     @IBOutlet weak var lbUpdateTime: NSTextField!
     @IBOutlet weak var btRefresh: NSButton!
     
-    @IBOutlet weak var viewCoinCheck: NSView!
-    @IBOutlet weak var stackViewMarketCheck: NSStackView!
-    
-    @IBOutlet weak var cbBtc: NSButton!
-    @IBOutlet weak var cbEth: NSButton!
-    @IBOutlet weak var cbDash: NSButton!
-    @IBOutlet weak var cbLtc: NSButton!
-    @IBOutlet weak var cbEtc: NSButton!
-    @IBOutlet weak var cbXrp: NSButton!
-    @IBOutlet weak var cbBch: NSButton!
-    @IBOutlet weak var cbXmr: NSButton!
-    @IBOutlet weak var cbQtum: NSButton!
-    @IBOutlet weak var cbZec: NSButton!
-    @IBOutlet weak var cbBtg: NSButton!
-    @IBOutlet weak var cbIota: NSButton!
-    @IBOutlet weak var cbEmc2: NSButton!
-    
-    @IBOutlet weak var cbEos: NSButton!
-    @IBOutlet weak var cbAda: NSButton!
-    @IBOutlet weak var cbSnt: NSButton!
-    @IBOutlet weak var cbNeo: NSButton!
-    @IBOutlet weak var cbXlm: NSButton!
-    @IBOutlet weak var cbXem: NSButton!
-    @IBOutlet weak var cbStrat: NSButton!
-    @IBOutlet weak var cbPowr: NSButton!
-    @IBOutlet weak var cbTix: NSButton!
-    @IBOutlet weak var cbSteem: NSButton!
-    @IBOutlet weak var cbMer: NSButton!
-    @IBOutlet weak var cbMtl: NSButton!
-    @IBOutlet weak var cbSbd: NSButton!
-    @IBOutlet weak var cbOmg: NSButton!
-    @IBOutlet weak var cbStorj: NSButton!
-    @IBOutlet weak var cbKmd: NSButton!
-    @IBOutlet weak var cbArk: NSButton!
-    @IBOutlet weak var cbLsk: NSButton!
-    @IBOutlet weak var cbGrs: NSButton!
-    @IBOutlet weak var cbPivx: NSButton!
-    @IBOutlet weak var cbWaves: NSButton!
-    @IBOutlet weak var cbVtc: NSButton!
-    @IBOutlet weak var cbArdr: NSButton!
-    
-    @IBOutlet weak var cbUpbit: NSButton!
-    @IBOutlet weak var cbBithumb: NSButton!
-    @IBOutlet weak var cbCoinone: NSButton!
-    @IBOutlet weak var cbBinance: NSButton!
-    
-    @IBOutlet var lbBtcTitle: NSTextField!
-    @IBOutlet var lbEthTitle: NSTextField!
-    @IBOutlet var lbDashTitle: NSTextField!
-    @IBOutlet var lbLtcTitle: NSTextField!
-    @IBOutlet var lbEtcTitle: NSTextField!
-    @IBOutlet var lbXrpTitle: NSTextField!
-    @IBOutlet var lbBchTitle: NSTextField!
-    @IBOutlet var lbXmrTitle: NSTextField!
-    @IBOutlet var lbQtumTitle: NSTextField!
-    @IBOutlet var lbZecTitle: NSTextField!
-    @IBOutlet var lbBtgTitle: NSTextField!
-    @IBOutlet var lbIotaTitle: NSTextField!
-    @IBOutlet var lbEmc2Title: NSTextField!
-    @IBOutlet var lbEos: NSTextField!
-    @IBOutlet var lbAda: NSTextField!
-    @IBOutlet var lbSnt: NSTextField!
-    @IBOutlet var lbNeo: NSTextField!
-    @IBOutlet var lbXlm: NSTextField!
-    @IBOutlet var lbXem: NSTextField!
-    @IBOutlet var lbStrat: NSTextField!
-    @IBOutlet var lbPowr: NSTextField!
-    @IBOutlet var lbTix: NSTextField!
-    @IBOutlet var lbSteem: NSTextField!
-    @IBOutlet var lbMer: NSTextField!
-    @IBOutlet var lbMtl: NSTextField!
-    @IBOutlet var lbSbd: NSTextField!
-    @IBOutlet var lbOmg: NSTextField!
-    @IBOutlet var lbStorj: NSTextField!
-    @IBOutlet var lbKmd: NSTextField!
-    @IBOutlet var lbArk: NSTextField!
-    @IBOutlet var lbLsk: NSTextField!
-    @IBOutlet var lbGrs: NSTextField!
-    @IBOutlet var lbPivx: NSTextField!
-    @IBOutlet var lbWaves: NSTextField!
-    @IBOutlet var lbVtc: NSTextField!
-    @IBOutlet var lbArdr: NSTextField!
-    
-    @IBOutlet weak var stackViewMarkets: NSStackView!
-    @IBOutlet weak var stackViewCoinName: NSStackView!
+    @IBOutlet weak var collectionViewCoin: NSCollectionView!
+    @IBOutlet weak var collectionViewTick: NSCollectionView!
     
     @IBOutlet weak var btDonate: NSButton!
     @IBOutlet weak var viewDonateToggle: NSView!
@@ -118,35 +32,27 @@ class VCPopover: NSViewController {
     @IBOutlet weak var lbDingAlert: NSTextField!//alert message from Dingding to user
     @IBOutlet weak var cbShowIcon: NSButton!
     
-    var arrCbCoin = [NSButton]()
-    var arrCbMarket = [NSButton]()
+    var currentTab: Site?
     
-    var arrlbCoinTitle = [NSTextField]()
-    
-    var arrMarketView = [ModelMarket]()
-    
-    var countUpdatedMarket: Int = 0
+    var sites: [Site] = [Site]() //default is upbit TODO 바낸으로 할까? 국가별로 하면 좋을거같다
+    var ticks = [Tick]()
     
     override func viewDidLoad() {
-        arrCbCoin = [cbBtc, cbEth, cbDash, cbLtc, cbEtc, cbXrp, cbBch, cbXmr, cbQtum, cbZec, cbBtg, cbIota, cbEmc2,
-                     cbEos, cbAda, cbSnt, cbNeo, cbXlm, cbXem, cbStrat, cbPowr, cbTix, cbSteem, cbMer, cbMtl, cbSbd, cbOmg, cbStorj, cbKmd, cbArk, cbLsk, cbGrs, cbPivx, cbWaves, cbVtc, cbArdr]
-        arrCbMarket = [cbUpbit, cbBithumb, cbCoinone, cbBinance]
-        arrlbCoinTitle = [lbBtcTitle, lbEthTitle, lbDashTitle, lbLtcTitle, lbEtcTitle, lbXrpTitle, lbBchTitle, lbXmrTitle, lbQtumTitle, lbZecTitle, lbBtgTitle, lbIotaTitle, lbEmc2Title,
-                          lbEos, lbAda, lbSnt, lbNeo, lbXlm, lbXem, lbStrat, lbPowr, lbTix, lbSteem, lbMer, lbMtl, lbSbd, lbOmg, lbStorj, lbKmd, lbArk, lbLsk, lbGrs, lbPivx, lbWaves, lbVtc, lbArdr]
-        
-        addMarketView()
-        
-        initView()
+        //MyValue.clear() //For test
         
         //Need to update in outside
-        NotificationCenter.default.addObserver(self, selector: #selector(VCPopover.updateCoinState), name: NSNotification.Name(rawValue: "VCPopover.updateCoinState"), object: nil)
+        //NotificationCenter.default.addObserver(self, selector: #selector(VCPopover.updateTick), name: NSNotification.Name(rawValue: "VCPopover.updateCoinState"), object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(VCPopover.updateTick), name: NSNotification.Name(rawValue: "VCPopover.updateSelectedCoins"), object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(VCPopover.finishSetCoins), name: NSNotification.Name(rawValue: "VCPopover.finishSetCoins"), object: nil)
+        
         NSRunningApplication.current.activate(options: NSApplication.ActivationOptions.activateIgnoringOtherApps)
+        
+        initView()
+        initData()
     }
     
     override func viewWillAppear() {
         super.viewWillAppear()
-        
-        updateCoinState()
         
         if(self.isDarkMode()) {
             (NSApplication.shared.delegate as! AppDelegate).statusItem.image = MyValue.isShowStatusbarIcon ? NSImage(named: "icon_white") : NSImage(named: "icon_none")
@@ -163,6 +69,7 @@ class VCPopover: NSViewController {
             lbLine.backgroundColor = NSColor.darkGray.withAlphaComponent(0.3)
             btMinimode.image = NSImage.init(named: "ic_fullscreen_black")
         }
+        
         NSRunningApplication.current.activate(options: .activateIgnoringOtherApps)
 
         //From Secret Api!
@@ -170,10 +77,28 @@ class VCPopover: NSViewController {
         //isShowDonateLayout()
     }
     
+    func initMyData() {
+        if(UserDefaults.standard.string(forKey: "AppleInterfaceStyle") ?? "Light" == "Dark") {
+            (NSApplication.shared.delegate as! AppDelegate).statusItem.image = NSImage(named: "icon_white")
+        }
+    }
+    
+    func initData() {
+        for siteType in SiteType.allCases {
+            let site = Site(siteType: siteType)
+            
+            self.sites.append(site)
+            
+            if siteType == Const.DEFAULT_SITE_TYPE {
+                self.currentTab = site
+            }
+        }
+        
+        self.updateTick()
+    }
+    
     //Setup popup buttons
     func initView() {
-        //MyValue.clear() //For test
-        
         viewDonateToggle.isHidden = true
         viewDonate.isHidden = true
         
@@ -182,235 +107,103 @@ class VCPopover: NSViewController {
         //For animation..
         btRefresh.wantsLayer = true
         
-        //Popup Button
+        //initStatusBarConfigureView()
+        initCoinCollectionView()
+        initTickCollectionView()
+    }
+    
+    //코인정보 다 가지고 온 다음에 호출되어야한다
+    func initStatusBarConfigureView() {
+        guard let mySite = sites.filter({ $0.siteType == MyValue.mySite }).first else { return }
+        
         btStatusUpdatePer.addItems(withTitles: Array(Const.dicUpdatePerSec.keys))
-        btStatusCoin.addItems(withTitles: Coin.allValues)
-        btStatusMarket.addItems(withTitles: Market.allValues)
-        btBaseCurrency.addItems(withTitles: BaseCurrency.allValues)
-        
+        btStatusSite.addItems(withTitles: SiteType.allCases.map{ $0.rawValue })
+        btStatusCoin.addItems(withTitles: mySite.coins.map { $0.marketAndCode })
+
         btStatusUpdatePer.selectItem(withTitle: MyValue.updatePer)
-        btStatusCoin.selectItem(withTitle: MyValue.myCoin.rawValue)
-        btStatusMarket.selectItem(withTitle: MyValue.myMarket.rawValue)
-        btBaseCurrency.selectItem(withTitle: MyValue.myBaseCurrency.rawValue)
+        btStatusSite.selectItem(withTitle: MyValue.mySite.rawValue)
+        btStatusCoin.selectItem(withTitle: MyValue.myCoin)
+        
         cbShowIcon.state = MyValue.isShowStatusbarIcon ? .on : .off
-        
-        //Check Button
-        for cb in arrCbCoin {
-            cb.state = MyValue.arrSelectedCoin.contains(cb.title) ? .on : .off
-            
-            //Hide not selected coin view
-            if(!MyValue.arrSelectedCoin.contains(cb.title)) {
-                arrlbCoinTitle[cb.tag].isHidden = true
-                
-                for index in 0...arrMarketView.count-1 {
-                    arrMarketView[index].setVisibilityLabel(position: cb.tag, isHidden: true)
-                }
-            }
-        }
-        for cb in arrCbMarket {
-            cb.state = MyValue.arrSelectedMarket.contains(cb.title) ? .on : .off
-            
-            //Hide not selected market view
-            if(!MyValue.arrSelectedMarket.contains(cb.title)) {
-                stackViewMarkets.subviews[cb.tag].isHidden = true
-            }
-        }
     }
     
-    //Add exchange market view
-    func addMarketView() {
-        for marketName in Market.allValues {
-            let view = ModelMarket(frame: NSRect(x: 0, y: 0, width: 0, height: 0), title: marketName)
-            
-            self.stackViewMarkets.addArrangedSubview(view.view)
-            
-            arrMarketView.append(view)
-            
-            //Hide not selected market view
-            if(!MyValue.arrSelectedMarket.contains(marketName)) {
-                view.isHidden = true
-            }
-        }
+    func initCoinCollectionView() {
+        collectionViewCoin.register(NSNib(nibNamed: "ItemCoin", bundle: nil), forItemWithIdentifier: NSUserInterfaceItemIdentifier(rawValue: "ItemCoin"))
         
-        //첫번째 더해지는 애는 앞 라인을 숨긴다
-        for viewMarket in arrMarketView {
-            if(!viewMarket.isHidden) {
-                viewMarket.hideSeparator()
-                break;
-            }
-        }
+        let gridLayout = NSCollectionViewGridLayout()
+        gridLayout.minimumItemSize = NSSize(width: collectionViewCoin.frame.width/4.2, height: 30.0)
+        gridLayout.maximumItemSize = NSSize(width: collectionViewCoin.frame.width/4.2, height: 30.0)
+        gridLayout.maximumNumberOfColumns = 4
+        collectionViewCoin.collectionViewLayout = gridLayout
     }
     
-    //Update coins sate in popover view
-    @objc func updateCoinState() {
+    func initTickCollectionView() {
+        collectionViewTick.register(NSNib(nibNamed: "ItemTick", bundle: nil), forItemWithIdentifier: NSUserInterfaceItemIdentifier(rawValue: "ItemTick"))
+        
+        let gridLayout = NSCollectionViewGridLayout()
+        gridLayout.minimumItemSize = NSSize(width: collectionViewTick.frame.width/2.2, height: 50.0)
+        gridLayout.maximumItemSize = NSSize(width: collectionViewTick.frame.width/2.2, height: 50.0)
+        gridLayout.maximumNumberOfColumns = 2
+        collectionViewTick.collectionViewLayout = gridLayout
+    }
+    
+    //각 사이트 생성자에서 코인 로드가 완료 되면 호출
+    @objc func finishSetCoins() {
+        collectionViewCoin.reloadData()
+        updateTick()
+        
+        initStatusBarConfigureView()
+    }
+    
+    //Update tick in popover view
+    @objc func updateTick() {
         lbUpdateTime.stringValue = Const.DEFAULT_LOADING_TEXT
         
-        //Calculate count of selected market
-        for cb in arrCbMarket {
-            if(cb.state == .on) {
-                countUpdatedMarket += 1
-            }
-        }
-        
-        //Update only selected market
-        for cb in arrCbMarket {
-            if(cb.state == .on) {
-                getCoinStateFromApi(indexOfMarket: arrCbMarket.firstIndex(of: cb)!)
-            }
-        }
-    }
-    
-    func getCoinStateFromApi(indexOfMarket: Int) {
-        if(indexOfMarket == 0){
-            Api.getCoinsStateBithumb(arrSelectedCoins: MyValue.arrSelectedCoin, complete: {isSuccess, arrResult in
-                self.updateStateViewAfterGetDataFromApi(isSuccess: isSuccess, indexOfView: indexOfMarket, arrData: arrResult)
-            })
-        }
-        else if(indexOfMarket == 1) {
-            Api.getCoinsStateCoinone(arrSelectedCoins: MyValue.arrSelectedCoin, complete: {isSuccess, arrResult in
-                self.updateStateViewAfterGetDataFromApi(isSuccess: isSuccess, indexOfView: indexOfMarket, arrData: arrResult)
-            })
-        }
-        else if(indexOfMarket == 2) {
-            Api.getCoinsStateUpbit(arrSelectedCoins: MyValue.arrSelectedCoin, complete: {isSuccess, arrResult in
-                //print("야\(arrResult)")
-                self.updateStateViewAfterGetDataFromApi(isSuccess: isSuccess, indexOfView: indexOfMarket, arrData: arrResult)
-            })
-        }
-    }
-    
-    func updateStateViewAfterGetDataFromApi(isSuccess: Bool, indexOfView: Int, arrData: [InfoCoin]) {
-        if(isSuccess){
-            self.arrMarketView[indexOfView].updateCoinState(arrData: arrData)
+        Api.getUpbitTicks(selectedCoins: MyValue.selectedCoins, complete: { isSuccess, result in
+            self.ticks.removeAll()
+            self.ticks.append(contentsOf: result)
             
-            //Set update time
-            //self.lbUpdateTime.stringValue = Date().todayString(format: "yyyy.MM.dd HH:mm:ss")
-        }
-        else{
-            //Set update fail time
-            //self.lbUpdateTime.stringValue = Date().todayString(format: "yyyy.MM.dd HH:mm:ss") + "last update is failed"
-        }
-        countUpdatedMarket -= 1
-        
-        if(countUpdatedMarket <= 0){
-            //toggleRefreshButtonAnimation(isRotate: false)
-            lbUpdateTime.stringValue = Date().todayString(format: "yyyy.MM.dd HH:mm:ss")
-            countUpdatedMarket = 0
-        }
-    }
-    
-//    //Alert message from Dingding(developer this app)
-//    func getDingdingAlertMessage() {
-//        SecretApi.getDingAlertMessage(complete: {isSuccess, message in
-//            if(isSuccess){
-//                self.lbDingAlert.isHidden = false
-//                self.lbDingAlert.stringValue = message
-//            }
-//            else {
-//                self.lbDingAlert.isHidden = true
-//            }
-//        })
-//    }
-//
-//    //🤑🤑🤑😢😢😢
-//    func isShowDonateLayout() {
-//        SecretApi.isShowDonateLayout(complete: {isSuccess, result in
-//            guard let isWillShow = Bool(result), isSuccess else {self.toggleDonateView(false); return}
-//            self.toggleDonateView(isWillShow)
-//        })
-//    }
-    
-    func toggleDonateView(_ isShow: Bool) {
-        if(isShow) {
-            viewDonateToggle.isHidden = false
-        }
-        else {
-            viewDonateToggle.isHidden = true
-        }
-    }
-    
-    //change coin(will update) check state
-    @IBAction func changeCheckCoin(_ sender: NSButton) {
-        if(MyValue.arrSelectedCoin.count > 15) {
-            sender.state = .off
-        }
-        
-        let isChecked = sender.state == .on
-        
-        //Hide coin name label
-        arrlbCoinTitle[sender.tag].isHidden = !isChecked
-        
-        //Hide price label in model view
-        for index in 0...arrMarketView.count-1 {
-            arrMarketView[index].setVisibilityLabel(position: sender.tag, isHidden: !isChecked)
-        }
-        
-        var arrSelected = [String]()
-        for cb in arrCbCoin {
-            if(cb.state == .on){
-                arrSelected.append(Coin.allValues[cb.tag])
+            self.collectionViewTick.reloadData()
+            
+            self.lbUpdateTime.stringValue = Date().todayString(format: "yyyy.MM.dd HH:mm:ss")
+            
+            if !isSuccess {
+                self.lbUpdateTime.stringValue = self.lbUpdateTime.stringValue + " last update is failed"
             }
-        }
-        MyValue.arrSelectedCoin = arrSelected
+        })
     }
     
-    //change market check state
-    @IBAction func changeCheckMarket(_ sender: NSButton) {
-        let isChecked = sender.state == .on
-        
-        stackViewMarkets.subviews[sender.tag].isHidden = !isChecked
-        
-        var arrSelected = [String]()
-        for cb in arrCbMarket {
-            if(cb.state == .on){
-                arrSelected.append(Market.allValues[cb.tag])
-            }
-        }
-        MyValue.arrSelectedMarket = arrSelected
-        
-        //첫번째 더해지는 애는 앞 라인을 숨긴다
-        for viewMarket in arrMarketView {
-            if(!viewMarket.isHidden) {
-                viewMarket.hideSeparator()
-                break;
-            }
-        }
-    }
-    
-    //Change Update per sec
     @IBAction func changeUpdatePer(_ sender: NSPopUpButton) {
         MyValue.updatePer = sender.titleOfSelectedItem ?? Const.DEFAULT_UPDATE_PER.stirng
     }
     
-    //Change my coin
-    @IBAction func changeMyCoin(_ sender: NSPopUpButton) {
-        MyValue.myCoin = Coin.valueOf(name: sender.titleOfSelectedItem!)
-    }
-    
-    //Change trading market
-    @IBAction func changeMyMarket(_ sender: NSPopUpButton) {
-        MyValue.myMarket = Market.valueOf(name: sender.titleOfSelectedItem!)
+    @IBAction func changeMySite(_ sender: NSPopUpButton) {
+        guard let currentTab = currentTab else { return }
         
-        //Update coin list for selected market
+        let currentTabCoins = currentTab.coins.map { $0.marketAndCode }
+        
+        MyValue.mySite = SiteType(rawValue: sender.titleOfSelectedItem!) ?? .upbit
+
+        //Update coin list for selected site
         btStatusCoin.removeAllItems()
-        btStatusCoin.addItems(withTitles: Market.valueOf(name: sender.title).arrTradableCoin())
-        
+        btStatusCoin.addItems(withTitles: currentTabCoins)
+
         //Current my coin is not tradable in changed market. So change my coin to first coin of tradable coins in my market.
-        if(!Market.valueOf(name: sender.title).arrTradableCoin().contains(MyValue.myCoin.rawValue)) {
+        if currentTabCoins.count > 0,
+           !currentTabCoins.contains(MyValue.myCoin) {
             btStatusCoin.selectItem(at: 0)
-            
-            MyValue.myCoin = Coin.valueOf(name: btStatusCoin.titleOfSelectedItem!)
+
+            MyValue.myCoin = currentTab.coins[0].marketAndCode
         }
     }
     
-    //Change Base Currency
-    @IBAction func changeBaseCurrency(_ sender: NSPopUpButton) {
-        MyValue.myBaseCurrency = BaseCurrency.valueOf(name: sender.titleOfSelectedItem!)
+    @IBAction func changeMyCoin(_ sender: NSPopUpButton) {
+        MyValue.myCoin = sender.titleOfSelectedItem!//currentTab. MyValue.mySite.coins.filter { $0.coin }// Coin.valueOf(name: sender.titleOfSelectedItem!)
     }
     
     //Refresh data
     @IBAction func clickRefresh(_ sender: NSButton) {
-        updateCoinState()
+        updateTick()
     }
     
     @IBAction func clickMinimode(_ sender: Any) {
@@ -418,11 +211,7 @@ class VCPopover: NSViewController {
 
         if(MyValue.isSimpleMode) {
             viewStatusSetting.isHidden = true
-            viewCoinCheck.isHidden = true
-            stackViewMarketCheck.isHidden = true
             lbLine.isHidden = true
-            lbBaseCurrency.isHidden = true
-            btBaseCurrency.isHidden = true
             
             btMinimode.image = NSImage.init(named: self.isDarkMode() ? "ic_fullscreen_white" : "ic_fullscreen_black")
         }
@@ -432,9 +221,6 @@ class VCPopover: NSViewController {
                     view.isHidden = false
                 }
             }
-            
-            lbBaseCurrency.isHidden = false
-            btBaseCurrency.isHidden = false
             
             btMinimode.image = NSImage.init(named: self.isDarkMode() ? "ic_fullscreen_exit_white" : "ic_fullscreen_exit_black")
         }
@@ -456,11 +242,11 @@ class VCPopover: NSViewController {
     
     //Click to copy donate address
     @IBAction func clickCopyDonateAddress(_ sender: NSButton) {
-        let address = Coin.donateAddress(index: sender.tag)
-        
-        let pasteboard = NSPasteboard.general
-        pasteboard.declareTypes([NSPasteboard.PasteboardType.string], owner: nil)
-        pasteboard.setString(address, forType: NSPasteboard.PasteboardType.string)
+//        let address = Coin.donateAddress(index: sender.tag)
+//
+//        let pasteboard = NSPasteboard.general
+//        pasteboard.declareTypes([NSPasteboard.PasteboardType.string], owner: nil)
+//        pasteboard.setString(address, forType: NSPasteboard.PasteboardType.string)
     }
     
     //Show icon in status bar
@@ -503,5 +289,55 @@ class VCPopover: NSViewController {
         } else {
             btRefresh.layer?.removeAllAnimations()
         }
+    }
+}
+
+
+// MARK: - NSCollectionViewDataSource
+extension VCPopover: NSCollectionViewDataSource {
+    func collectionView(_ collectionView: NSCollectionView, numberOfItemsInSection section: Int) -> Int {
+        if collectionView == collectionViewCoin {
+            return currentTab?.coins.count ?? 0
+        }
+        else if collectionView == collectionViewTick {
+            return ticks.count
+        }
+
+        return 0
+    }
+    
+    func numberOfSections(in collectionView: NSCollectionView) -> Int {
+        return 1
+    }
+    
+    func collectionView(_ collectionView: NSCollectionView, itemForRepresentedObjectAt indexPath: IndexPath) -> NSCollectionViewItem {
+        if collectionView == collectionViewCoin {
+            let item = collectionView.makeItem(withIdentifier: NSUserInterfaceItemIdentifier(rawValue: "ItemCoin"), for: indexPath) as! ItemCoin
+            guard let coins = currentTab?.coins else { return NSCollectionViewItem() }
+            
+            item.data = coins[indexPath.item]
+
+            return item
+        }
+        else if collectionView == collectionViewTick {
+            let item = collectionView.makeItem(withIdentifier: NSUserInterfaceItemIdentifier(rawValue: "ItemTick"), for: indexPath) as! ItemTick
+            item.updateView(tick: ticks[ indexPath.item])
+            
+            return item
+        }
+
+        return NSCollectionViewItem()
+    }
+}
+
+
+// MARK: - NSCollectionViewDelegateFlowLayout
+extension VCPopover: NSCollectionViewDelegateFlowLayout {
+//    func collectionView(_ collectionView: NSCollectionView, layout collectionViewLayout: NSCollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> NSSize {
+//        return NSSize(width: 150.0, height: 150.0)
+//    }
+    
+    func collectionView(_ collectionView: NSCollectionView, layout collectionViewLayout: NSCollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> NSSize {
+        return .zero
     }
 }

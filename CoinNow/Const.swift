@@ -14,25 +14,24 @@ struct Const {
 //    static let HOST_CRYPTOWATCH = "https://api.cryptowat.ch"
     
 //    static let COIN_PRICE_LOAD_FAIL = -1.0 //When server does not receive a value
-//    static let COIN_PRICE_NO_VALUE = 0.0 //When there is no value to display. This is not fail. (Conin that can not be traded on the market.)
+//    static let COIN_PRICE_NO_VALUE = 0.0 //When there is no value to display. This is not fail. (Conin that can not be traded on the site.)
     
     //Default values
     static let DEFAULT_UPDATE_PER: (stirng: String, double: Double) = ("1min", 60)
-    static let DEFAULT_MY_COIN = Coin.btc.rawValue
-    static let DEFAULT_MY_MARKET = Market.bithumb.rawValue
-    static let DEFAULT_MY_BASE_CURRENCY = BaseCurrency.krw.rawValue
+    static let DEFAULT_MY_COIN = "KRW-BTC"// TODO Coin.btc.rawValue
+    static let DEFAULT_MY_SITE = SiteType.upbit.rawValue
+    static let DEFAULT_SITE_TYPE: SiteType = .upbit
     static let DEFAULT_LOADING_TEXT = "Loading.."
-    //static let USDT_RATE: Double = 1.01 //poloniex is used usdt.
     
     struct UserDefaultKey {
         static let MY_COIN = "MY_COIN" //Coin that show in status bar
-        static let MY_MARKET = "MY_MARKET" //Trading market that show in status bar
-        static let MY_BASE_CURRENCY = "MY_BASE_CURRENCY"
+        static let MY_SITE = "MY_SITE" //Trading site that show in status bar
+        static let MY_MARKET = "MY_MARKET"
         static let UPDATE_PER = "UPDATE_PER" //type is String(keys of dicUpdatePerSec)
         static let IS_SHOW_ICON = "IS_SHOW_ICON" //Show icon in statusbar
         
-        //will update market and coin
-        static let SELECTED_MARKETS = "SELECTED_MARKETS"
+        //will update site and coin
+        static let SELECTED_SITES = "SELECTED_SITES"
         static let SELECTED_COINS = "SELECTED_COINS"
         
         static let IS_SIMPLE_MODE = "IS_SIMPLE_MODE"

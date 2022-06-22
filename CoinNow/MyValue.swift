@@ -21,62 +21,39 @@ struct MyValue {
         }
     }
     
+    //상태바 거래소
+    static var mySite: SiteType = SiteType(rawValue: UserDefaults.standard.string(forKey: Const.UserDefaultKey.MY_SITE) ?? Const.DEFAULT_MY_SITE) ?? .upbit {
+        didSet {
+            UserDefaults.standard.set(mySite.rawValue, forKey: Const.UserDefaultKey.MY_SITE)
+            UserDefaults.standard.synchronize()
+            
+            (NSApplication.shared.delegate as! AppDelegate).updateStatusLabel(willShowLoadingText: false)
+            //debugPrint("mySite >> didSet \(mySite.rawValue)")
+        }
+    }
+    
     //상태바 코인
-    static var myCoin: Coin = Coin.valueOf(name: UserDefaults.standard.string(forKey: Const.UserDefaultKey.MY_COIN) ?? Const.DEFAULT_MY_COIN) {
+    static var myCoin: String = UserDefaults.standard.string(forKey: Const.UserDefaultKey.MY_COIN) ?? Const.DEFAULT_MY_COIN {
         didSet {
-            UserDefaults.standard.set(myCoin.rawValue, forKey: Const.UserDefaultKey.MY_COIN)
+            UserDefaults.standard.set(myCoin, forKey: Const.UserDefaultKey.MY_COIN)
             UserDefaults.standard.synchronize()
-            
-            (NSApplication.shared.delegate as! AppDelegate).updateStatusLabel(willShowLoadingText: false)
-            //debugPrint("myCoin >> didSet \(myCoin.rawValue)")
-        }
-    }
-    
-    //상태바 코인의 사이트
-    static var myMarket: Market = Market.valueOf(name: UserDefaults.standard.string(forKey: Const.UserDefaultKey.MY_MARKET) ?? Const.DEFAULT_MY_MARKET) {
-        didSet {
-            UserDefaults.standard.set(myMarket.rawValue, forKey: Const.UserDefaultKey.MY_MARKET)
-            UserDefaults.standard.synchronize()
-            
-            (NSApplication.shared.delegate as! AppDelegate).updateStatusLabel(willShowLoadingText: false)
-            //debugPrint("myMarket >> didSet \(myMarket.rawValue)")
-        }
-    }
-    
-    //기준 통화
-    static var myBaseCurrency: BaseCurrency = BaseCurrency.valueOf(name: UserDefaults.standard.string(forKey: Const.UserDefaultKey.MY_BASE_CURRENCY) ?? Const.DEFAULT_MY_BASE_CURRENCY) {
-        didSet {
-            UserDefaults.standard.set(myBaseCurrency.rawValue, forKey: Const.UserDefaultKey.MY_BASE_CURRENCY)
-            UserDefaults.standard.synchronize()
-            
-            NotificationCenter.default.post(name: NSNotification.Name(rawValue: "VCPopover.updateCoinState"), object: nil)
 
             (NSApplication.shared.delegate as! AppDelegate).updateStatusLabel(willShowLoadingText: false)
-            //debugPrint("myBaseCurrency >> didSet \(myBaseCurrency.rawValue)")
+            debugPrint("myCoin >> didSet \(String(describing: myCoin))")
         }
     }
     
     //선택된 코인들
-    static var arrSelectedCoin: [String] = UserDefaults.standard.stringArray(forKey: Const.UserDefaultKey.SELECTED_COINS) ?? Coin.defaultSelectedValues {
+    static var selectedCoins: [Coin] = (try? PropertyListDecoder().decode([Coin].self, from: UserDefaults.standard.data(forKey: Const.UserDefaultKey.SELECTED_COINS) ?? Data())) ?? [Coin]() {
         didSet {
-            UserDefaults.standard.set(arrSelectedCoin, forKey: Const.UserDefaultKey.SELECTED_COINS)
-            UserDefaults.standard.synchronize()
+            if let data = try? PropertyListEncoder().encode(selectedCoins) {
+                UserDefaults.standard.set(data, forKey: Const.UserDefaultKey.SELECTED_COINS)
+                UserDefaults.standard.synchronize()
+            }
             
-            NotificationCenter.default.post(name: NSNotification.Name(rawValue: "VCPopover.updateCoinState"), object: nil)
+            NotificationCenter.default.post(name: NSNotification.Name(rawValue: "VCPopover.updateSelectedCoins"), object: nil)
             
-            //debugPrint("arrSelectedCoin >> didSet \(arrSelectedCoin)")
-        }
-    }
-    
-    //선택된 사이트들
-    static var arrSelectedMarket: [String] = UserDefaults.standard.stringArray(forKey: Const.UserDefaultKey.SELECTED_MARKETS) ?? Market.defaultSelectedValues {
-        didSet {
-            UserDefaults.standard.set(arrSelectedMarket, forKey: Const.UserDefaultKey.SELECTED_MARKETS)
-            UserDefaults.standard.synchronize()
-            
-            NotificationCenter.default.post(name: NSNotification.Name(rawValue: "VCPopover.updateCoinState"), object: nil)
-            
-            //debugPrint("arrSelectedMarket >> didSet \(arrSelectedMarket)")
+            //debugPrint("selectedCoins >> didSet \(selectedCoins)")
         }
     }
     
@@ -100,11 +77,11 @@ struct MyValue {
     static func clear() {
         UserDefaults.standard.removeObject(forKey: Const.UserDefaultKey.IS_SHOW_ICON)
         UserDefaults.standard.removeObject(forKey: Const.UserDefaultKey.IS_SIMPLE_MODE)
-        UserDefaults.standard.removeObject(forKey: Const.UserDefaultKey.MY_BASE_CURRENCY)
+        UserDefaults.standard.removeObject(forKey: Const.UserDefaultKey.MY_MARKET)
         UserDefaults.standard.removeObject(forKey: Const.UserDefaultKey.MY_COIN)
         UserDefaults.standard.removeObject(forKey: Const.UserDefaultKey.MY_MARKET)
         UserDefaults.standard.removeObject(forKey: Const.UserDefaultKey.SELECTED_COINS)
-        UserDefaults.standard.removeObject(forKey: Const.UserDefaultKey.SELECTED_MARKETS)
+        UserDefaults.standard.removeObject(forKey: Const.UserDefaultKey.SELECTED_SITES)
         UserDefaults.standard.removeObject(forKey: Const.UserDefaultKey.UPDATE_PER)
         UserDefaults.standard.synchronize()
         

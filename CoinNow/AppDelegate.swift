@@ -52,38 +52,16 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     
     //Set label that show my coin state at status bar
     @objc public func updateStatusLabel(willShowLoadingText: Bool) {
-        //print("Update Status Label : \(MyValue.myMarket) / \(MyValue.myCoin.rawValue) / \(MyValue.myBaseCurrency.rawValue)")
+        //print("Update Status Label : \(MyValue.mySite) / \(String(describing: MyValue.myCoin))")
         
-        if(MyValue.myMarket == .bithumb){
-            Api.getCoinsStateBithumb(arrSelectedCoins: [MyValue.myCoin.rawValue], complete: {isSuccess, arrResult in
-                for infoCoin in arrResult {
-                    if(infoCoin.coin == MyValue.myCoin) {
-                        self.setStatusLabelTitle(title: "\(infoCoin.coin.rawValue) \(Double(infoCoin.currentPrice).withCommas()) ")
-                        break
-                    }
-                }
+        guard !MyValue.myCoin.isEmpty else { return }
+        
+        if MyValue.mySite == .upbit {
+            Api.getMyCoinTick(marketAndCode: MyValue.myCoin, complete: { isSuccess, result in
+                self.setStatusLabelTitle(title: "\(MyValue.myCoin.split(separator: "-")[1]) \(result ?? "-") ")
             })
         }
-        else if(MyValue.myMarket == .coinone) {
-            Api.getCoinsStateCoinone(arrSelectedCoins: [MyValue.myCoin.rawValue], complete: {isSuccess, arrResult in
-                for infoCoin in arrResult {
-                    if(infoCoin.coin == MyValue.myCoin) {
-                        self.setStatusLabelTitle(title: "\(infoCoin.coin.rawValue) \(Double(infoCoin.currentPrice).withCommas()) ")
-                        break
-                    }
-                }
-            })
-        }
-        else if(MyValue.myMarket == .upbit) {
-            Api.getCoinsStateUpbit(arrSelectedCoins: [MyValue.myCoin.rawValue], complete: {isSuccess, arrResult in
-                for infoCoin in arrResult {
-                    if(infoCoin.coin == MyValue.myCoin) {
-                        self.setStatusLabelTitle(title: "\(infoCoin.coin.rawValue) \(Double(infoCoin.currentPrice).withCommas()) ")
-                        break
-                    }
-                }
-            })
-        }
+        //TODO 바낸 추가하기
     }
     
     public func setStatusLabelTitle(title: String) {
@@ -113,4 +91,3 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         AppDelegate.timer.invalidate()
     }
 }
-

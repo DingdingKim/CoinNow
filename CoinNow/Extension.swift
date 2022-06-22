@@ -9,6 +9,15 @@
 import Foundation
 import Cocoa
 
+extension NSNumber {
+    func withCommas() -> String {
+        let numberFormatter = NumberFormatter()
+        numberFormatter.numberStyle = NumberFormatter.Style.decimal
+        
+        return numberFormatter.string(from: self)!
+    }
+}
+
 extension Double {
     func withCommas() -> String {
         let numberFormatter = NumberFormatter()

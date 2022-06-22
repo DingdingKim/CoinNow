@@ -1,5 +1,5 @@
 //
-//  InfoCoin.swift
+//  Tick.swift
 //  DDCurrentCoinState
 //
 //  Created by DingMac on 2017. 6. 29..
@@ -8,8 +8,8 @@
 
 import Foundation
 
-struct InfoCoin {
-    var coin: Coin //Coin name
+struct Tick {
+    var coin: Coin
     var currentPrice: Double
     
     init(coin: Coin, currentPrice: Double) {
