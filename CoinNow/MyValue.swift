@@ -27,7 +27,7 @@ struct MyValue {
             UserDefaults.standard.set(mySiteType.rawValue, forKey: Const.UserDefaultKey.MY_SITE)
             UserDefaults.standard.synchronize()
             
-            (NSApplication.shared.delegate as! AppDelegate).updateStatusLabel(willShowLoadingText: false)
+            (NSApplication.shared.delegate as! AppDelegate).updateStatusItem(willShowLoadingText: false)
             //debugPrint("mySiteType >> didSet \(mySiteType.rawValue)")
         }
     }
@@ -38,7 +38,7 @@ struct MyValue {
             UserDefaults.standard.set(myCoin, forKey: Const.UserDefaultKey.MY_COIN)
             UserDefaults.standard.synchronize()
 
-            (NSApplication.shared.delegate as! AppDelegate).updateStatusLabel(willShowLoadingText: false)
+            (NSApplication.shared.delegate as! AppDelegate).updateStatusItem(willShowLoadingText: false)
             debugPrint("myCoin >> didSet \(String(describing: myCoin))")
         }
     }
@@ -70,19 +70,33 @@ struct MyValue {
         didSet {
             UserDefaults.standard.set(isShowStatusbarIcon, forKey: Const.UserDefaultKey.IS_SHOW_ICON)
             UserDefaults.standard.synchronize()
+            
+            (NSApplication.shared.delegate as! AppDelegate).updateStatusItem(willShowLoadingText: false)
+        }
+    }
+    
+    //상태바에 마켓 코드 표시 여부
+    static var isShowStatusbarMarket: Bool = UserDefaults.standard.bool(forKey: Const.UserDefaultKey.IS_SHOW_MARKET) {
+        didSet {
+            UserDefaults.standard.set(isShowStatusbarMarket, forKey: Const.UserDefaultKey.IS_SHOW_MARKET)
+            UserDefaults.standard.synchronize()
+            
+            (NSApplication.shared.delegate as! AppDelegate).updateStatusItem(willShowLoadingText: false)
         }
     }
     
     //다 지우기
     static func clear() {
-        UserDefaults.standard.removeObject(forKey: Const.UserDefaultKey.IS_SHOW_ICON)
         UserDefaults.standard.removeObject(forKey: Const.UserDefaultKey.IS_SIMPLE_MODE)
-        UserDefaults.standard.removeObject(forKey: Const.UserDefaultKey.MY_MARKET)
-        UserDefaults.standard.removeObject(forKey: Const.UserDefaultKey.MY_COIN)
-        UserDefaults.standard.removeObject(forKey: Const.UserDefaultKey.MY_MARKET)
-        UserDefaults.standard.removeObject(forKey: Const.UserDefaultKey.SELECTED_COINS)
-        UserDefaults.standard.removeObject(forKey: Const.UserDefaultKey.SELECTED_SITES)
         UserDefaults.standard.removeObject(forKey: Const.UserDefaultKey.UPDATE_PER)
+        UserDefaults.standard.removeObject(forKey: Const.UserDefaultKey.MY_SITE)
+        UserDefaults.standard.removeObject(forKey: Const.UserDefaultKey.MY_COIN)
+        UserDefaults.standard.removeObject(forKey: Const.UserDefaultKey.IS_SHOW_ICON)
+        UserDefaults.standard.removeObject(forKey: Const.UserDefaultKey.IS_SHOW_MARKET)
+        
+        UserDefaults.standard.removeObject(forKey: Const.UserDefaultKey.SELECTED_COINS)
+        
         UserDefaults.standard.synchronize()
     }
 }
+

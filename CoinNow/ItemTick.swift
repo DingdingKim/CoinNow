@@ -28,7 +28,10 @@ class ItemTick: NSCollectionViewItem {
         lbMarket.stringValue = "\(tick.coin.code)/\(tick.coin.market)"
         lbKPremium.stringValue = ""
         
-        lineRight.isHidden = index % 2 != 0
+        //lineRight.isHidden = index % 2 != 0
         //lineBottom.isHidden = isLastRow
+        
+        lineRight.isHidden = true
+        //lineBottom.isHidden = true
     }
 }

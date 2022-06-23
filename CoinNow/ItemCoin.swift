@@ -24,7 +24,7 @@ class ItemCoin: NSCollectionViewItem {
     }
     
     func updateView() {
-        btnCoin.title = data.marketAndCode
+        btnCoin.title = data.code
         btnCoin.state = data.isChecked ? .on : .off
     }
     

@@ -14,10 +14,11 @@ class VCPopover: NSViewController {
     @IBOutlet weak var btMinimode: NSButton!
     @IBOutlet weak var viewStatusSetting: NSView!
     
-    @IBOutlet weak var cbShowIcon: NSButton!
     @IBOutlet weak var btStatusUpdatePer: NSPopUpButton!
     @IBOutlet weak var btStatusSite: NSPopUpButton!
     @IBOutlet weak var btStatusCoin: NSPopUpButton!
+    @IBOutlet weak var cbShowIcon: NSButton!
+    @IBOutlet weak var cbShowMarket: NSButton!
     
     @IBOutlet weak var lbLine: NSTextField!
     
@@ -79,7 +80,7 @@ class VCPopover: NSViewController {
         
         //For animation..
         btRefresh.wantsLayer = true
-        viewSelectCoins.customBackgroundColor = NSColor.black.withAlphaComponent(0.1)
+        collectionViewCoin.customBackgroundColor = NSColor.black.withAlphaComponent(0.1)
         
         initTickCollectionView()
     }
@@ -115,11 +116,10 @@ class VCPopover: NSViewController {
         collectionViewTick.delegate = self
         collectionViewTick.register(NSNib(nibNamed: "ItemTick", bundle: nil), forItemWithIdentifier: NSUserInterfaceItemIdentifier(rawValue: "ItemTick"))
         
-        let gridLayout = NSCollectionViewGridLayout()
-        gridLayout.minimumItemSize = NSSize(width: collectionViewTick.frame.width/2, height: 45.0)
-        gridLayout.maximumItemSize = NSSize(width: collectionViewTick.frame.width/2, height: 45.0)
-        gridLayout.maximumNumberOfColumns = 2
-        collectionViewTick.collectionViewLayout = gridLayout
+        let flowLayout = NSCollectionViewFlowLayout()
+        flowLayout.minimumInteritemSpacing = 0
+        flowLayout.minimumLineSpacing = 0
+        collectionViewTick.collectionViewLayout = flowLayout
     }
     
     //각 사이트 생성자에서 코인 로드가 완료 되면 호출
@@ -188,7 +188,7 @@ class VCPopover: NSViewController {
             viewSelectCoins.isHidden = true
             lbLine.isHidden = true
             
-            btMinimode.image = NSImage.init(named: self.isDarkMode() ? "ic_fullscreen_white" : "ic_fullscreen_black")
+            btMinimode.image = NSImage.init(named: "ic_fullscreen")
         }
         else {
             for view in stackViewRoot.arrangedSubviews {
@@ -197,19 +197,19 @@ class VCPopover: NSViewController {
                 }
             }
             
-            btMinimode.image = NSImage.init(named: self.isDarkMode() ? "ic_fullscreen_exit_white" : "ic_fullscreen_exit_black")
+            btMinimode.image = NSImage.init(named: "ic_fullscreen_exit")
         }
     }
     
     @IBAction func clickDonate(_ sender: NSButton) {
         //close
         if(sender.tag == 0){
-            btDonate.image = NSImage.init(named: self.isDarkMode() ? "ic_expand_less_white" : "ic_expand_less_black")
+            btDonate.image = NSImage.init(named: "ic_expand_less")
             viewDonate.isHidden = false
             sender.tag = 1
         }
         else {
-            btDonate.image = NSImage.init(named: self.isDarkMode() ? "ic_expand_more_white" : "ic_expand_more_black")
+            btDonate.image = NSImage.init(named: "ic_expand_more")
             viewDonate.isHidden = true
             sender.tag = 0
         }
@@ -227,18 +227,11 @@ class VCPopover: NSViewController {
     //Show icon in status bar
     @IBAction func clickShowStatusbarIcon(_ sender: NSButton) {
         MyValue.isShowStatusbarIcon = sender.state == .on
-        
-        if(MyValue.isShowStatusbarIcon) {
-            if isDarkMode() {
-                (NSApplication.shared.delegate as! AppDelegate).statusItem.image = NSImage(named: "icon_white")
-            }
-            else {
-                (NSApplication.shared.delegate as! AppDelegate).statusItem.image = NSImage(named: "icon_black")
-            }
-        }
-        else {
-            (NSApplication.shared.delegate as! AppDelegate).statusItem.image = NSImage(named: "icon_none")
-        }
+    }
+    
+    //Show market in status bar(BTC 1000 or 1000)
+    @IBAction func clickShowStatusbarMarket(_ sender: NSButton) {
+        MyValue.isShowStatusbarMarket = sender.state == .on
     }
     
     //Terminate App
@@ -248,21 +241,9 @@ class VCPopover: NSViewController {
     }
     
     func setDarkMode() {
-        if(self.isDarkMode()) {
-            (NSApplication.shared.delegate as! AppDelegate).statusItem.image = MyValue.isShowStatusbarIcon ? NSImage(named: "icon_white") : NSImage(named: "icon_none")
-            btDonate.image = NSImage.init(named: "ic_expand_more_white")
-            btRefresh.image = NSImage(named: "ic_autorenew_white")
-            lbLine.backgroundColor = NSColor.white.withAlphaComponent(0.3)
-            btMinimode.image = NSImage.init(named: "ic_fullscreen_white")
-            btMinimode.image = NSImage.init(named: self.isDarkMode() ? "ic_fullscreen_exit_white" : "ic_fullscreen_exit_black")
-        }
-        else {
-            (NSApplication.shared.delegate as! AppDelegate).statusItem.image = MyValue.isShowStatusbarIcon ? NSImage(named: "icon_black") : NSImage(named: "icon_none")
-            btDonate.image = NSImage.init(named: "ic_expand_more_black")
-            btRefresh.image = NSImage(named: "ic_autorenew_black")
-            lbLine.backgroundColor = NSColor.darkGray.withAlphaComponent(0.3)
-            btMinimode.image = NSImage.init(named: "ic_fullscreen_black")
-        }
+        lbLine.backgroundColor = NSColor.white.withAlphaComponent(0.3)
+        (NSApplication.shared.delegate as! AppDelegate).updateStatusItem(willShowLoadingText: false)
+        lbLine.backgroundColor = NSColor.darkGray.withAlphaComponent(0.3)
     }
 }
 
@@ -283,9 +264,6 @@ extension VCPopover: NSCollectionViewDataSource {
         if collectionView == collectionViewCoin, currentTab?.marketAndCoins.count ?? 0 > 0 {
             return currentTab?.marketAndCoins.count ?? 1
         }
-        else if collectionView == collectionViewTick, ticks.count > 0 {
-            return ticks.count
-        }
         
         return 1
     }
@@ -300,6 +278,8 @@ extension VCPopover: NSCollectionViewDataSource {
             return item
         }
         else if collectionView == collectionViewTick {
+            guard indexPath.item < ticks.count else { return NSCollectionViewItem() }
+            
             let item = collectionView.makeItem(withIdentifier: NSUserInterfaceItemIdentifier(rawValue: "ItemTick"), for: indexPath) as! ItemTick
             item.updateView(tick: ticks[ indexPath.item], index: indexPath.item, isLastRow: ticks.count / 2 <= indexPath.item)
             
@@ -324,10 +304,20 @@ extension VCPopover: NSCollectionViewDataSource {
 // MARK: - NSCollectionViewDelegateFlowLayout
 extension VCPopover: NSCollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: NSCollectionView, layout collectionViewLayout: NSCollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> NSSize {
-        return NSSize(width: collectionView.frame.width / 4.3, height: 30.0)
+        if collectionView == collectionViewCoin {
+            return NSSize(width: collectionView.frame.width / 5.3, height: 30.0)
+        }
+        else if collectionView == collectionViewTick {
+            return NSSize(width: collectionView.frame.width / 2.1, height: 40.0)
+        }
+        return .zero
     }
     
     func collectionView(_ collectionView: NSCollectionView, layout collectionViewLayout: NSCollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> NSSize {
-        return NSSize(width: 0.0, height: 20.0)
+        if collectionView == collectionViewCoin {
+            return NSSize(width: 0.0, height: 20.0)
+        }
+        
+        return .zero
     }
 }

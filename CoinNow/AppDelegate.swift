@@ -17,48 +17,41 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     private static var timer = Timer()
     
     func applicationDidFinishLaunching(_ notification: Notification) {
-        setStatusButton()
+        initStatusItem()
         
-        updateStatusLabel(willShowLoadingText: true)
+        updateStatusItem(willShowLoadingText: true)
         
         setTimerSec(updatePer: MyValue.updatePer)
     }
     
     func applicationWillTerminate(_ aNotification: Notification) {
-        //terminate timer
         terminateTimer()
     }
     
-    //Set button at status bar(toggle popover)
-    func setStatusButton() {
+    //Set item at status bar(toggle popover)
+    func initStatusItem() {
         popover.behavior = .transient//close popover when click outside
         
-        //For os is dark mode
-        if(MyValue.isShowStatusbarIcon) {
-            if(UserDefaults.standard.string(forKey: "AppleInterfaceStyle") ?? "Light" == "Dark") {
-                self.statusItem.image = NSImage(named: "icon_white")
-            }
-            else {
-                self.statusItem.image = NSImage(named: "icon_black")
-            }
-        }
-        else {
-            self.statusItem.image = NSImage(named: "icon_none")
-        }
-        
-        self.statusItem.button?.action = #selector(AppDelegate.togglePopover(_:))
+        statusItem.button?.action = #selector(AppDelegate.togglePopover(_:))
         popover.contentViewController = VCPopover(nibName: "VCPopover", bundle: nil)
     }
     
     //Set label that show my coin state at status bar
-    @objc public func updateStatusLabel(willShowLoadingText: Bool) {
+    @objc public func updateStatusItem(willShowLoadingText: Bool) {
         //print("Update Status Label : \(MyValue.mySiteType) / \(String(describing: MyValue.myCoin))")
+        
+        statusItem.image = MyValue.isShowStatusbarIcon ? NSImage(named: "statusbar_icon") : nil
         
         guard !MyValue.myCoin.isEmpty else { return }
         
         if MyValue.mySiteType == .upbit {
             Api.getMyCoinTick(marketAndCode: MyValue.myCoin, complete: { isSuccess, result in
-                self.setStatusLabelTitle(title: "\(MyValue.myCoin.split(separator: "-")[1]) \(result ?? "-") ")
+                if MyValue.isShowStatusbarMarket {
+                    self.setStatusLabelTitle(title: "\(MyValue.myCoin.split(separator: "-")[1]) \(result ?? "-") ")
+                }
+                else {
+                    self.setStatusLabelTitle(title: "\(result ?? "-") ")
+                }
             })
         }
         //TODO 바낸 추가하기
@@ -73,7 +66,11 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         terminateTimer()
         //debugPrint("setTimerSec : \(updatePer)")
         
-        AppDelegate.timer = Timer.scheduledTimer(timeInterval: Const.dicUpdatePerSec[updatePer] ?? Const.DEFAULT_UPDATE_PER.double, target: self, selector: #selector(updateStatusLabel), userInfo: nil, repeats: true)
+        AppDelegate.timer = Timer.scheduledTimer(timeInterval: Const.dicUpdatePerSec[updatePer] ?? Const.DEFAULT_UPDATE_PER.double,
+                                                 target: self,
+                                                 selector: #selector(updateStatusItem),
+                                                 userInfo: nil,
+                                                 repeats: true)
     }
     
     @objc func togglePopover(_ sender: AnyObject?) {

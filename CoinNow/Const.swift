@@ -26,12 +26,11 @@ struct Const {
     struct UserDefaultKey {
         static let MY_COIN = "MY_COIN" //Coin that show in status bar
         static let MY_SITE = "MY_SITE" //Trading site that show in status bar
-        static let MY_MARKET = "MY_MARKET"
         static let UPDATE_PER = "UPDATE_PER" //type is String(keys of dicUpdatePerSec)
         static let IS_SHOW_ICON = "IS_SHOW_ICON" //Show icon in statusbar
+        static let IS_SHOW_MARKET = "IS_SHOW_MARKET" //Show market code in statusbar
         
-        //will update site and coin
-        static let SELECTED_SITES = "SELECTED_SITES"
+        //will update by selected coin
         static let SELECTED_COINS = "SELECTED_COINS"
         
         static let IS_SIMPLE_MODE = "IS_SIMPLE_MODE"
