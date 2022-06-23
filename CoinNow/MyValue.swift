@@ -22,13 +22,13 @@ struct MyValue {
     }
     
     //상태바 거래소
-    static var mySite: SiteType = SiteType(rawValue: UserDefaults.standard.string(forKey: Const.UserDefaultKey.MY_SITE) ?? Const.DEFAULT_MY_SITE) ?? .upbit {
+    static var mySiteType : SiteType = SiteType(rawValue: UserDefaults.standard.string(forKey: Const.UserDefaultKey.MY_SITE) ?? Const.DEFAULT_MY_SITE) ?? .upbit {
         didSet {
-            UserDefaults.standard.set(mySite.rawValue, forKey: Const.UserDefaultKey.MY_SITE)
+            UserDefaults.standard.set(mySiteType.rawValue, forKey: Const.UserDefaultKey.MY_SITE)
             UserDefaults.standard.synchronize()
             
             (NSApplication.shared.delegate as! AppDelegate).updateStatusLabel(willShowLoadingText: false)
-            //debugPrint("mySite >> didSet \(mySite.rawValue)")
+            //debugPrint("mySiteType >> didSet \(mySiteType.rawValue)")
         }
     }
     
@@ -84,6 +84,5 @@ struct MyValue {
         UserDefaults.standard.removeObject(forKey: Const.UserDefaultKey.SELECTED_SITES)
         UserDefaults.standard.removeObject(forKey: Const.UserDefaultKey.UPDATE_PER)
         UserDefaults.standard.synchronize()
-        
     }
 }

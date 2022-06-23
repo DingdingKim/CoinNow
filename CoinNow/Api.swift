@@ -11,13 +11,10 @@ import Alamofire
 import SwiftyJSON
 
 class Api {
-    static let API_STATUS_CODE_SUCCESS_DING = 200
-    
     //내 코인 가격
     //marketAndCode: KRW-BTC
     static func getMyCoinTick(marketAndCode: String, complete: @escaping (_ isSuccess: Bool, _ results: String?) -> Void) {
-        print("유알엘: https://api.upbit.com/v1/ticker?markets=\(marketAndCode)")
-        if MyValue.mySite == .upbit {
+        if MyValue.mySiteType == .upbit {
             Alamofire.request("https://api.upbit.com/v1/ticker?markets=\(marketAndCode)", method: .get).responseJSON { (responseData) -> Void in
                 guard let resultValue = responseData.result.value else { complete(false, nil); return}
                 guard let resultTicks = (JSON(resultValue)).array, resultTicks.count > 0 else { complete(false, nil); return}
@@ -26,7 +23,7 @@ class Api {
                 complete(true, currentPrice.withCommas())
             }
         }
-        else if MyValue.mySite == .binance {
+        else if MyValue.mySiteType == .binance {
             // TODO 바낸 구현
         }
         
@@ -37,13 +34,12 @@ class Api {
     static func getUpbitTicks(selectedCoins: [Coin], complete: @escaping (_ isSuccess: Bool, _ results: [Tick]) -> Void){
         var ticks = [Tick]()
         
-        let marketAndCodeList = selectedCoins.map{ $0.marketAndCode }.joined(separator: ",")
+        let marketAndCodeList = selectedCoins.filter { $0.site == .upbit }
+                                                .map { $0.marketAndCode }.joined(separator: ",")
 
-        print("유알엘: https://api.upbit.com/v1/ticker?markets=\(marketAndCodeList)")
         Alamofire.request("https://api.upbit.com/v1/ticker?markets=\(marketAndCodeList)", method: .get).responseJSON { (responseData) -> Void in
             guard let resultValue = responseData.result.value else { complete(false, []); return}
             guard let resultTicks = (JSON(resultValue)).array else { complete(false, []); return}
-            //guard let currentPrice = resultTicks[0]["trade_price"].double else { complete(false, []); return}
             
             for coin in selectedCoins {
                 for tick in resultTicks {

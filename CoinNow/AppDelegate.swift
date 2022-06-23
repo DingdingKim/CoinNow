@@ -52,11 +52,11 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     
     //Set label that show my coin state at status bar
     @objc public func updateStatusLabel(willShowLoadingText: Bool) {
-        //print("Update Status Label : \(MyValue.mySite) / \(String(describing: MyValue.myCoin))")
+        //print("Update Status Label : \(MyValue.mySiteType) / \(String(describing: MyValue.myCoin))")
         
         guard !MyValue.myCoin.isEmpty else { return }
         
-        if MyValue.mySite == .upbit {
+        if MyValue.mySiteType == .upbit {
             Api.getMyCoinTick(marketAndCode: MyValue.myCoin, complete: { isSuccess, result in
                 self.setStatusLabelTitle(title: "\(MyValue.myCoin.split(separator: "-")[1]) \(result ?? "-") ")
             })

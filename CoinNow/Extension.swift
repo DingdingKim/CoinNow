@@ -21,14 +21,15 @@ extension NSNumber {
 extension Double {
     func withCommas() -> String {
         let numberFormatter = NumberFormatter()
-        numberFormatter.numberStyle = NumberFormatter.Style.decimal
+        numberFormatter.numberStyle = .decimal
+        numberFormatter.maximumFractionDigits = 100
         
         //large price(>100) no need to show floating point.
         if(self > 100){
-            return numberFormatter.string(from: NSNumber(value:self.roundTo(places: 0)))!
+            return numberFormatter.string(from: NSNumber(value:self)) ?? ""
         }
         else{
-            return numberFormatter.string(from: NSNumber(value:self.roundTo(places: 2)))!
+            return numberFormatter.string(from: NSNumber(value:self)) ?? ""
         }
     }
     //Get https://stackoverflow.com/questions/27338573/rounding-a-double-value-to-x-number-of-decimal-places-in-swift
@@ -88,5 +89,16 @@ extension NSView {
 //            rotateAnimation.delegate = delegate as! CAAnimationDelegate
 //        }
         self.layer?.add(rotateAnimation, forKey: nil)
+    }
+    
+    var customBackgroundColor: NSColor? {
+        set {
+            wantsLayer = true
+            layer?.backgroundColor = newValue?.cgColor
+        }
+        get {
+            guard let backgroundColor = layer?.backgroundColor else { return nil }
+            return NSColor(cgColor: backgroundColor)
+        }
     }
 }

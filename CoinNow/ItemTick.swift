@@ -13,6 +13,8 @@ class ItemTick: NSCollectionViewItem {
     @IBOutlet weak var lbMarket: NSTextField!
     @IBOutlet weak var lbPrice: NSTextField!
     @IBOutlet weak var lbKPremium: NSTextField!
+    @IBOutlet weak var lineBottom: NSTextField!
+    @IBOutlet weak var lineRight: NSTextField!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -20,9 +22,13 @@ class ItemTick: NSCollectionViewItem {
     }
     
     //Called when coin price data is updated
-    func updateView(tick: Tick) {
+    func updateView(tick: Tick, index: Int, isLastRow: Bool) {
         lbCoin.stringValue = tick.coin.name
-        lbPrice.stringValue = "\(NSNumber(value: tick.currentPrice).decimalValue)"
+        lbPrice.stringValue = tick.currentPrice.withCommas()
         lbMarket.stringValue = "\(tick.coin.code)/\(tick.coin.market)"
+        lbKPremium.stringValue = ""
+        
+        lineRight.isHidden = index % 2 != 0
+        //lineBottom.isHidden = isLastRow
     }
 }
