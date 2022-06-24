@@ -7,6 +7,8 @@
 //
 
 import Cocoa
+import Starscream
+import SwiftyJSON
 
 class VCPopover: NSViewController {
     @IBOutlet weak var stackViewRoot: NSStackView!
@@ -36,14 +38,17 @@ class VCPopover: NSViewController {
     var currentTab: Site?
     
     var sites: [Site] = [Site]() //default is upbit TODO 바낸으로 할까? 국가별로 하면 좋을거같다
-    var ticks = [Tick]()
+    var ticks = [Tick]() //이 갯수는 선택한 코인의 개수와 동일하다. 값을 계속 업데이트 하는 방식으로 사용한다
     
     override func viewDidLoad() {
+        print("**********viewDidLoad")
+        
         //MyValue.clear() //For test
         
         //Need to update in outside
-        NotificationCenter.default.addObserver(self, selector: #selector(VCPopover.updateTick), name: NSNotification.Name(rawValue: "VCPopover.updateSelectedCoins"), object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(VCPopover.updateSelectedCoins), name: NSNotification.Name(rawValue: "VCPopover.updateSelectedCoins"), object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(VCPopover.finishSetCoins), name: NSNotification.Name(rawValue: "VCPopover.finishSetCoins"), object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(VCPopover.updateTick), name: NSNotification.Name(rawValue: "receiveTick"), object: nil)
         
         NSRunningApplication.current.activate(options: NSApplication.ActivationOptions.activateIgnoringOtherApps)
         
@@ -54,7 +59,7 @@ class VCPopover: NSViewController {
     override func viewWillAppear() {
         super.viewWillAppear()
         
-        setDarkMode()
+        print("**********viewWillAppear")
         
         NSRunningApplication.current.activate(options: .activateIgnoringOtherApps)
     }
@@ -70,18 +75,21 @@ class VCPopover: NSViewController {
             }
         }
         
-        self.updateTick()
+        for coin in MyValue.selectedCoins {
+            self.ticks.append(Tick(coin: coin, currentPrice: -1))
+        }
     }
     
     //Setup popup view
     func initView() {
+        print("**********initView")
+        
         viewDonateToggle.isHidden = true
         viewDonate.isHidden = true
         
-        //For animation..
-        btRefresh.wantsLayer = true
         collectionViewCoin.customBackgroundColor = NSColor.black.withAlphaComponent(0.1)
         
+        initCoinCollectionView()
         initTickCollectionView()
     }
     
@@ -89,15 +97,16 @@ class VCPopover: NSViewController {
     func initStatusBarConfigureView() {
         guard let mySite = sites.filter({ $0.siteType == MyValue.mySiteType }).first else { return }
         
-        btStatusUpdatePer.addItems(withTitles: Array(Const.dicUpdatePerSec.keys))
+        btStatusUpdatePer.addItems(withTitles: Array(UpdatePer.allCases.map { $0.rawValue }))
         btStatusSite.addItems(withTitles: SiteType.allCases.map{ $0.rawValue })
         btStatusCoin.addItems(withTitles: mySite.coins.map { $0.marketAndCode })
 
-        btStatusUpdatePer.selectItem(withTitle: MyValue.updatePer)
+        btStatusUpdatePer.selectItem(withTitle: MyValue.updatePer.rawValue)
         btStatusSite.selectItem(withTitle: MyValue.mySiteType.rawValue)
         btStatusCoin.selectItem(withTitle: MyValue.myCoin)
         
-        cbShowIcon.state = MyValue.isShowStatusbarIcon ? .on : .off
+        cbShowMarket.state = MyValue.isHiddenStatusbarMarket ? .off : .on
+        cbShowIcon.state = MyValue.isHiddenStatusbarIcon ? .off : .on
     }
     
     func initCoinCollectionView() {
@@ -124,30 +133,54 @@ class VCPopover: NSViewController {
     
     //각 사이트 생성자에서 코인 로드가 완료 되면 호출
     @objc func finishSetCoins() {
+        print("**********finishSetCoins")
+        
         initStatusBarConfigureView()
-        initCoinCollectionView()
+        
+        //소켓이 아니었다면(타이머) 소켓을 다시 만들고 연결한다
+        if MyValue.updatePer != .realTime {
+            print("**********finishSetCoins: ==== realtime이 아니다")
+            appDelegate.initWebSocket()
+        }
+        //소켓이었다면 선택된 코인들의 정보도 받을 수 있게(평소에는 내 코인 하나만 가져왔으니까) write
+        else {
+            appDelegate.writeToSocket()
+        }
         
         collectionViewCoin.reloadData()
     }
     
     //Update tick in popover view
-    @objc func updateTick() {
-        lbUpdateTime.stringValue = Const.DEFAULT_LOADING_TEXT
+    @objc func updateTick(_ notification: Notification) {
+        guard let data = notification.userInfo?["tick"] as? WebSocketUpbit else { return }
         
-        Api.getUpbitTicks(selectedCoins: MyValue.selectedCoins, complete: { isSuccess, result in
-            self.ticks.removeAll()
-            self.ticks.append(contentsOf: result)
-            
-            self.collectionViewTick.reloadData()
-            
-            self.lbUpdateTime.stringValue = Date().todayString(format: "yyyy.MM.dd HH:mm:ss")
-            
-            if !isSuccess {
-                self.lbUpdateTime.stringValue = self.lbUpdateTime.stringValue + " last update is failed"
+        for (index, tick) in ticks.enumerated() {
+            if tick.coin.site == .upbit, tick.coin.marketAndCode == data.code {
+                self.ticks[index].currentPrice = data.trade_price
+                self.ticks[index].changeState = data.change
+                
+                break
             }
-        })
+        }
+        
+        self.collectionViewTick.reloadData()
     }
     
+    @objc func updateSelectedCoins() {
+        //요청 전 틱 리스트를 다시 만들어준다
+        self.ticks.removeAll()
+        
+        for coin in MyValue.selectedCoins {
+            self.ticks.append(Tick(coin: coin, currentPrice: -1))
+        }
+        
+        collectionViewTick.reloadData()
+        
+        //바뀐 코인리스트를 가지고 틱을 가지고 오도록 웹소켓에 write
+        appDelegate.writeToSocket()
+    }
+    
+    // 바낸은 어떻게 할건지 생각하기
     @IBAction func changeMySite(_ sender: NSPopUpButton) {
         guard let currentTab = currentTab else { return }
         
@@ -173,11 +206,11 @@ class VCPopover: NSViewController {
     }
     
     @IBAction func changeUpdatePer(_ sender: NSPopUpButton) {
-        MyValue.updatePer = sender.titleOfSelectedItem ?? Const.DEFAULT_UPDATE_PER.stirng
+        MyValue.updatePer = UpdatePer(rawValue: sender.titleOfSelectedItem!) ?? Const.DEFAULT_UPDATE_PER
     }
     
     @IBAction func clickRefresh(_ sender: NSButton) {
-        updateTick()
+        //updateTick()
     }
     
     @IBAction func clickMinimode(_ sender: Any) {
@@ -192,7 +225,7 @@ class VCPopover: NSViewController {
         }
         else {
             for view in stackViewRoot.arrangedSubviews {
-                if(view != viewDonate && view != viewDonateToggle){
+                if(view != viewDonate && view != viewDonateToggle) {
                     view.isHidden = false
                 }
             }
@@ -226,24 +259,18 @@ class VCPopover: NSViewController {
     
     //Show icon in status bar
     @IBAction func clickShowStatusbarIcon(_ sender: NSButton) {
-        MyValue.isShowStatusbarIcon = sender.state == .on
+        MyValue.isHiddenStatusbarIcon = sender.state == .off
     }
     
     //Show market in status bar(BTC 1000 or 1000)
     @IBAction func clickShowStatusbarMarket(_ sender: NSButton) {
-        MyValue.isShowStatusbarMarket = sender.state == .on
+        MyValue.isHiddenStatusbarMarket = sender.state == .off
     }
     
     //Terminate App
     @IBAction func clickQuit(_ sender: NSButton) {
-        (NSApplication.shared.delegate as! AppDelegate).terminateTimer()
+        appDelegate.terminateTimer()
         NSApp.terminate(self)
-    }
-    
-    func setDarkMode() {
-        lbLine.backgroundColor = NSColor.white.withAlphaComponent(0.3)
-        (NSApplication.shared.delegate as! AppDelegate).updateStatusItem(willShowLoadingText: false)
-        lbLine.backgroundColor = NSColor.darkGray.withAlphaComponent(0.3)
     }
 }
 
@@ -293,7 +320,7 @@ extension VCPopover: NSCollectionViewDataSource {
         guard let view = collectionView.makeSupplementaryView(ofKind: NSCollectionView.elementKindSectionHeader,
                                                               withIdentifier: NSUserInterfaceItemIdentifier(rawValue: "HeaderCoin"),
                                                               for: indexPath) as? HeaderCoin else { return NSView() }
-        guard let marketCoins = currentTab?.marketAndCoins else { return view }
+        guard let marketCoins = currentTab?.marketAndCoins, indexPath.section < marketCoins.count else { return view }
         
         view.updateView(data: marketCoins[indexPath.section])
         

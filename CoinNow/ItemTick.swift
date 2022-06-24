@@ -18,15 +18,18 @@ class ItemTick: NSCollectionViewItem {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
         view.wantsLayer = true
     }
     
     //Called when coin price data is updated
     func updateView(tick: Tick, index: Int, isLastRow: Bool) {
         lbCoin.stringValue = tick.coin.name
-        lbPrice.stringValue = tick.currentPrice.withCommas()
+        lbPrice.stringValue = tick.displayCurrentPrice
         lbMarket.stringValue = "\(tick.coin.code)/\(tick.coin.market)"
         lbKPremium.stringValue = ""
+        
+        lbPrice.textColor = tick.changeState.textColor
         
         //lineRight.isHidden = index % 2 != 0
         //lineBottom.isHidden = isLastRow

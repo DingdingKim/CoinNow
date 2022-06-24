@@ -25,9 +25,9 @@ class Api {
         }
         else if MyValue.mySiteType == .binance {
             // TODO 바낸 구현
+            
+            complete(false, "-")
         }
-        
-        complete(false, "-")
     }
     
     //Upbit 현재 가격

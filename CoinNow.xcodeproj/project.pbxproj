@@ -29,6 +29,7 @@
 		75F538251F1946F200884EAA /* PopoverContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75F538241F1946F200884EAA /* PopoverContentView.swift */; };
 		75F86F7F28640CDE0048132C /* HeaderCoin.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75F86F7E28640CDE0048132C /* HeaderCoin.swift */; };
 		75F86F8128640CEA0048132C /* HeaderCoin.xib in Resources */ = {isa = PBXBuildFile; fileRef = 75F86F8028640CEA0048132C /* HeaderCoin.xib */; };
+		75F86F87286586F40048132C /* WebSocketUpbit.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75F86F86286586F40048132C /* WebSocketUpbit.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -58,6 +59,7 @@
 		75F538241F1946F200884EAA /* PopoverContentView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PopoverContentView.swift; sourceTree = "<group>"; };
 		75F86F7E28640CDE0048132C /* HeaderCoin.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeaderCoin.swift; sourceTree = "<group>"; };
 		75F86F8028640CEA0048132C /* HeaderCoin.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = HeaderCoin.xib; sourceTree = "<group>"; };
+		75F86F86286586F40048132C /* WebSocketUpbit.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WebSocketUpbit.swift; sourceTree = "<group>"; };
 		F212CE6EE9DF95734B9FD749 /* Pods-CoinNow.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CoinNow.debug.xcconfig"; path = "Pods/Target Support Files/Pods-CoinNow/Pods-CoinNow.debug.xcconfig"; sourceTree = "<group>"; };
 		F3BC805D8FF828DC94118A9A /* Pods-CoinNow.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CoinNow.release.xcconfig"; path = "Pods/Target Support Files/Pods-CoinNow/Pods-CoinNow.release.xcconfig"; sourceTree = "<group>"; };
 		FC71B95B1EFD5F5A565D27C8 /* Pods_CoinNow.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_CoinNow.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -123,6 +125,7 @@
 			children = (
 				75E6549E1F175B8400230402 /* Site.swift */,
 				75E654A01F175C9F00230402 /* Coin.swift */,
+				75F86F86286586F40048132C /* WebSocketUpbit.swift */,
 				755E393E1F08208600CA6BBC /* Tick.swift */,
 				75E654A21F1761A400230402 /* MyValue.swift */,
 			);
@@ -300,11 +303,13 @@
 			inputPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-CoinNow/Pods-CoinNow-frameworks.sh",
 				"${BUILT_PRODUCTS_DIR}/Alamofire/Alamofire.framework",
+				"${BUILT_PRODUCTS_DIR}/Starscream/Starscream.framework",
 				"${BUILT_PRODUCTS_DIR}/SwiftyJSON/SwiftyJSON.framework",
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Alamofire.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Starscream.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SwiftyJSON.framework",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -319,6 +324,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				75F86F87286586F40048132C /* WebSocketUpbit.swift in Sources */,
 				755E393B1F08208000CA6BBC /* Extension.swift in Sources */,
 				755E39391F08208000CA6BBC /* Api.swift in Sources */,
 				75E6549F1F175B8400230402 /* Site.swift in Sources */,
@@ -474,7 +480,7 @@
 				ENABLE_HARDENED_RUNTIME = YES;
 				INFOPLIST_FILE = CoinNow/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
-				MACOSX_DEPLOYMENT_TARGET = 10.11;
+				MACOSX_DEPLOYMENT_TARGET = 10.14;
 				PRODUCT_BUNDLE_IDENTIFIER = com.dingding.CoinNow;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -495,7 +501,7 @@
 				ENABLE_HARDENED_RUNTIME = YES;
 				INFOPLIST_FILE = CoinNow/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
-				MACOSX_DEPLOYMENT_TARGET = 10.11;
+				MACOSX_DEPLOYMENT_TARGET = 10.14;
 				PRODUCT_BUNDLE_IDENTIFIER = com.dingding.CoinNow;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
