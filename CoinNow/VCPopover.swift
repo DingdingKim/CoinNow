@@ -137,15 +137,16 @@ class VCPopover: NSViewController {
         
         initStatusBarConfigureView()
         
-        //소켓이 아니었다면(타이머) 소켓을 다시 만들고 연결한다
-        if MyValue.updatePer != .realTime {
-            print("**********finishSetCoins: ==== realtime이 아니다")
-            appDelegate.initWebSocket()
-        }
-        //소켓이었다면 선택된 코인들의 정보도 받을 수 있게(평소에는 내 코인 하나만 가져왔으니까) write
-        else {
-            appDelegate.writeToSocket()
-        }
+        //TODO 이게 왜 여기 있어야하지? 왜넣었어 딩딩아?
+//        //소켓이 아니었다면(타이머) 소켓을 다시 만들고 연결한다
+//        if MyValue.updatePer != .realTime {
+//            print("**********finishSetCoins: ==== realtime이 아니다")
+//            appDelegate.initWebSocket()
+//        }
+//        //소켓이었다면 선택된 코인들의 정보도 받을 수 있게(평소에는 내 코인 하나만 가져왔으니까) write
+//        else {
+//            appDelegate.writeToSocket()
+//        }
         
         collectionViewCoin.reloadData()
     }
@@ -180,25 +181,29 @@ class VCPopover: NSViewController {
         appDelegate.writeToSocket()
     }
     
-    // 바낸은 어떻게 할건지 생각하기
     @IBAction func changeMySite(_ sender: NSPopUpButton) {
-        guard let currentTab = currentTab else { return }
-        
-        let currentTabCoins = currentTab.coins.map { $0.marketAndCode }
-        
         MyValue.mySiteType = SiteType(rawValue: sender.titleOfSelectedItem!) ?? .upbit
+        
+        guard let mySite = sites.filter({ $0.siteType == MyValue.mySiteType }).first else { return }
+        
+        let mySiteCoins = mySite.coins.map { $0.marketAndCode }
 
         //Update coin list for selected site
         btStatusCoin.removeAllItems()
-        btStatusCoin.addItems(withTitles: currentTabCoins)
+        btStatusCoin.addItems(withTitles: mySiteCoins)
 
         //Current my coin is not tradable in changed market. So change my coin to first coin of tradable coins in my market.
-        if currentTabCoins.count > 0,
-           !currentTabCoins.contains(MyValue.myCoin) {
+        //사이트 바뀌면 무조건 바꾸는걸로 수정했다
+        /*
+        if mySiteCoins.count > 0,
+           !mySiteCoins.contains(MyValue.myCoin) {
             btStatusCoin.selectItem(at: 0)
 
-            MyValue.myCoin = currentTab.coins[0].marketAndCode
+            MyValue.myCoin = mySiteCoins[0]
         }
+         */
+        
+        MyValue.myCoin = mySiteCoins[0]
     }
     
     @IBAction func changeMyCoin(_ sender: NSPopUpButton) {
@@ -210,6 +215,7 @@ class VCPopover: NSViewController {
     }
     
     @IBAction func clickRefresh(_ sender: NSButton) {
+        //TODO 완전히 코인목록부터 다시 싹 가져오게 하는거도 좋을거같다
         //updateTick()
     }
     
@@ -232,6 +238,11 @@ class VCPopover: NSViewController {
             
             btMinimode.image = NSImage.init(named: "ic_fullscreen_exit")
         }
+    }
+    
+    @IBAction func clickSiteTab(_ sender: NSSegmentedControl) {
+        currentTab = sites[sender.selectedSegment]
+        collectionViewCoin.reloadData()
     }
     
     @IBAction func clickDonate(_ sender: NSButton) {
