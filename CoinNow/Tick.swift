@@ -12,14 +12,14 @@ struct Tick {
     var coin: Coin
     
     var currentPrice: Double//현재가격: -1이면 값을 못가지고 온 상태
-    var changeState: WebSocketUpbitChangeType//전일 종가 대비 업/다운
+    var changeState: WebSocketPriceChangeType//전일 종가 대비 업/다운
     //var isActive: Bool//거래가능 상태인가
     
     var displayCurrentPrice: String {
         return currentPrice > 0 ? currentPrice.withCommas() : ""
     }
     
-    init(coin: Coin, currentPrice: Double, changeState: WebSocketUpbitChangeType = .unknown) {
+    init(coin: Coin, currentPrice: Double, changeState: WebSocketPriceChangeType = .unknown) {
         self.coin = coin
         self.currentPrice = currentPrice
         self.changeState = changeState

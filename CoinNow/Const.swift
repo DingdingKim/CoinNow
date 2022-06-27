@@ -38,7 +38,7 @@ struct Const {
     static let REST_BINANCE = "https://api.binance.com"
 
     static let WEBSOCKET_UPBIT = "wss://api.upbit.com/websocket/v1"
-    static let WEBSOCKET_BINANCE = "wss://stream.binance.com:9443"
+    static let WEBSOCKET_BINANCE = "wss://stream.binance.com:9443/ws"
     
     struct UserDefaultKey {
         static let MY_COIN = "MY_COIN" //Coin that show in status bar

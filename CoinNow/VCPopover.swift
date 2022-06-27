@@ -158,12 +158,12 @@ class VCPopover: NSViewController {
     
     //Update tick in popover view
     @objc func updateTick(_ notification: Notification) {
-        guard let data = notification.userInfo?["tick"] as? WebSocketUpbit else { return }
+        guard let data = notification.userInfo?["tick"] as? WSocket else { return }
         
         for (index, tick) in ticks.enumerated() {
-            if tick.coin.site == .upbit, tick.coin.marketAndCode == data.code {
+            if tick.coin.site == data.siteType, tick.coin.marketAndCode == (data.marketAndCode) {
                 self.ticks[index].currentPrice = data.trade_price
-                self.ticks[index].changeState = data.change
+                self.ticks[index].changeState = data.changeState
                 
                 break
             }
@@ -173,10 +173,19 @@ class VCPopover: NSViewController {
     }
     
     @objc func updateSelectedCoins() {
+        var isContainUpbit = false
+        var isContainBinance = false
+        
         //요청 전 틱 리스트를 다시 만들어준다
         self.ticks.removeAll()
         
         for coin in MyValue.selectedCoins {
+            if coin.site == .upbit {
+                isContainUpbit = true
+            }
+            else if coin.site == .binance {
+                isContainBinance = true
+            }
             self.ticks.append(Tick(coin: coin, currentPrice: -1))
         }
         
@@ -190,7 +199,13 @@ class VCPopover: NSViewController {
         collectionViewTick.reloadData()
         
         //바뀐 코인리스트를 가지고 틱을 가지고 오도록 웹소켓에 write
-        appDelegate.writeToSocket()
+        
+        if isContainUpbit {
+            appDelegate.writeToSocket(.upbit)
+        }
+        else if isContainBinance {
+            appDelegate.writeToSocket(.binance)
+        }
     }
     
     @IBAction func changeMySite(_ sender: NSPopUpButton) {

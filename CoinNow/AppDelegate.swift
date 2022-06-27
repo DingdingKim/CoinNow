@@ -8,6 +8,7 @@
 
 import Cocoa
 import Starscream
+import SwiftyJSON
 
 @NSApplicationMain
 class AppDelegate: NSObject, NSApplicationDelegate {
@@ -16,11 +17,20 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     
     private static var timer = Timer()
     
-    private var socket: WebSocket!
+    private var socketUpbit: WebSocket!
+    private var socketBinance: WebSocket!
+    
     private let server = WebSocketServer()
-    var isSocketConnected: Bool = false {
+    
+    var isSocketConnectedUpbit: Bool = false {
         didSet {
-            NotificationCenter.default.post(name: NSNotification.Name(rawValue: "socketStateChanged"), object: nil, userInfo: ["isConnected" : isSocketConnected])
+            NotificationCenter.default.post(name: NSNotification.Name(rawValue: "socketStateChanged"), object: nil, userInfo: ["isConnected" : isSocketConnectedUpbit, "siteType": SiteType.upbit])
+        }
+    }
+    
+    var isSocketConnectedBinance: Bool = false {
+        didSet {
+            NotificationCenter.default.post(name: NSNotification.Name(rawValue: "socketStateChanged"), object: nil, userInfo: ["isConnected" : isSocketConnectedBinance, "siteType": SiteType.binance])
         }
     }
     
@@ -33,9 +43,35 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     
     func applicationWillTerminate(_ aNotification: Notification) {
         print("--------applicationWillTerminate")
-        socket.forceDisconnect()
+        disconnectSockets()
         
         terminateTimer()
+    }
+    
+    func disconnectSockets(_ siteType: SiteType? = nil) {
+        print("--------disconnectSockets")
+        
+        if let siteType = siteType {
+            if siteType == .upbit {
+                if socketUpbit != nil {
+                    socketUpbit.forceDisconnect()
+                }
+            }
+            else if siteType == .binance {
+                if socketBinance != nil {
+                    socketBinance.forceDisconnect()
+                }
+            }
+        }
+        else {
+            if socketUpbit != nil {
+                socketUpbit.forceDisconnect()
+            }
+            
+            if socketBinance != nil {
+                socketBinance.forceDisconnect()
+            }
+        }
     }
     
     //Set item at status bar(toggle popover)
@@ -58,13 +94,10 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         print("--------updateUpdatePer")
         
         if MyValue.updatePer == .realTime {
-            initWebSocket()
+            initWebSocket(MyValue.mySiteType)
         }
         else {
-            if socket != nil {
-                socket.forceDisconnect()
-                socket = nil
-            }
+            disconnectSockets()
             
             initUpdatePerTimer()
         }
@@ -72,14 +105,14 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     
     //Set label that show my coin state at status bar
     @objc public func updateStatusItem() {
-        //print("--------updateStatusItem")
+        print("--------updateStatusItem")
         statusItem.button?.image = MyValue.isHiddenStatusbarIcon ? nil : NSImage(named: "statusbar_icon")
         
         guard !MyValue.myCoin.isEmpty else { return }
         
         //내 코인을 포함시켜야하니까 다시 write
         if MyValue.updatePer == .realTime {
-            writeToSocket()
+            writeToSocket(MyValue.mySiteType)
         }
         else {
             Api.getMyCoinTick(marketAndCode: MyValue.myCoin, complete: { isSuccess, price in
@@ -131,96 +164,171 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         AppDelegate.timer.invalidate()
     }
     
-    func initWebSocket() {
+    //TODO 생긴게 맘에 안든다
+    func initWebSocket(_ siteType: SiteType? = nil) {
         print("--------initWebSocket")
-        var request = URLRequest(url: URL(string: Const.WEBSOCKET_UPBIT)!)
-        request.timeoutInterval = 5
         
-        if socket != nil {
-            socket.forceDisconnect()
-            socket = nil
+        if let siteType = siteType {
+            if siteType == .upbit {
+                var request = URLRequest(url: URL(string: Const.WEBSOCKET_UPBIT)!)
+                request.timeoutInterval = 5
+                
+                disconnectSockets(.upbit)
+                
+                socketUpbit = WebSocket(request: request)
+                socketUpbit.delegate = self
+                socketUpbit.connect()
+            }
+            else if siteType == .binance {
+                var request = URLRequest(url: URL(string: Const.WEBSOCKET_BINANCE)!)
+                request.timeoutInterval = 5
+                
+                disconnectSockets(.binance)
+                
+                socketBinance = WebSocket(request: request)
+                socketBinance.delegate = self
+                socketBinance.connect()
+            }
         }
-        
-        socket = WebSocket(request: request)
-        socket.delegate = self
-        socket.connect()
+        else {
+            var requestUpbit = URLRequest(url: URL(string: Const.WEBSOCKET_UPBIT)!)
+            requestUpbit.timeoutInterval = 5
+            
+            disconnectSockets(.upbit)
+            
+            socketUpbit = WebSocket(request: requestUpbit)
+            socketUpbit.delegate = self
+            socketUpbit.connect()
+            
+            var requestBinance = URLRequest(url: URL(string: Const.WEBSOCKET_BINANCE)!)
+            requestBinance.timeoutInterval = 5
+            
+            disconnectSockets(.binance)
+            
+            socketBinance = WebSocket(request: requestBinance)
+            socketBinance.delegate = self
+            socketBinance.connect()
+        }
     }
     
     //업비트 웹소켓으로 틱 정보 가져옴
-    func writeToSocket() {
-        print("--------writeToSocket: \(popover.isShown), \(popover.isDetached)")
-        guard socket != nil, isSocketConnected else {
-            initWebSocket()
+    func writeToSocket(_ siteType: SiteType) {
+        if siteType == .upbit {
+            guard socketUpbit != nil, isSocketConnectedUpbit else {
+                initWebSocket(.upbit)
+                
+                print("연결안됨. 업빗 소켓 다시 세팅");
+                return
+            }
             
-            print("연결안됨. 소켓 다시 세팅");
-            return
+            //팝오버가 안보이면 내꺼만 가져오고 보이면 선택코인 다가져와
+            var marketAndCodes = popover.isShown ? MyValue.selectedCoins.filter({ $0.site == .upbit })
+                                                                        .map { $0.marketAndCode } : []
+            
+            //상태바 코인도 포함시켜서 요청한다. 같은 코드 두개보내면 응답을 아예 안하기 때문에 확인하고 넣기
+            //TODO Set으로 만들면 중복안되고 괜찮을거같은데 검토해보쟈
+            if MyValue.mySiteType == .upbit, !marketAndCodes.contains(MyValue.myCoin) {
+                marketAndCodes.append(MyValue.myCoin)
+            }
+            
+            let marketAndCodesString = marketAndCodes.joined(separator: "\",\"")
+            let param = "[{\"ticket\":\"test\"},{\"type\":\"ticker\",\"codes\":[\"\(marketAndCodesString)\"]}]"
+            print("하이 업빗: \(param)")
+            
+            socketUpbit.write(string: param) {
+                print("업빗 전송 완료")
+            }
         }
         
-        //팝오버가 안보이면 내꺼만 가져오고 보이면 선택코인 다가져와
-        var marketAndCodes = popover.isShown ? MyValue.selectedCoins.map { $0.marketAndCode } : []
-        
-        //상태바 코인도 포함시켜서 요청한다. 같은 코드 두개보내면 응답을 아예 안하기 때문에 확인하고 넣기
-        //TODO Set으로 만들면 중복안되고 괜찮을거같은데 검토해보쟈
-        if !marketAndCodes.contains(MyValue.myCoin) {
-            marketAndCodes.append(MyValue.myCoin)
-            print("내 코인도 가져가유~")
-        }
-        
-        let marketAndCodesString = marketAndCodes.joined(separator: "\",\"")
-        let param = "[{\"ticket\":\"test\"},{\"type\":\"ticker\",\"codes\":[\"\(marketAndCodesString)\"]}]"
-        print("하이: \(param)")
-        
-        socket.write(string: param) {
-            print("전송 완료")
-        }
-    }
-    
-    func disconnectSocket() {
-        if socket != nil {
-            socket.forceDisconnect()
-            //socket = nil
-            print("디스커넥트")
+        if siteType == .binance {
+            guard socketBinance != nil, isSocketConnectedBinance else {
+                initWebSocket(.binance)
+                
+                print("연결안됨. 바낸 소켓 다시 세팅");
+                return
+            }
+            
+            //팝오버가 안보이면 내꺼만 가져오고 보이면 선택코인 다가져와
+            var marketAndCodes = popover.isShown ? MyValue.selectedCoins.filter({ $0.site == .binance })
+                                                                        .map {
+                                                                            return $0.code + $0.market + "@ticker"
+                                                                        } : []
+            
+            //상태바 코인도 포함시켜서 요청한다. 같은 코드 두개보내면 응답을 아예 안하기 때문에 확인하고 넣기
+            //TODO Set으로 만들면 중복안되고 괜찮을거같은데 검토해보쟈
+            if MyValue.mySiteType == .binance, !marketAndCodes.contains(MyValue.myCoin) {
+                marketAndCodes.append(MyValue.myCoin)
+            }
+            //wss://stream.binance.com:9443/ws/btcusdt@ticker/etcusdt@ticker
+            
+            let marketAndCodesString = marketAndCodes.joined(separator: "\",\"")
+            let param = "{\"method\": \"SUBSCRIBE\",\"params\":[\"\(marketAndCodesString.lowercased())\"],\"id\": 1}"
+            print("하이 바낸: \(param)")
+            //{"method": "SUBSCRIBE","params":["etcusdt@ticker", "btcusdt@ticker"],"id": 312}
+            
+            socketBinance.write(string: param) {
+                print("바낸 전송 완료")
+            }
         }
     }
 }
 
 extension AppDelegate: WebSocketDelegate {
     func didReceive(event: WebSocketEvent, client: WebSocket) {
+        let siteType: SiteType = (client.request.url == socketUpbit.request.url) ? .upbit : .binance
+        
         switch event {
-        case .connected(let headers):
-            isSocketConnected = true
-            NotificationCenter.default.post(name: NSNotification.Name(rawValue: "socketStateChanged"), object: nil, userInfo: ["isConnected" : isSocketConnected])
+        case .connected( _):
+            if socketUpbit != nil, siteType == .upbit {
+                self.isSocketConnectedUpbit = true
+            }
+            else if socketBinance != nil, siteType == .binance {
+                self.isSocketConnectedBinance = true
+            }
             
             //틱정보 받아오도록 웹소켓 전송
-            writeToSocket()
+            writeToSocket(siteType)
             
-            print("websocket is connected: \(headers)")
+        case .disconnected( _, _):
+            if socketUpbit != nil, siteType == .upbit {
+                self.isSocketConnectedUpbit = false
+            }
+            else if socketBinance != nil, siteType == .binance {
+                self.isSocketConnectedBinance = false
+            }
             
-        case .disconnected(let reason, let code):
-            isSocketConnected = false
-            print("websocket is disconnected: \(reason) with code: \(code)")
+        case .text(let data):
+            let data = WSocket(from: siteType, data: JSON.init(parseJSON: data))
+            
+            //VCPopover뷰 업데이트 하라고 소리쳐~
+            NotificationCenter.default.post(name: NSNotification.Name(rawValue: "receiveTick"), object: nil, userInfo: ["tick" : data])
+            
+            //받은게 상태바 코인이면 상태바 업뎃
+            if data.code == MyValue.myCoin {
+                updateStatusText(MyValue.isHiddenStatusbarMarket ? data.displayCurrentPrice : "\(MyValue.myCoin.split(separator: "-")[1]) \(data.displayCurrentPrice)")
+            }
             
         case .binary(let data):
-            do {
-                let data = try JSONDecoder().decode(WebSocketUpbit.self, from: data)
-                //print("리시브: \(data.code)")
-                
-                //VCPopover뷰 업데이트 하라고 소리쳐~
-                NotificationCenter.default.post(name: NSNotification.Name(rawValue: "receiveTick"), object: nil, userInfo: ["tick" : data])
-                
-                //받은게 상태바 코인이면 상태바 업뎃
-                if data.code == MyValue.myCoin {
-                    updateStatusText(MyValue.isHiddenStatusbarMarket ? data.displayCurrentPrice : "\(MyValue.myCoin.split(separator: "-")[1]) \(data.displayCurrentPrice)")
-                }
-            } catch {
-                print("업비트 웹소켓 데이터 파싱 오류")
+            let data = WSocket(from: siteType, data: JSON(data))
+            
+            //VCPopover뷰 업데이트 하라고 소리쳐~
+            NotificationCenter.default.post(name: NSNotification.Name(rawValue: "receiveTick"), object: nil, userInfo: ["tick" : data])
+            
+            //받은게 상태바 코인이면 상태바 업뎃
+            if data.code == MyValue.myCoin {
+                updateStatusText(MyValue.isHiddenStatusbarMarket ? data.displayCurrentPrice : "\(MyValue.myCoin.split(separator: "-")[1]) \(data.displayCurrentPrice)")
             }
             
         case .cancelled:
-            isSocketConnected = false
+            if socketUpbit != nil, client.request.url == socketUpbit.request.url {
+                self.isSocketConnectedUpbit = false
+            }
+            else if socketBinance != nil, client.request.url == socketBinance.request.url {
+                self.isSocketConnectedBinance = false
+            }
             
         case .error(let error):
-            isSocketConnected = false
+            
             handleError(error)
             
         default:
@@ -245,11 +353,11 @@ extension AppDelegate: NSPopoverDelegate {
         
         //소켓이면 내꺼만 가지고 오게 다시 쓰기
         if MyValue.updatePer == .realTime {
-            writeToSocket()
+            writeToSocket(MyValue.mySiteType)
         }
         //타이머 업데이트라면 소켓은 다시 제거한다
         else {
-            disconnectSocket()
+            disconnectSockets()
         }
     }
     
@@ -257,12 +365,16 @@ extension AppDelegate: NSPopoverDelegate {
         //소켓이 아니었다면(타이머) 소켓을 다시 만들고 연결한다
         if MyValue.updatePer != .realTime {
             print("**********popoverDidShow: ==== realtime")
+            
             initWebSocket()
         }
         //소켓이었다면 선택된 코인들의 정보도 받을 수 있게(평소에는 내 코인 하나만 가져왔으니까) write
         else {
             print("**********popoverDidShow: ==== realtime이 아니다")
-            writeToSocket()
+            
+            //둘 다
+            writeToSocket(.upbit)
+            writeToSocket(.binance)
         }
     }
 }
