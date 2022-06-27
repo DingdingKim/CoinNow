@@ -14,6 +14,8 @@ class Api {
     //내 코인 가격
     //marketAndCode: KRW-BTC
     static func getMyCoinTick(marketAndCode: String, complete: @escaping (_ isSuccess: Bool, _ results: String?) -> Void) {
+        print("getMyCoinTick: \(MyValue.mySiteType)")
+        
         if MyValue.mySiteType == .upbit {
             Alamofire.request("\(Const.REST_UPBIT)/v1/ticker?markets=\(marketAndCode)", method: .get).responseJSON { (responseData) -> Void in
                 guard let resultValue = responseData.result.value else { complete(false, nil); return }
@@ -24,13 +26,24 @@ class Api {
             }
         }
         else if MyValue.mySiteType == .binance {
-            // TODO 바낸 구현
+            //바낸은 이게 뒤집어져있네ㅠ
+            //업빗: 마켓-코인
+            //바낸: 코인마켓
+            let splited = marketAndCode.split(separator: "-")
             
-            complete(false, "-")
+            guard splited.count > 0 else { complete(false, nil); return }
+            
+            Alamofire.request("\(Const.REST_BINANCE)/api/v3/ticker/price?symbol=\(splited[1])\(splited[0])", method: .get).responseJSON { (responseData) -> Void in
+                guard let resultValue = responseData.result.value else { complete(false, nil); return }
+                guard let resultTick = JSON(resultValue).dictionaryObject else { complete(false, nil); return }
+                guard let currentPrice = resultTick["price"] as? String else { complete(false, nil); return }
+                
+                complete(true, currentPrice)
+            }
         }
     }
     
-    //Upbit 현재 가격
+    //Upbit 현재 가격. 안씀
     static func getUpbitTicks(selectedCoins: [Coin], complete: @escaping (_ isSuccess: Bool, _ results: [Tick]) -> Void){
         var ticks = [Tick]()
         
@@ -46,6 +59,30 @@ class Api {
                     if tick["market"].stringValue == coin.marketAndCode {
                         ticks.append(Tick(coin: coin, currentPrice: tick["trade_price"].doubleValue))
                     }
+                }
+            }
+            
+            complete(true, ticks)
+        }
+    }
+    
+    //바낸 현재 가격. 안씀
+    static func getBinanceTicks(selectedCoins: [Coin], complete: @escaping (_ isSuccess: Bool, _ results: [Tick]) -> Void){
+        var ticks = [Tick]()
+        
+        let marketAndCodeList = selectedCoins.filter { $0.site == .upbit }
+                                                .map { $0.marketAndCode }.joined(separator: ",")
+
+        Alamofire.request("\(Const.REST_BINANCE)/api/v3/ticker/price?symbols=\(marketAndCodeList)", method: .get).responseJSON { (responseData) -> Void in
+            guard let resultValue = responseData.result.value else { complete(false, []); return }
+            //1개면 오브젝트로 리턴. 여러개면 배열
+            guard let resultTick = JSON(resultValue).dictionaryObject else { complete(false, []); return }
+            //guard let resultTicks = (JSON(resultValue)).array else { complete(false, []); return }
+            
+            for coin in selectedCoins {
+                if let symbol = resultTick["symbol"] as? String, symbol == coin.marketAndCode,
+                    let price = resultTick["price"] as? Double {
+                    ticks.append(Tick(coin: coin, currentPrice: price))
                 }
             }
             

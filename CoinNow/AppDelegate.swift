@@ -26,7 +26,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     
     func applicationDidFinishLaunching(_ notification: Notification) {
         print("--------applicationDidFinishLaunching")
-        MyValue.clear() //For test
+        //MyValue.clear() //For test
         
         initStatusItem()
     }

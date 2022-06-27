@@ -35,6 +35,8 @@ class VCPopover: NSViewController {
     @IBOutlet weak var viewDonateToggle: NSView!
     @IBOutlet weak var viewDonate: NSView!
     
+    @IBOutlet weak var cHeightTick: NSLayoutConstraint!
+    
     var currentTab: Site?
     
     var sites: [Site] = [Site]() //default is upbit TODO 바낸으로 할까? 국가별로 하면 좋을거같다
@@ -88,6 +90,7 @@ class VCPopover: NSViewController {
         viewDonate.isHidden = true
         
         collectionViewCoin.customBackgroundColor = NSColor.black.withAlphaComponent(0.1)
+        //collectionViewTick.customBackgroundColor = NSColor.white.withAlphaComponent(0.5)
         
         initCoinCollectionView()
         initTickCollectionView()
@@ -121,6 +124,8 @@ class VCPopover: NSViewController {
     }
     
     func initTickCollectionView() {
+        collectionViewTick.wantsLayer = true
+        
         collectionViewTick.dataSource = self
         collectionViewTick.delegate = self
         collectionViewTick.register(NSNib(nibNamed: "ItemTick", bundle: nil), forItemWithIdentifier: NSUserInterfaceItemIdentifier(rawValue: "ItemTick"))
@@ -173,6 +178,13 @@ class VCPopover: NSViewController {
         
         for coin in MyValue.selectedCoins {
             self.ticks.append(Tick(coin: coin, currentPrice: -1))
+        }
+        
+        let tickCollectionviewHeight = CGFloat(ceil(Double(ticks.count) / 2.0) * 40)
+        
+        //max height : 400
+        if tickCollectionviewHeight < 400 {
+            cHeightTick.constant = tickCollectionviewHeight
         }
         
         collectionViewTick.reloadData()

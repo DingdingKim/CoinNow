@@ -52,7 +52,7 @@
                 <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="1xC-2Y-1SY">
                     <rect key="frame" x="209" y="1" width="12" height="15"/>
                     <textFieldCell key="cell" lineBreakMode="clipping" title="0" id="7DL-LZ-SVS">
-                        <font key="font" metaFont="system" size="12"/>
+                        <font key="font" metaFont="cellTitle"/>
                         <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                         <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                     </textFieldCell>
@@ -66,14 +66,14 @@
                     </textFieldCell>
                 </textField>
                 <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="76L-aa-r5m" userLabel="Line">
-                    <rect key="frame" x="0.0" y="0.0" width="229" height="1"/>
+                    <rect key="frame" x="10" y="0.0" width="209" height="1"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="1" id="0gd-fb-crC"/>
                     </constraints>
                     <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Label" drawsBackground="YES" id="ooB-GG-hkP">
                         <font key="font" metaFont="system"/>
                         <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
-                        <color key="backgroundColor" red="0.55686274509803924" green="0.55686274509803924" blue="0.57647058823529407" alpha="0.300249787414966" colorSpace="custom" customColorSpace="sRGB"/>
+                        <color key="backgroundColor" red="0.55686274509803924" green="0.55686274509803924" blue="0.57647058823529407" alpha="0.20000000000000001" colorSpace="custom" customColorSpace="sRGB"/>
                     </textFieldCell>
                 </textField>
                 <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="IyM-bJ-3sI" userLabel="Line">
@@ -84,7 +84,7 @@
                     <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Label" drawsBackground="YES" id="8Ly-uF-rhn">
                         <font key="font" metaFont="system"/>
                         <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
-                        <color key="backgroundColor" red="0.55686274509803924" green="0.55686274509803924" blue="0.57647058823529407" alpha="0.300249787414966" colorSpace="custom" customColorSpace="sRGB"/>
+                        <color key="backgroundColor" red="0.55686274509803924" green="0.55686274509803924" blue="0.57647058823529407" alpha="0.20000000000000001" colorSpace="custom" customColorSpace="sRGB"/>
                     </textFieldCell>
                 </textField>
             </subviews>
@@ -92,11 +92,11 @@
                 <constraint firstItem="A7i-xk-JKQ" firstAttribute="top" secondItem="eaF-L1-UOZ" secondAttribute="bottom" id="5aJ-ah-mit"/>
                 <constraint firstItem="1xC-2Y-1SY" firstAttribute="centerY" secondItem="jUT-tF-pmk" secondAttribute="centerY" id="MFZ-h7-eQD"/>
                 <constraint firstAttribute="bottom" secondItem="76L-aa-r5m" secondAttribute="bottom" id="Mbo-PF-uin"/>
-                <constraint firstAttribute="trailing" secondItem="76L-aa-r5m" secondAttribute="trailing" id="PLx-wc-9Cv"/>
+                <constraint firstAttribute="trailing" secondItem="76L-aa-r5m" secondAttribute="trailing" constant="10" id="PLx-wc-9Cv"/>
                 <constraint firstAttribute="trailing" secondItem="IyM-bJ-3sI" secondAttribute="trailing" id="Qxz-Ne-e95"/>
                 <constraint firstItem="eaF-L1-UOZ" firstAttribute="leading" secondItem="D35-bd-GV7" secondAttribute="trailing" id="RAc-tY-1Vf"/>
                 <constraint firstItem="D35-bd-GV7" firstAttribute="leading" secondItem="jUT-tF-pmk" secondAttribute="leading" constant="10" id="RWn-Zw-LP6"/>
-                <constraint firstItem="76L-aa-r5m" firstAttribute="leading" secondItem="jUT-tF-pmk" secondAttribute="leading" id="SHJ-a4-PnY"/>
+                <constraint firstItem="76L-aa-r5m" firstAttribute="leading" secondItem="jUT-tF-pmk" secondAttribute="leading" constant="10" id="SHJ-a4-PnY"/>
                 <constraint firstItem="D35-bd-GV7" firstAttribute="centerY" secondItem="jUT-tF-pmk" secondAttribute="centerY" id="UA7-ov-dtb"/>
                 <constraint firstAttribute="bottom" secondItem="A7i-xk-JKQ" secondAttribute="bottom" constant="5" id="VgD-J7-SJj"/>
                 <constraint firstItem="A7i-xk-JKQ" firstAttribute="leading" secondItem="eaF-L1-UOZ" secondAttribute="leading" id="XHP-dB-1Ee"/>
