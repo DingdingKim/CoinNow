@@ -258,6 +258,9 @@
                                             <segment label="Binance"/>
                                         </segments>
                                     </segmentedCell>
+                                    <connections>
+                                        <action selector="clickSiteTab:" target="-2" id="cRf-pe-N9e"/>
+                                    </connections>
                                 </segmentedControl>
                             </subviews>
                             <constraints>

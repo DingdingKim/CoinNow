@@ -26,7 +26,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     
     func applicationDidFinishLaunching(_ notification: Notification) {
         print("--------applicationDidFinishLaunching")
-        //MyValue.clear() //For test
+        MyValue.clear() //For test
         
         initStatusItem()
     }
@@ -72,7 +72,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     
     //Set label that show my coin state at status bar
     @objc public func updateStatusItem() {
-        print("--------updateStatusItem")
+        //print("--------updateStatusItem")
         statusItem.button?.image = MyValue.isHiddenStatusbarIcon ? nil : NSImage(named: "statusbar_icon")
         
         guard !MyValue.myCoin.isEmpty else { return }
@@ -133,7 +133,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     
     func initWebSocket() {
         print("--------initWebSocket")
-        var request = URLRequest(url: URL(string: Const.UPBIT_WEBSOCKET)!)
+        var request = URLRequest(url: URL(string: Const.WEBSOCKET_UPBIT)!)
         request.timeoutInterval = 5
         
         if socket != nil {
@@ -149,7 +149,12 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     //업비트 웹소켓으로 틱 정보 가져옴
     func writeToSocket() {
         print("--------writeToSocket: \(popover.isShown), \(popover.isDetached)")
-        guard socket != nil, isSocketConnected else { print("연결안됨"); return }
+        guard socket != nil, isSocketConnected else {
+            initWebSocket()
+            
+            print("연결안됨. 소켓 다시 세팅");
+            return
+        }
         
         //팝오버가 안보이면 내꺼만 가져오고 보이면 선택코인 다가져와
         var marketAndCodes = popover.isShown ? MyValue.selectedCoins.map { $0.marketAndCode } : []
@@ -198,7 +203,7 @@ extension AppDelegate: WebSocketDelegate {
         case .binary(let data):
             do {
                 let data = try JSONDecoder().decode(WebSocketUpbit.self, from: data)
-                print("리시브: \(data.code)")
+                //print("리시브: \(data.code)")
                 
                 //VCPopover뷰 업데이트 하라고 소리쳐~
                 NotificationCenter.default.post(name: NSNotification.Name(rawValue: "receiveTick"), object: nil, userInfo: ["tick" : data])

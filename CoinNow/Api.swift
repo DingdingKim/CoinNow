@@ -15,10 +15,10 @@ class Api {
     //marketAndCode: KRW-BTC
     static func getMyCoinTick(marketAndCode: String, complete: @escaping (_ isSuccess: Bool, _ results: String?) -> Void) {
         if MyValue.mySiteType == .upbit {
-            Alamofire.request("https://api.upbit.com/v1/ticker?markets=\(marketAndCode)", method: .get).responseJSON { (responseData) -> Void in
-                guard let resultValue = responseData.result.value else { complete(false, nil); return}
-                guard let resultTicks = (JSON(resultValue)).array, resultTicks.count > 0 else { complete(false, nil); return}
-                guard let currentPrice = resultTicks[0]["trade_price"].double else { complete(false, nil); return}
+            Alamofire.request("\(Const.REST_UPBIT)/v1/ticker?markets=\(marketAndCode)", method: .get).responseJSON { (responseData) -> Void in
+                guard let resultValue = responseData.result.value else { complete(false, nil); return }
+                guard let resultTicks = (JSON(resultValue)).array, resultTicks.count > 0 else { complete(false, nil); return }
+                guard let currentPrice = resultTicks[0]["trade_price"].double else { complete(false, nil); return }
                 
                 complete(true, currentPrice.withCommas())
             }
@@ -37,9 +37,9 @@ class Api {
         let marketAndCodeList = selectedCoins.filter { $0.site == .upbit }
                                                 .map { $0.marketAndCode }.joined(separator: ",")
 
-        Alamofire.request("https://api.upbit.com/v1/ticker?markets=\(marketAndCodeList)", method: .get).responseJSON { (responseData) -> Void in
-            guard let resultValue = responseData.result.value else { complete(false, []); return}
-            guard let resultTicks = (JSON(resultValue)).array else { complete(false, []); return}
+        Alamofire.request("\(Const.REST_UPBIT)/v1/ticker?markets=\(marketAndCodeList)", method: .get).responseJSON { (responseData) -> Void in
+            guard let resultValue = responseData.result.value else { complete(false, []); return }
+            guard let resultTicks = (JSON(resultValue)).array else { complete(false, []); return }
             
             for coin in selectedCoins {
                 for tick in resultTicks {
@@ -57,12 +57,33 @@ class Api {
     static func getUpbitCoins(complete: @escaping (_ isSuccess: Bool, _ results: [Coin]) -> Void) {
         var coins = [Coin]()
         
-        Alamofire.request("https://api.upbit.com/v1/market/all", method: .get).responseJSON { (responseData) -> Void in
-            guard let resultValue = responseData.result.value else { complete(false, []); return}
-            guard let resultCoins = (JSON(resultValue)).array else { complete(false, []); return}
+        Alamofire.request("\(Const.REST_UPBIT)/v1/market/all", method: .get).responseJSON { (responseData) -> Void in
+            guard let resultValue = responseData.result.value else { complete(false, []); return }
+            guard let resultCoins = (JSON(resultValue)).array else { complete(false, []); return }
             
             for coin in resultCoins {
                 coins.append(Coin(from: .upbit, data: coin))
+            }
+            
+            complete(true, coins)
+        }
+    }
+    
+    //바낸 코인 다 가져오기
+    static func getBinanceCoins(complete: @escaping (_ isSuccess: Bool, _ results: [Coin]) -> Void) {
+        var coins = [Coin]()
+        
+        Alamofire.request("\(Const.REST_BINANCE)/api/v3/exchangeInfo", method: .get).responseJSON { (responseData) -> Void in
+            guard let resultValue = responseData.result.value else { complete(false, []); return }
+            guard let resultCoins = JSON(resultValue)["symbols"].array else { complete(false, []); return }
+            
+            //거래 가능만 들고온다
+            let availableCoins = resultCoins.filter { $0["isSpotTradingAllowed"].boolValue &&
+                                                        $0["status"].stringValue == "TRADING" &&
+                                                        SiteType.binance.markets.contains($0["quoteAsset"].stringValue)}
+            
+            for coin in availableCoins {
+                coins.append(Coin(from: .binance, data: coin))
             }
             
             complete(true, coins)

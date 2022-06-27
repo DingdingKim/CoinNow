@@ -4,46 +4,40 @@ CoinNow (For macOS)
 ## Introduction
 
 Provide current price of cryptocurrency
-Market : Upbit, Bithumb, Coinone, Poloniex, Bitfinex, Bittrex
-Coin   : coins in upbit KRW market, BTC, ETH, DASH, LTC, ETC, XRP, BCH, XMR, QTUM, EOS, IOTA
+Market : Upbit, Binance
 
-## 🔔🌟 Update 1.6.1 (2018.02.20) 🌟🔔
-- 영어로 적기가 너무 힘들어요ㅠ 기능은 문제 없지만 중간중간 한글로 주석달린 부분도 있고 정리되지 못한 부분들이 있을 수 있습니다ㅠ 죄송합니다 ㅠ 차차 정리할게요 ㅠ
-- 첨에 무료로 배포하고 기부로 수익을 조금이나마 내볼참이었는데 기부금은 0원이고ㅜ 무료 서버도 간당간당하고해서ㅜ 지금은 앱스토어에서 유료로 판매하고 있습니다ㅜ
-  유료로 전환한 뒤로는 깃헙 업뎃을 안하고있다가ㅠ 깃헙에 올린다고 앱결제율에 크게 영향이 있을것같지도않아서 앞으로 앱스토어 업데이트 할때마다 깃헙에도 푸시할 예정입니다! 
-
-## Demo
-
-![Screenshot](https://github.com/DingdingKim/CoinNow/blob/master/ScreenShot/screenshot1.jpg)
-![Screenshot](https://github.com/DingdingKim/CoinNow/blob/master/ScreenShot/screenshot1_1.jpg)
-![Screenshot](https://github.com/DingdingKim/CoinNow/blob/master/ScreenShot/screenshot2.jpg)
-
-## In AppStore
-You can install this app in AppStore! Search 'CoinNow'
-
-[👉 Link to AppStore 🍎](https://itunes.apple.com/kr/app/coinnow-%EC%8B%A4%EC%8B%9C%EA%B0%84-%EC%BD%94%EC%9D%B8-%EA%B0%80%EA%B2%A9-%EC%A0%95%EB%B3%B4/id1255102809?mt=12)
+## 🔔🌟 준비중. 2.0.0 (2022.07 중순 예정) 🌟🔔
+안녕하세유! 딩딩이에유! 👋  
+코인나우는 2018년 업데이트를 마지막으로 아예 앱스토어에서 내려놓고 완전 버려져 있었어유ㅠ  
+왜냐! 제가 코인을 거의 접고 살았거든유ㅠ  
+하면할수록 내 정신과 돈을 계속 까먹기만 하는거같아섴ㅋㅋ 그때 알았쥬  
+```
+아 내가 돈을 버는 방법은 원화채굴밖에 없구나 !🫠  
+```
+그래서 그동안 외주도 하고 프리도 하면서 신나게 일만 하다가 작년 말부터 좀 여유를 찾게 됐어유  
+그때 마침 코인 분위기도 좀 올라오는거 같길래 조금씩 다시 손을 대기 시작하는데 ... !  
+결과야 뭐 🥲  
+그래도 저는 포기하지않고 조금씩 꾸준히 코인놀이를 하고 있답니댜!  
+이 놀이를 좀 생산적인 일로 포장하기 위해서 그동안 버려놓았던 코인나우를 다시 살려보기로 했어유!😎  
+처음 만들때는(라떼는) 업비트에 코인이 그렇게 많지도 않았고 api도 없어서 크롤링으로 가져왓었는데 지금은 훨씬 편해졌네유!  
+이것저것 기능 추가하고 있는 중이고 7월 중순에 다시 앱스토어에서 만나보실 수 있게 준비하고있습니다!  
+거래소는 제가 사용하는거 위주로 업비트랑 바이낸스(현물, 선물)만 추가 할 예정이고  
+기능도 제가 필요하다고 생각하는것 위주로 추가 중이에요  
+추가하고 싶은 기능있으시다면 언제든 메일 주세요! 힣  
+그럼 저는 이만 10만원들고 바낸 선물 !연습!하러 갑니댜!(이미 10만원 2번 청산당ㅎ..🤭)  
 
 ## Todo
-- [x] Publish at Appstore
-- [ ] Add other exchange site
-- [ ] Add other coin
-- [ ] Alarm at target price
-
-## To users ❤️ (Update note ..Not important 😅)
-As coins and exchanges increase, it's too narrow to fit in the popup.
-How do you at a glance! Do not be mad! neatly! I'm worried about whether I can show you!
-
-In the next major update, I will return to add function, not to add exchanges or coins!
-An alarm at a fixed price or something visual so you can better understand the change in the price!
-Actually, I do not make money with this app, but because I am so funny and need to make an app, it may be a little slower and you may not feel uncomfortable.
-You have a suggestion or something to say about Coinnow! 
-Request issues in Github or send an e-mail to me. I'll reply you ASAP :D hehe
-
-Every time I leave work and start working until dawn, I'm almost out of my mind and I am writing down the update notes! Hehe
-I hope Coinow will help you a little bit!
-Obviously users do not have much to read this update note to the end, but ~
-Please do a lot of Coinnow promotion ~ I love you users!
-
+✅ 업비트 연동 되도록 수정  
+✅ 바낸 연동  
+✅ Rest -> 웹소켓  
+   Rsi 3위까지 보여주기  
+   바낸 선물탭도 넣기  
+   롱 숏 비율 알려주기(비트 한정)  
+   지금 VCPopover에 다 들어가있는걸 다 뷰로 분리시키자(코인뷰, 틱뷰)  
+   매수매도도 업빗처럼 테두리에 표시해주는거도 좋을거같다  
+   다국어 처리  
+   업비트 공지사항 가져오기  
+   rx로 교체  
 
 ## Author
 

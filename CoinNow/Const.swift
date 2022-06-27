@@ -34,7 +34,11 @@ struct Const {
     static let DEFAULT_SITE_TYPE: SiteType = .upbit
     static let DEFAULT_LOADING_TEXT = "Loading.."
     
-    static let UPBIT_WEBSOCKET = "wss://api.upbit.com/websocket/v1"
+    static let REST_UPBIT = "https://api.upbit.com"
+    static let REST_BINANCE = "https://api.binance.com"
+
+    static let WEBSOCKET_UPBIT = "wss://api.upbit.com/websocket/v1"
+    static let WEBSOCKET_BINANCE = "wss://stream.binance.com:9443"
     
     struct UserDefaultKey {
         static let MY_COIN = "MY_COIN" //Coin that show in status bar
