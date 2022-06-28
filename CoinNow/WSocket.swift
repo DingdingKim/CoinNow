@@ -54,16 +54,28 @@ struct WSocket: Codable {
             self.changeState = WebSocketPriceChangeType(rawValue: data["change"].stringValue) ?? .unknown
             
         case .binance:
-            //바이낸스는 마켓심볼이 딱 붙어서오기 때문에 구분을 할수가 없다...
-            //내 코인들을 다 뒤집어서 가지고있을 수 밖에 ...
-            let binanceCoins = MyValue.selectedCoins.filter({ $0.site == .binance })
-            
-            for coin in binanceCoins {
-                if coin.code + coin.market == data["s"].stringValue {
-                    self.code = coin.code
-                    self.market = coin.market
-                    break
+            if MyValue.mySiteType == .binance {
+                let market = String(MyValue.myCoin.split(separator: "-")[0])
+                let coin = String(MyValue.myCoin.split(separator: "-")[1])
+                
+                if (coin + market) == data["s"].stringValue {
+                    self.code = coin
+                    self.market = market
                 }
+            }
+            else {
+                //바이낸스는 마켓심볼이 딱 붙어서오기 때문에 구분을 할수가 없다...
+                //내 코인들을 다 뒤집어서 가지고있을 수 밖에 ...
+                let binanceCoins = MyValue.selectedCoins.filter({ $0.site == .binance })
+                
+                for coin in binanceCoins {
+                    if (coin.code + coin.market) == data["s"].stringValue {
+                        self.code = coin.code
+                        self.market = coin.market
+                        break
+                    }
+                }
+                
             }
             
             self.trade_price = Double(data["c"].stringValue) ?? 0

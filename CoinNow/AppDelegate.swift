@@ -36,7 +36,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     
     func applicationDidFinishLaunching(_ notification: Notification) {
         print("--------applicationDidFinishLaunching")
-        //MyValue.clear() //For test
+        MyValue.clear() //For test
         
         initStatusItem()
     }
@@ -49,7 +49,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     }
     
     func disconnectSockets(_ siteType: SiteType? = nil) {
-        print("--------disconnectSockets")
+        print("--------disconnectSockets: \(siteType)")
         
         if let siteType = siteType {
             if siteType == .upbit {
@@ -170,6 +170,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         
         if let siteType = siteType {
             if siteType == .upbit {
+                print("--------initWebSocket 업비트")
                 var request = URLRequest(url: URL(string: Const.WEBSOCKET_UPBIT)!)
                 request.timeoutInterval = 5
                 
@@ -180,6 +181,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
                 socketUpbit.connect()
             }
             else if siteType == .binance {
+                print("--------initWebSocket 바낸")
                 var request = URLRequest(url: URL(string: Const.WEBSOCKET_BINANCE)!)
                 request.timeoutInterval = 5
                 
@@ -191,6 +193,8 @@ class AppDelegate: NSObject, NSApplicationDelegate {
             }
         }
         else {
+            print("--------initWebSocket 둘다")
+            
             var requestUpbit = URLRequest(url: URL(string: Const.WEBSOCKET_UPBIT)!)
             requestUpbit.timeoutInterval = 5
             
@@ -257,7 +261,8 @@ class AppDelegate: NSObject, NSApplicationDelegate {
             //상태바 코인도 포함시켜서 요청한다. 같은 코드 두개보내면 응답을 아예 안하기 때문에 확인하고 넣기
             //TODO Set으로 만들면 중복안되고 괜찮을거같은데 검토해보쟈
             if MyValue.mySiteType == .binance, !marketAndCodes.contains(MyValue.myCoin) {
-                marketAndCodes.append(MyValue.myCoin)
+                let splited = MyValue.myCoin.split(separator: "-")
+                marketAndCodes.append("\(String(splited[1]))\(String(splited[0]))@ticker")
             }
             //wss://stream.binance.com:9443/ws/btcusdt@ticker/etcusdt@ticker
             
@@ -286,6 +291,8 @@ extension AppDelegate: WebSocketDelegate {
                 self.isSocketConnectedBinance = true
             }
             
+            print("연결성공: \(siteType)")
+            
             //틱정보 받아오도록 웹소켓 전송
             writeToSocket(siteType)
             
@@ -302,9 +309,10 @@ extension AppDelegate: WebSocketDelegate {
             
             //VCPopover뷰 업데이트 하라고 소리쳐~
             NotificationCenter.default.post(name: NSNotification.Name(rawValue: "receiveTick"), object: nil, userInfo: ["tick" : data])
+            print("Receive Binance: \(data)")
             
             //받은게 상태바 코인이면 상태바 업뎃
-            if data.code == MyValue.myCoin {
+            if data.marketAndCode == MyValue.myCoin {
                 updateStatusText(MyValue.isHiddenStatusbarMarket ? data.displayCurrentPrice : "\(MyValue.myCoin.split(separator: "-")[1]) \(data.displayCurrentPrice)")
             }
             
@@ -315,7 +323,8 @@ extension AppDelegate: WebSocketDelegate {
             NotificationCenter.default.post(name: NSNotification.Name(rawValue: "receiveTick"), object: nil, userInfo: ["tick" : data])
             
             //받은게 상태바 코인이면 상태바 업뎃
-            if data.code == MyValue.myCoin {
+            print("리시브: \(data.marketAndCode) / \(MyValue.myCoin)")
+            if data.marketAndCode == MyValue.myCoin {
                 updateStatusText(MyValue.isHiddenStatusbarMarket ? data.displayCurrentPrice : "\(MyValue.myCoin.split(separator: "-")[1]) \(data.displayCurrentPrice)")
             }
             
