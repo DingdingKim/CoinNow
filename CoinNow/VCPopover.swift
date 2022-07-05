@@ -203,7 +203,7 @@ class VCPopover: NSViewController {
         if isContainUpbit {
             appDelegate.writeToSocket(.upbit)
         }
-        else if isContainBinance {
+        if isContainBinance {
             appDelegate.writeToSocket(.binance)
         }
     }

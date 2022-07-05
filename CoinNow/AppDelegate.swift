@@ -17,6 +17,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     
     private static var timer = Timer()
     
+    //이걸 하나로 묶어서 관리 할 수 있을거같다
     private var socketUpbit: WebSocket!
     private var socketBinance: WebSocket!
     
@@ -215,6 +216,16 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         }
     }
     
+    func unSubscribeBinance(symbol: String) {
+        let param = "{\"method\": \"SUBSCRIBE\",\"params\":[\"\(symbol.lowercased())@ticker\"],\"id\": 1}"
+        print("구독해제: \(param)")
+        
+        //기존거 다 삭제하고 다시 받도록 한다
+        socketBinance.write(string: param) {
+            print("바낸 전송 완료")
+        }
+    }
+    
     //업비트 웹소켓으로 틱 정보 가져옴
     func writeToSocket(_ siteType: SiteType) {
         if siteType == .upbit {
@@ -266,11 +277,15 @@ class AppDelegate: NSObject, NSApplicationDelegate {
             }
             //wss://stream.binance.com:9443/ws/btcusdt@ticker/etcusdt@ticker
             
+            //구독할게 없다
+            guard marketAndCodes.count > 0 else { print( "구독할게없다"); return }
+            
             let marketAndCodesString = marketAndCodes.joined(separator: "\",\"")
             let param = "{\"method\": \"SUBSCRIBE\",\"params\":[\"\(marketAndCodesString.lowercased())\"],\"id\": 1}"
             print("하이 바낸: \(param)")
             //{"method": "SUBSCRIBE","params":["etcusdt@ticker", "btcusdt@ticker"],"id": 312}
             
+            //기존거 다 삭제하고 다시 받도록 한다
             socketBinance.write(string: param) {
                 print("바낸 전송 완료")
             }
@@ -307,6 +322,11 @@ extension AppDelegate: WebSocketDelegate {
         case .text(let data):
             let data = WSocket(from: siteType, data: JSON.init(parseJSON: data))
             
+//            //더이상 선택된 코인이 아니라서 코드를 못넣는 경우다. unsubscribe한다
+//            if data.code.isEmpty {
+//                unSubscribeBinance(symbol: data.code + data.market)
+//            }
+            
             //VCPopover뷰 업데이트 하라고 소리쳐~
             NotificationCenter.default.post(name: NSNotification.Name(rawValue: "receiveTick"), object: nil, userInfo: ["tick" : data])
             print("Receive Binance: \(data)")
@@ -323,7 +343,7 @@ extension AppDelegate: WebSocketDelegate {
             NotificationCenter.default.post(name: NSNotification.Name(rawValue: "receiveTick"), object: nil, userInfo: ["tick" : data])
             
             //받은게 상태바 코인이면 상태바 업뎃
-            print("리시브: \(data.marketAndCode) / \(MyValue.myCoin)")
+            //print("Receive Upbit: \(data.marketAndCode) / \(MyValue.myCoin)")
             if data.marketAndCode == MyValue.myCoin {
                 updateStatusText(MyValue.isHiddenStatusbarMarket ? data.displayCurrentPrice : "\(MyValue.myCoin.split(separator: "-")[1]) \(data.displayCurrentPrice)")
             }
@@ -360,13 +380,11 @@ extension AppDelegate: NSPopoverDelegate {
     func popoverDidClose(_ notification: Notification) {
         print("popoverDidClose: \(popover.isShown)")
         
+        disconnectSockets()
+        
         //소켓이면 내꺼만 가지고 오게 다시 쓰기
         if MyValue.updatePer == .realTime {
             writeToSocket(MyValue.mySiteType)
-        }
-        //타이머 업데이트라면 소켓은 다시 제거한다
-        else {
-            disconnectSockets()
         }
     }
     
