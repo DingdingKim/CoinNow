@@ -51,7 +51,6 @@ struct MyValue {
                 UserDefaults.standard.synchronize()
                 
                 debugPrint("selectedCoins >> didSet \(selectedCoins)")
-                NotificationCenter.default.post(name: NSNotification.Name(rawValue: "VCPopover.updateSelectedCoins"), object: nil)
             }
             
             //소켓에 업데이트된 코인 선택 목록으로 다시 요청한다

@@ -31,13 +31,7 @@ class Site {
         self.siteType = siteType
         
         setData() {
-            if self.siteType == Const.DEFAULT_SITE_TYPE {
-                //아무것도 없는 경우 업빗에서 가져온거에서 앞에 3개를 넣어준다
-                if MyValue.selectedCoins.count == 0 {
-                    MyValue.selectedCoins.append(contentsOf: self.marketAndCoins[0].coins.sorted(by: { $0.market > $1.market })[0...3])
-                }
-            }
-            NotificationCenter.default.post(name: NSNotification.Name(rawValue: "VCPopover.finishSetCoins"), object: nil)
+            NotificationCenter.default.post(name: NSNotification.Name(rawValue: "VCPopover.finishSetCoins"), object: nil, userInfo: ["site": self])
         }
     }
     
