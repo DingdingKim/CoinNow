@@ -12,6 +12,7 @@
         <collectionViewItem title="ItemTick" id="Y92-ku-JT2" customClass="ItemTick" customModule="CoinNow" customModuleProvider="target">
             <connections>
                 <outlet property="lbCoin" destination="eaF-L1-UOZ" id="PWh-RT-Hn0"/>
+                <outlet property="lbExchange" destination="Qlb-wM-0tC" id="eIj-Ne-7sk"/>
                 <outlet property="lbKPremium" destination="txo-Lg-ZYo" id="F1R-ja-enK"/>
                 <outlet property="lbMarket" destination="A7i-xk-JKQ" id="Fiz-UK-YUz"/>
                 <outlet property="lbPrice" destination="1xC-2Y-1SY" id="Thp-kA-qKa"/>
@@ -41,8 +42,16 @@
                         <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                     </textFieldCell>
                 </textField>
+                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="Qlb-wM-0tC" userLabel="exchange">
+                    <rect key="frame" x="8" y="5" width="28" height="11"/>
+                    <textFieldCell key="cell" lineBreakMode="clipping" title="Upbit" id="adb-hl-OD7">
+                        <font key="font" metaFont="systemLight" size="9"/>
+                        <color key="textColor" name="systemPurpleColor" catalog="System" colorSpace="catalog"/>
+                        <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                    </textFieldCell>
+                </textField>
                 <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="A7i-xk-JKQ">
-                    <rect key="frame" x="8" y="5" width="35" height="11"/>
+                    <rect key="frame" x="35" y="5" width="35" height="11"/>
                     <textFieldCell key="cell" lineBreakMode="clipping" title="market" id="3VD-e0-9HM">
                         <font key="font" metaFont="systemLight" size="9"/>
                         <color key="textColor" name="systemIndigoColor" catalog="System" colorSpace="catalog"/>
@@ -89,17 +98,19 @@
                 </textField>
             </subviews>
             <constraints>
+                <constraint firstItem="A7i-xk-JKQ" firstAttribute="leading" secondItem="Qlb-wM-0tC" secondAttribute="trailing" constant="3" id="12s-wM-NrJ"/>
                 <constraint firstItem="A7i-xk-JKQ" firstAttribute="top" secondItem="eaF-L1-UOZ" secondAttribute="bottom" id="5aJ-ah-mit"/>
                 <constraint firstItem="1xC-2Y-1SY" firstAttribute="centerY" secondItem="jUT-tF-pmk" secondAttribute="centerY" id="MFZ-h7-eQD"/>
                 <constraint firstAttribute="bottom" secondItem="76L-aa-r5m" secondAttribute="bottom" id="Mbo-PF-uin"/>
+                <constraint firstAttribute="bottom" secondItem="Qlb-wM-0tC" secondAttribute="bottom" constant="5" id="P0H-3q-FdI"/>
                 <constraint firstAttribute="trailing" secondItem="76L-aa-r5m" secondAttribute="trailing" constant="10" id="PLx-wc-9Cv"/>
                 <constraint firstAttribute="trailing" secondItem="IyM-bJ-3sI" secondAttribute="trailing" id="Qxz-Ne-e95"/>
                 <constraint firstItem="eaF-L1-UOZ" firstAttribute="leading" secondItem="D35-bd-GV7" secondAttribute="trailing" id="RAc-tY-1Vf"/>
                 <constraint firstItem="D35-bd-GV7" firstAttribute="leading" secondItem="jUT-tF-pmk" secondAttribute="leading" constant="10" id="RWn-Zw-LP6"/>
+                <constraint firstItem="Qlb-wM-0tC" firstAttribute="leading" secondItem="jUT-tF-pmk" secondAttribute="leading" constant="10" id="RsL-Ni-mDl"/>
                 <constraint firstItem="76L-aa-r5m" firstAttribute="leading" secondItem="jUT-tF-pmk" secondAttribute="leading" constant="10" id="SHJ-a4-PnY"/>
                 <constraint firstItem="D35-bd-GV7" firstAttribute="centerY" secondItem="jUT-tF-pmk" secondAttribute="centerY" id="UA7-ov-dtb"/>
                 <constraint firstAttribute="bottom" secondItem="A7i-xk-JKQ" secondAttribute="bottom" constant="5" id="VgD-J7-SJj"/>
-                <constraint firstItem="A7i-xk-JKQ" firstAttribute="leading" secondItem="eaF-L1-UOZ" secondAttribute="leading" id="XHP-dB-1Ee"/>
                 <constraint firstAttribute="bottom" secondItem="IyM-bJ-3sI" secondAttribute="bottom" id="ZOC-No-Bi2"/>
                 <constraint firstAttribute="trailing" secondItem="1xC-2Y-1SY" secondAttribute="trailing" constant="10" id="ciY-0o-hma"/>
                 <constraint firstItem="IyM-bJ-3sI" firstAttribute="top" secondItem="jUT-tF-pmk" secondAttribute="top" id="efF-eS-s3F"/>

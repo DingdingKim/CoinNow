@@ -49,7 +49,6 @@ struct Const {
         
         //will update by selected coin
         static let SELECTED_COINS = "SELECTED_COINS"
-        
         static let IS_SIMPLE_MODE = "IS_SIMPLE_MODE"
     }
 }

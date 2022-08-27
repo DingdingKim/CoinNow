@@ -10,7 +10,6 @@
             <connections>
                 <outlet property="btDonate" destination="tKF-7c-ZiL" id="43w-qC-xYh"/>
                 <outlet property="btMinimode" destination="pce-U1-erj" id="0Ec-d8-oZO"/>
-                <outlet property="btRefresh" destination="tFh-tF-H97" id="ylw-u2-JnH"/>
                 <outlet property="btStatusCoin" destination="hC2-lS-lZ9" id="B6d-KR-eMb"/>
                 <outlet property="btStatusSite" destination="FIh-G9-J5h" id="RYQ-JK-9sZ"/>
                 <outlet property="btStatusUpdatePer" destination="lU9-Gp-3Ts" id="wvC-hS-Fj2"/>
@@ -25,6 +24,7 @@
                 <outlet property="view" destination="Hz6-mo-xeY" id="kkN-F2-eo5"/>
                 <outlet property="viewDonate" destination="lUP-Lp-Wel" id="HdP-ks-SEe"/>
                 <outlet property="viewDonateToggle" destination="NXn-AB-4RR" id="myo-fZ-wmI"/>
+                <outlet property="viewNetworkError" destination="AzT-aQ-fNg" id="MP8-7R-sxd"/>
                 <outlet property="viewSelectCoins" destination="wi7-nI-zqO" id="f00-g4-Hvq"/>
                 <outlet property="viewStatusSetting" destination="Lt9-nb-WLc" id="Rgi-Ot-30R"/>
             </connections>
@@ -178,8 +178,8 @@
                             <rect key="frame" x="0.0" y="628" width="519" height="40"/>
                             <subviews>
                                 <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" allowsCharacterPickerTouchBarItem="YES" translatesAutoresizingMaskIntoConstraints="NO" id="9lg-xr-wyn">
-                                    <rect key="frame" x="-2" y="11" width="141" height="19"/>
-                                    <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="center" title="Current Coin State" id="7ib-vM-8SW">
+                                    <rect key="frame" x="-2" y="11" width="104" height="19"/>
+                                    <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="center" title="Current Price" id="7ib-vM-8SW">
                                         <font key="font" metaFont="systemSemibold" size="15"/>
                                         <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                                         <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
@@ -193,27 +193,11 @@
                                         <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                                     </textFieldCell>
                                 </textField>
-                                <button ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="tFh-tF-H97" userLabel="Button_Refresh">
-                                    <rect key="frame" x="499" y="18" width="20" height="20"/>
-                                    <constraints>
-                                        <constraint firstAttribute="width" constant="20" id="OdB-H1-3jf"/>
-                                        <constraint firstAttribute="height" constant="20" id="TND-SO-Fic"/>
-                                    </constraints>
-                                    <buttonCell key="cell" type="square" bezelStyle="shadowlessSquare" image="ic_autorenew" imagePosition="only" alignment="center" imageScaling="proportionallyUpOrDown" inset="2" id="xHX-Ru-UGY">
-                                        <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
-                                        <font key="font" metaFont="system"/>
-                                    </buttonCell>
-                                    <connections>
-                                        <action selector="clickRefresh:" target="-2" id="LgF-mE-dL5"/>
-                                    </connections>
-                                </button>
                             </subviews>
                             <constraints>
                                 <constraint firstAttribute="trailing" secondItem="pD8-71-cuc" secondAttribute="trailing" id="0vN-CT-0sH"/>
-                                <constraint firstItem="pD8-71-cuc" firstAttribute="leading" secondItem="tFh-tF-H97" secondAttribute="trailing" id="74q-yC-ZhE"/>
                                 <constraint firstItem="9lg-xr-wyn" firstAttribute="top" secondItem="9Ma-2L-eKd" secondAttribute="top" constant="10" id="WwX-zc-P2n"/>
                                 <constraint firstAttribute="height" constant="40" id="emf-He-Lkj"/>
-                                <constraint firstItem="pD8-71-cuc" firstAttribute="centerY" secondItem="tFh-tF-H97" secondAttribute="centerY" id="jFQ-Oe-pD1"/>
                                 <constraint firstItem="9lg-xr-wyn" firstAttribute="leading" secondItem="9Ma-2L-eKd" secondAttribute="leading" id="qla-1W-yof"/>
                             </constraints>
                         </customView>
@@ -569,12 +553,44 @@
                         <real value="3.4028234663852886e+38"/>
                     </customSpacing>
                 </stackView>
+                <visualEffectView hidden="YES" appearanceType="vibrantLight" blendingMode="behindWindow" material="mediumLight" state="active" translatesAutoresizingMaskIntoConstraints="NO" id="AzT-aQ-fNg">
+                    <rect key="frame" x="0.0" y="0.0" width="569" height="794"/>
+                    <subviews>
+                        <customView translatesAutoresizingMaskIntoConstraints="NO" id="IWU-y4-Q1T" userLabel="View state title">
+                            <rect key="frame" x="159" y="385" width="251" height="24"/>
+                            <subviews>
+                                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" allowsCharacterPickerTouchBarItem="YES" translatesAutoresizingMaskIntoConstraints="NO" id="cvg-OE-iZk">
+                                    <rect key="frame" x="-2" y="0.0" width="255" height="24"/>
+                                    <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="center" title="Network connection failure" id="TFY-lO-RzS">
+                                        <font key="font" metaFont="systemSemibold" size="20"/>
+                                        <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                        <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                                    </textFieldCell>
+                                </textField>
+                            </subviews>
+                            <constraints>
+                                <constraint firstAttribute="bottom" secondItem="cvg-OE-iZk" secondAttribute="bottom" id="Qqw-ol-QTU"/>
+                                <constraint firstItem="cvg-OE-iZk" firstAttribute="leading" secondItem="IWU-y4-Q1T" secondAttribute="leading" id="fCi-kW-9Gs"/>
+                                <constraint firstItem="cvg-OE-iZk" firstAttribute="top" secondItem="IWU-y4-Q1T" secondAttribute="top" id="vDY-Ch-NMX"/>
+                                <constraint firstAttribute="trailing" secondItem="cvg-OE-iZk" secondAttribute="trailing" id="w6F-Wp-SOa"/>
+                            </constraints>
+                        </customView>
+                    </subviews>
+                    <constraints>
+                        <constraint firstItem="IWU-y4-Q1T" firstAttribute="centerX" secondItem="AzT-aQ-fNg" secondAttribute="centerX" id="jTg-Dg-5gT"/>
+                        <constraint firstItem="IWU-y4-Q1T" firstAttribute="centerY" secondItem="AzT-aQ-fNg" secondAttribute="centerY" id="jVF-N4-VxS"/>
+                    </constraints>
+                </visualEffectView>
             </subviews>
             <constraints>
+                <constraint firstItem="AzT-aQ-fNg" firstAttribute="top" secondItem="Hz6-mo-xeY" secondAttribute="top" id="4JM-mG-TKh"/>
                 <constraint firstAttribute="bottom" secondItem="E8k-QV-wP3" secondAttribute="bottom" constant="15" id="Brj-MR-bJg"/>
                 <constraint firstItem="E8k-QV-wP3" firstAttribute="leading" secondItem="Hz6-mo-xeY" secondAttribute="leading" constant="25" id="EX4-Pn-cub"/>
+                <constraint firstItem="AzT-aQ-fNg" firstAttribute="leading" secondItem="Hz6-mo-xeY" secondAttribute="leading" id="Jc3-vP-dMA"/>
                 <constraint firstItem="E8k-QV-wP3" firstAttribute="top" secondItem="Hz6-mo-xeY" secondAttribute="top" constant="25" id="LpO-zz-s5T"/>
                 <constraint firstItem="pce-U1-erj" firstAttribute="top" secondItem="Hz6-mo-xeY" secondAttribute="top" constant="5" id="Ogr-A1-bZD"/>
+                <constraint firstAttribute="bottom" secondItem="AzT-aQ-fNg" secondAttribute="bottom" id="U1G-Yv-aox"/>
+                <constraint firstAttribute="trailing" secondItem="AzT-aQ-fNg" secondAttribute="trailing" id="cht-Xi-KDM"/>
                 <constraint firstAttribute="trailing" secondItem="E8k-QV-wP3" secondAttribute="trailing" constant="25" id="hCp-RE-M3u"/>
                 <constraint firstAttribute="trailing" secondItem="pce-U1-erj" secondAttribute="trailing" constant="5" id="tYS-nA-d24"/>
             </constraints>
@@ -582,7 +598,6 @@
         </customView>
     </objects>
     <resources>
-        <image name="ic_autorenew" width="24" height="24"/>
         <image name="ic_content_copy" width="18" height="18"/>
         <image name="ic_expand_more" width="24" height="24"/>
         <image name="ic_fullscreen_exit" width="24" height="24"/>

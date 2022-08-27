@@ -10,6 +10,7 @@ import Cocoa
 
 class ItemTick: NSCollectionViewItem {
     @IBOutlet weak var lbCoin: NSTextField!
+    @IBOutlet weak var lbExchange: NSTextField!
     @IBOutlet weak var lbMarket: NSTextField!
     @IBOutlet weak var lbPrice: NSTextField!
     @IBOutlet weak var lbKPremium: NSTextField!
@@ -26,6 +27,7 @@ class ItemTick: NSCollectionViewItem {
     func updateView(tick: Tick, index: Int, isLastRow: Bool) {
         lbCoin.stringValue = tick.coin.name
         lbPrice.stringValue = tick.displayCurrentPrice
+        lbExchange.stringValue = tick.coin.site.rawValue
         lbMarket.stringValue = "\(tick.coin.code)/\(tick.coin.market)"
         lbKPremium.stringValue = ""
         

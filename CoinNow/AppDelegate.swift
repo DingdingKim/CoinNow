@@ -9,30 +9,29 @@
 import Cocoa
 import Starscream
 import SwiftyJSON
+import Network
 
 @NSApplicationMain
 class AppDelegate: NSObject, NSApplicationDelegate {
     let statusItem = NSStatusBar.system.statusItem(withLength: -1)
-    private let popover = NSPopover()
+    let popover = NSPopover()
     
-    private var timer: Timer?
+    var timer: Timer?
     
     //상태바 담당 소켓(얘는 앱 실행하는 동안 계속 열려있다(타이머 모드 제외))
-    private var socketStatusBar: WebSocket!
+    var socketStatusBar: WebSocket!
     
-    private let server = WebSocketServer()
+    let server = WebSocketServer()
     
-    var isSocketConnected: Bool = false {
-        didSet {
-            //NotificationCenter.default.post(name: NSNotification.Name(rawValue: "socketStateChanged"), object: nil, userInfo: ["isConnected" : isSocketConnected, "siteType": SiteType.upbit])
-        }
-    }
+    let monitor = NWPathMonitor()
     
     func applicationDidFinishLaunching(_ notification: Notification) {
         print("--------applicationDidFinishLaunching")
-        MyValue.clear() //For test
+        //MyValue.clear() //For test
         
         initStatusItem()
+        
+        initNetworkMonitor()
     }
     
     func applicationWillTerminate(_ aNotification: Notification) {
@@ -157,6 +156,8 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     }
     
     func unSubscribeBinance(marketAndCode: String) {
+        print("--------unSubscribeBinance: \(MyValue.mySiteType)")
+        
         let splited = marketAndCode.split(separator: "-")
         let symbol = String(splited[1]) + String(splited[0])
         let param = "{\"method\": \"UNSUBSCRIBE\",\"params\":[\"\(symbol.lowercased())@ticker\"],\"id\": 1}"
@@ -169,10 +170,10 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     
     //웹소켓으로 틱 정보 가져옴
     func writeToSocket() {
-        guard socketStatusBar != nil, isSocketConnected else {
-            initWebSocket()
+        guard let socketStatusBar = socketStatusBar else {
+            print("연결안됨. 상태바 소켓 다시 세팅")
             
-            print("연결안됨. 상태바 소켓 다시 세팅");
+            initWebSocket()
             return
         }
         
@@ -194,21 +195,42 @@ class AppDelegate: NSObject, NSApplicationDelegate {
             print("writeToSocket 완료")
         }
     }
+    
+    func initNetworkMonitor() {
+        let queue = DispatchQueue(label: "Network Monitor")
+        
+        monitor.start(queue: queue)
+        monitor.pathUpdateHandler = { path in
+            print("✅ Connection status: \(path.status == .satisfied)")
+            
+            let isConnected = path.status == .satisfied
+            
+            DispatchQueue.main.async {
+                if isConnected {
+                    self.initStatusItem()
+                }
+                else {
+                    self.updateStatusText("Disconnected")
+                }
+                
+                NotificationCenter.default.post(name: NSNotification.Name(rawValue: "updateConnectionStatus"),
+                                                object: nil,
+                                                userInfo: ["isConnected" : isConnected])
+            }
+        }
+    }
 }
 
 extension AppDelegate: WebSocketDelegate {
     func didReceive(event: WebSocketEvent, client: WebSocket) {
         switch event {
         case .connected( _):
-            isSocketConnected = true
-
             print("연결 성공: \(MyValue.mySiteType)")
 
             //틱정보 받아오도록 웹소켓 전송
             writeToSocket()
 
         case .disconnected( _, _):
-            isSocketConnected = false
             print("연결 끊어짐: \(MyValue.mySiteType)")
 
         case .text(let data):
@@ -232,7 +254,7 @@ extension AppDelegate: WebSocketDelegate {
             }
 
         case .cancelled:
-            isSocketConnected = false
+            print("연결 취소됨")
 
         case .error(let error):
             handleError(error)
@@ -245,9 +267,11 @@ extension AppDelegate: WebSocketDelegate {
     func handleError(_ error: Error?) {
         if let e = error as? WSError {
             print("websocket encountered an error: \(e.message)")
-        } else if let e = error {
+        }
+        else if let e = error {
             print("websocket encountered an error: \(e.localizedDescription)")
-        } else {
+        }
+        else {
             print("websocket encountered an error")
         }
     }

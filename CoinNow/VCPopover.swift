@@ -36,6 +36,7 @@ class VCPopover: NSViewController {
     @IBOutlet weak var viewDonate: NSView!
     
     @IBOutlet weak var cHeightTick: NSLayoutConstraint!
+    @IBOutlet weak var viewNetworkError: NSView!
     
     var currentTab: Site?
     
@@ -48,13 +49,17 @@ class VCPopover: NSViewController {
     
     var isSocketConnectedUpbit: Bool = false {
         didSet {
-            NotificationCenter.default.post(name: NSNotification.Name(rawValue: "socketStateChanged"), object: nil, userInfo: ["isConnected" : isSocketConnectedUpbit, "siteType": SiteType.upbit])
+            NotificationCenter.default.post(name: NSNotification.Name(rawValue: "socketStateChanged"),
+                                            object: nil,
+                                            userInfo: ["isConnected" : isSocketConnectedUpbit, "siteType": SiteType.upbit])
         }
     }
     
     var isSocketConnectedBinance: Bool = false {
         didSet {
-            NotificationCenter.default.post(name: NSNotification.Name(rawValue: "socketStateChanged"), object: nil, userInfo: ["isConnected" : isSocketConnectedBinance, "siteType": SiteType.binance])
+            NotificationCenter.default.post(name: NSNotification.Name(rawValue: "socketStateChanged"),
+                                            object: nil,
+                                            userInfo: ["isConnected" : isSocketConnectedBinance, "siteType": SiteType.binance])
         }
     }
     
@@ -63,10 +68,10 @@ class VCPopover: NSViewController {
         
         //MyValue.clear() //For test
         
-        //Need to update in outside
         NotificationCenter.default.addObserver(self, selector: #selector(VCPopover.updateSelectedCoins), name: NSNotification.Name(rawValue: "VCPopover.updateSelectedCoins"), object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(VCPopover.finishSetCoins), name: NSNotification.Name(rawValue: "VCPopover.finishSetCoins"), object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(VCPopover.updateTick), name: NSNotification.Name(rawValue: "receiveTick"), object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(VCPopover.updateConnectionStatus), name: NSNotification.Name(rawValue: "updateConnectionStatus"), object: nil)
         
         NSRunningApplication.current.activate(options: NSApplication.ActivationOptions.activateIgnoringOtherApps)
         
@@ -79,9 +84,9 @@ class VCPopover: NSViewController {
         
         print("**********viewWillAppear")
         
+        //팝업이 뜰때마다 소켓을 다시 연결
         initWebSocket()
-        //            writeToSocket(.upbit)
-        //            writeToSocket(.binance)
+        updateView()
         
         NSRunningApplication.current.activate(options: .activateIgnoringOtherApps)
     }
@@ -94,27 +99,26 @@ class VCPopover: NSViewController {
         for siteType in SiteType.allCases {
             let site = Site(siteType: siteType)
             
-            self.sites.append(site)
+            sites.append(site)
             
             if siteType == Const.DEFAULT_SITE_TYPE {
-                self.currentTab = site
+                currentTab = site
             }
         }
         
         for coin in MyValue.selectedCoins {
-            self.ticks.append(Tick(coin: coin, currentPrice: -1))
+            ticks.append(Tick(coin: coin, currentPrice: -1))
         }
     }
     
-    //Setup popup view
     func initView() {
         print("**********initView")
         
+        //일단 숨겨놓는다
         viewDonateToggle.isHidden = true
         viewDonate.isHidden = true
         
         collectionViewCoin.customBackgroundColor = NSColor.black.withAlphaComponent(0.1)
-        //collectionViewTick.customBackgroundColor = NSColor.white.withAlphaComponent(0.5)
         
         initCoinCollectionView()
         initTickCollectionView()
@@ -160,6 +164,16 @@ class VCPopover: NSViewController {
         collectionViewTick.collectionViewLayout = flowLayout
     }
     
+    func updateView() {
+        let tickCollectionviewHeight = CGFloat(ceil(Double(ticks.count) / 2.0) * 40)
+        
+        if tickCollectionviewHeight < 400 {
+            cHeightTick.constant = tickCollectionviewHeight
+        }
+        
+        viewNetworkError.isHidden = Reachability.isConnectedToNetwork()
+    }
+    
     //각 사이트 생성자에서 코인 로드가 완료 되면 호출
     @objc func finishSetCoins(_ notification: Notification) {
         print("**********finishSetCoins")
@@ -167,7 +181,7 @@ class VCPopover: NSViewController {
         
         if data.siteType == Const.DEFAULT_SITE_TYPE {
             //아무것도 없는 경우 업빗에서 가져온거에서 앞에 3개를 넣어준다
-            if MyValue.selectedCoins.count == 0 {
+            if MyValue.selectedCoins.count == 0, data.marketAndCoins.count > 0, data.marketAndCoins[0].coins.count > 0 {
                 MyValue.selectedCoins.append(contentsOf: data.marketAndCoins[0].coins.sorted(by: { $0.market > $1.market })[0...3])
                 
                 for coin in MyValue.selectedCoins {
@@ -380,7 +394,6 @@ class VCPopover: NSViewController {
                 return
             }
             
-            //팝오버가 안보이면 내꺼만 가져오고 보이면 선택코인 다가져와
             var marketAndCodes = MyValue.selectedCoins.filter({ $0.site == .binance })
                                                                         .map {
                                                                             return $0.code + $0.market + "@ticker"
@@ -407,6 +420,12 @@ class VCPopover: NSViewController {
                 print("바낸 전송 완료")
             }
         }
+    }
+    
+    //인터넷 연결상태 변경 시 호출
+    @objc func updateConnectionStatus(_ notification: Notification?) {
+        viewNetworkError.isHidden = notification?.userInfo?["isConnected"] as? Bool ?? true
+        print("👋 하이: \(notification?.userInfo?["isConnected"] as? Bool ?? true)")
     }
     
     @IBAction func changeMySite(_ sender: NSPopUpButton) {
@@ -442,11 +461,6 @@ class VCPopover: NSViewController {
         MyValue.updatePer = UpdatePer(rawValue: sender.titleOfSelectedItem!) ?? Const.DEFAULT_UPDATE_PER
     }
     
-    @IBAction func clickRefresh(_ sender: NSButton) {
-        //TODO 완전히 코인목록부터 다시 싹 가져오게 하는거도 좋을거같다
-        //updateTick()
-    }
-    
     @IBAction func clickMinimode(_ sender: Any) {
         MyValue.isSimpleMode = !MyValue.isSimpleMode
 
@@ -473,6 +487,22 @@ class VCPopover: NSViewController {
         collectionViewCoin.reloadData()
     }
     
+    //Show icon in status bar
+    @IBAction func clickShowStatusbarIcon(_ sender: NSButton) {
+        MyValue.isHiddenStatusbarIcon = sender.state == .off
+    }
+    
+    //Show market in status bar(BTC 1000 or 1000)
+    @IBAction func clickShowStatusbarMarket(_ sender: NSButton) {
+        MyValue.isHiddenStatusbarMarket = sender.state == .off
+    }
+    
+    //Terminate App
+    @IBAction func clickQuit(_ sender: NSButton) {
+        appDelegate.terminateTimer()
+        NSApp.terminate(self)
+    }
+    
     @IBAction func clickDonate(_ sender: NSButton) {
         //close
         if(sender.tag == 0){
@@ -494,22 +524,6 @@ class VCPopover: NSViewController {
 //        let pasteboard = NSPasteboard.general
 //        pasteboard.declareTypes([NSPasteboard.PasteboardType.string], owner: nil)
 //        pasteboard.setString(address, forType: NSPasteboard.PasteboardType.string)
-    }
-    
-    //Show icon in status bar
-    @IBAction func clickShowStatusbarIcon(_ sender: NSButton) {
-        MyValue.isHiddenStatusbarIcon = sender.state == .off
-    }
-    
-    //Show market in status bar(BTC 1000 or 1000)
-    @IBAction func clickShowStatusbarMarket(_ sender: NSButton) {
-        MyValue.isHiddenStatusbarMarket = sender.state == .off
-    }
-    
-    //Terminate App
-    @IBAction func clickQuit(_ sender: NSButton) {
-        appDelegate.terminateTimer()
-        NSApp.terminate(self)
     }
 }
 
@@ -626,8 +640,6 @@ extension VCPopover: WebSocketDelegate {
             
             //VCPopover뷰 업데이트 하라고 소리쳐~
             NotificationCenter.default.post(name: NSNotification.Name(rawValue: "receiveTick"), object: nil, userInfo: ["tick" : data])
-            
-            //받은게 상태바 코인이면 상태바 업뎃
             print("Receive Upbit: \(data.marketAndCode) / \(MyValue.myCoin)")
             
         case .cancelled:
@@ -639,7 +651,6 @@ extension VCPopover: WebSocketDelegate {
             }
             
         case .error(let error):
-            
             handleError(error)
             
         default:
@@ -650,9 +661,11 @@ extension VCPopover: WebSocketDelegate {
     func handleError(_ error: Error?) {
         if let e = error as? WSError {
             print("websocket encountered an error: \(e.message)")
-        } else if let e = error {
+        }
+        else if let e = error {
             print("websocket encountered an error: \(e.localizedDescription)")
-        } else {
+        }
+        else {
             print("websocket encountered an error")
         }
     }
