@@ -29,9 +29,17 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         print("--------applicationDidFinishLaunching")
         //MyValue.clear() //For test
         
+        NSWorkspace.shared.notificationCenter.addObserver(self, selector: #selector(wakeUp), name: NSWorkspace.didWakeNotification, object: nil)
+        
         initStatusItem()
         
         initNetworkMonitor()
+    }
+    
+    
+    @objc func wakeUp() {
+        print("일어나써유")
+        initStatusItem()
     }
     
     func applicationWillTerminate(_ aNotification: Notification) {
