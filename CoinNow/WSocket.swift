@@ -54,14 +54,12 @@ struct WSocket: Codable {
             self.changeState = WebSocketPriceChangeType(rawValue: data["change"].stringValue) ?? .unknown
             
         case .binance, .binanceF:
-            if MyValue.mySiteType == .binance {
-                let market = String(MyValue.myCoin.split(separator: "-")[0])
-                let coin = String(MyValue.myCoin.split(separator: "-")[1])
-                
-                if (coin + market) == data["s"].stringValue {
-                    self.code = coin
-                    self.market = market
-                }
+            let market = String(MyValue.myCoin.split(separator: "-")[0])
+            let coin = String(MyValue.myCoin.split(separator: "-")[1])
+            
+            if (coin + market) == data["s"].stringValue {
+                self.code = coin
+                self.market = market
             }
             
             //바이낸스는 마켓심볼이 딱 붙어서오기 때문에 구분을 할수가 없다...

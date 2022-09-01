@@ -34,7 +34,6 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         initNetworkMonitor()
     }
     
-    
     @objc func wakeUp() {
         print("일어나써유")
         initStatusItem()
@@ -68,11 +67,6 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         popover.contentViewController = VCPopover(nibName: "VCPopover", bundle: nil)
         
         updateStatusText("Loading..")
-        updateUpdatePer()
-    }
-
-    @objc public func updateUpdatePer() {
-        print("--------updateUpdatePer")
         
         initWebSocket()
     }
@@ -84,7 +78,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         
         guard !MyValue.myCoin.isEmpty else { return }
         
-        writeToSocket()
+        initWebSocket()
     }
     
     public func updateStatusText(_ text: String) {
@@ -106,12 +100,22 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     func initWebSocket() {
         print("--------initWebSocket: \(MyValue.mySiteType)")
         
-        var request = URLRequest(url: URL(string: MyValue.mySiteType == .upbit ? Const.WEBSOCKET_UPBIT : Const.WEBSOCKET_BINANCE)!)
-        request.timeoutInterval = 5
+        var request: URLRequest?
+        
+        switch MyValue.mySiteType {
+            case .upbit:
+                request = URLRequest(url: URL(string: Const.WEBSOCKET_UPBIT)!)
+            case .binance:
+                request = URLRequest(url: URL(string: Const.WEBSOCKET_BINANCE)!)
+            case .binanceF:
+                request = URLRequest(url: URL(string: Const.WEBSOCKET_BINANCE_F)!)
+        }
+        
+        request?.timeoutInterval = 5
         
         disconnectSockets()
         
-        socketStatusBar = WebSocket(request: request)
+        socketStatusBar = WebSocket(request: request!)
         socketStatusBar.delegate = self
         socketStatusBar.connect()
     }
@@ -143,11 +147,11 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         if MyValue.mySiteType == .upbit {
             param = "[{\"ticket\":\"statusbar\"},{\"type\":\"ticker\",\"codes\":[\"\(MyValue.myCoin)\"]}]"
         }
-        else if MyValue.mySiteType == .binance {
+        else if MyValue.mySiteType == .binance || MyValue.mySiteType == .binanceF {
             let splited = MyValue.myCoin.split(separator: "-")
             let symbol = String(splited[1]) + String(splited[0])
             
-            param = "{\"method\": \"SUBSCRIBE\",\"params\":[\"\(symbol)@ticker\"],\"id\": 1}"
+            param = "{\"method\": \"SUBSCRIBE\",\"params\":[\"\(symbol.lowercased())@ticker\"],\"id\": 1}"
             
         }
         print("writeToSocket 상태바: \(param)")
@@ -195,24 +199,22 @@ extension AppDelegate: WebSocketDelegate {
             print("연결 끊어짐: \(MyValue.mySiteType)")
 
         case .text(let data):
+            guard !data.contains("error") else { return }
+            
             let data = WSocket(from: MyValue.mySiteType, data: JSON.init(parseJSON: data))
 
             print("Receive Binance: \(data.marketAndCode) / \(MyValue.myCoin)")
             
-            //받은게 상태바 코인이면 상태바 업뎃
-            if data.marketAndCode == MyValue.myCoin {
-                updateStatusText(MyValue.isHiddenStatusbarMarket ?
+            updateStatusText(MyValue.isHiddenStatusbarMarket ?
                                     data.displayCurrentPrice : "\(MyValue.myCoin.split(separator: "-")[1]) \(data.displayCurrentPrice)")
-            }
 
         case .binary(let data):
             let data = WSocket(from: MyValue.mySiteType, data: JSON(data))
 
             print("Receive Upbit: \(data.marketAndCode) / \(MyValue.myCoin)")
-            if data.marketAndCode == MyValue.myCoin {
-                updateStatusText(MyValue.isHiddenStatusbarMarket ?
+            
+            updateStatusText(MyValue.isHiddenStatusbarMarket ?
                                     data.displayCurrentPrice : "\(MyValue.myCoin.split(separator: "-")[1]) \(data.displayCurrentPrice)")
-            }
 
         case .cancelled:
             print("연결 취소됨")

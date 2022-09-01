@@ -10,16 +10,6 @@ import Foundation
 import Cocoa
 
 struct MyValue {
-    //상태바 코인 업데이트 주기
-    static var updatePer: UpdatePer = UpdatePer(rawValue: UserDefaults.standard.string(forKey: Const.UserDefaultKey.UPDATE_PER) ?? Const.DEFAULT_UPDATE_PER.rawValue) ?? .realTime {
-        didSet {
-            UserDefaults.standard.set(updatePer.rawValue, forKey: Const.UserDefaultKey.UPDATE_PER)
-            UserDefaults.standard.synchronize()
-            debugPrint("updatePer >> didSet \(updatePer)")
-            
-            (NSApplication.shared.delegate as! AppDelegate).updateUpdatePer()
-        }
-    }
     
     //상태바 거래소
     static var mySiteType: SiteType = SiteType(rawValue: UserDefaults.standard.string(forKey: Const.UserDefaultKey.MY_SITE) ?? Const.DEFAULT_MY_SITE) ?? .upbit {
