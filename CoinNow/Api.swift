@@ -126,4 +126,24 @@ class Api {
             complete(true, coins)
         }
     }
+    
+    //바낸 선물 코인 다 가져오기
+    static func getBinanceFutureCoins(complete: @escaping (_ isSuccess: Bool, _ results: [Coin]) -> Void) {
+        var coins = [Coin]()
+        
+        Alamofire.request("\(Const.REST_BINANCE_F)/fapi/v1/exchangeInfo", method: .get).responseJSON { (responseData) -> Void in
+            guard let resultValue = responseData.result.value else { complete(false, []); return }
+            guard let resultCoins = JSON(resultValue)["symbols"].array else { complete(false, []); return }
+            
+            //거래 가능만 들고온다
+            let availableCoins = resultCoins.filter { $0["status"].stringValue == "TRADING" &&
+                                                        SiteType.binance.markets.contains($0["quoteAsset"].stringValue)}
+            
+            for coin in availableCoins {
+                coins.append(Coin(from: .binanceF, data: coin))
+            }
+            
+            complete(true, coins)
+        }
+    }
 }

@@ -40,6 +40,13 @@ struct Coin: Codable {
             self.name = data["baseAsset"].stringValue //바낸은 영어이름 안준다ㅠ 그냥 코인(심볼) 코드명으로 적는다
             self.market = data["quoteAsset"].stringValue
             self.code = data["baseAsset"].stringValue
+            
+        case .binanceF:
+            self.marketAndCode = "\(data["quoteAsset"].stringValue)-\(data["baseAsset"].stringValue)"
+            self.name = data["baseAsset"].stringValue //바낸은 영어이름 안준다ㅠ 그냥 코인(심볼) 코드명으로 적는다
+            self.market = data["quoteAsset"].stringValue
+            self.code = data["baseAsset"].stringValue
         }
     }
 }
+

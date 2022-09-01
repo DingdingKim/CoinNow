@@ -188,7 +188,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         var param = ""
         
         if MyValue.mySiteType == .upbit {
-            param = "[{\"ticket\":\"test\"},{\"type\":\"ticker\",\"codes\":[\"\(MyValue.myCoin)\"]}]"
+            param = "[{\"ticket\":\"statusbar\"},{\"type\":\"ticker\",\"codes\":[\"\(MyValue.myCoin)\"]}]"
         }
         else if MyValue.mySiteType == .binance {
             let splited = MyValue.myCoin.split(separator: "-")
