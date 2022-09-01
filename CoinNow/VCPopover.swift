@@ -16,7 +16,6 @@ class VCPopover: NSViewController {
     @IBOutlet weak var btMinimode: NSButton!
     @IBOutlet weak var viewStatusSetting: NSView!
     
-    @IBOutlet weak var btStatusUpdatePer: NSPopUpButton!
     @IBOutlet weak var btStatusSite: NSPopUpButton!
     @IBOutlet weak var btStatusCoin: NSPopUpButton!
     @IBOutlet weak var cbShowIcon: NSButton!
@@ -25,7 +24,6 @@ class VCPopover: NSViewController {
     @IBOutlet weak var lbLine: NSTextField!
     
     @IBOutlet weak var lbUpdateTime: NSTextField!
-    @IBOutlet weak var btRefresh: NSButton!
     
     @IBOutlet weak var viewSelectCoins: NSView!
     @IBOutlet weak var collectionViewCoin: NSCollectionView!
@@ -128,11 +126,9 @@ class VCPopover: NSViewController {
     func initStatusBarConfigureView() {
         guard let mySite = sites.filter({ $0.siteType == MyValue.mySiteType }).first else { return }
         
-        btStatusUpdatePer.addItems(withTitles: Array(UpdatePer.allCases.map { $0.rawValue }))
         btStatusSite.addItems(withTitles: SiteType.allCases.map{ $0.rawValue })
         btStatusCoin.addItems(withTitles: mySite.coins.map { $0.marketAndCode })
 
-        btStatusUpdatePer.selectItem(withTitle: MyValue.updatePer.rawValue)
         btStatusSite.selectItem(withTitle: MyValue.mySiteType.rawValue)
         btStatusCoin.selectItem(withTitle: MyValue.myCoin)
         
@@ -457,10 +453,6 @@ class VCPopover: NSViewController {
         MyValue.myCoin = sender.titleOfSelectedItem!
     }
     
-    @IBAction func changeUpdatePer(_ sender: NSPopUpButton) {
-        MyValue.updatePer = UpdatePer(rawValue: sender.titleOfSelectedItem!) ?? Const.DEFAULT_UPDATE_PER
-    }
-    
     @IBAction func clickMinimode(_ sender: Any) {
         MyValue.isSimpleMode = !MyValue.isSimpleMode
 
@@ -499,7 +491,8 @@ class VCPopover: NSViewController {
     
     //Terminate App
     @IBAction func clickQuit(_ sender: NSButton) {
-        appDelegate.terminateTimer()
+        disconnectSockets()
+        
         NSApp.terminate(self)
     }
     

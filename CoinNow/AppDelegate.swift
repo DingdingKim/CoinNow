@@ -16,8 +16,6 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     let statusItem = NSStatusBar.system.statusItem(withLength: -1)
     let popover = NSPopover()
     
-    var timer: Timer?
-    
     //상태바 담당 소켓(얘는 앱 실행하는 동안 계속 열려있다(타이머 모드 제외))
     var socketStatusBar: WebSocket!
     
@@ -46,8 +44,6 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         print("--------applicationWillTerminate")
         
         disconnectSockets()
-        
-        terminateTimer()
     }
     
     func disconnectSockets() {
@@ -78,14 +74,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     @objc public func updateUpdatePer() {
         print("--------updateUpdatePer")
         
-        if MyValue.updatePer == .realTime {
-            initWebSocket()
-        }
-        else {
-            disconnectSockets()
-            
-            initUpdatePerTimer()
-        }
+        initWebSocket()
     }
     
     //Set label that show my coin state at status bar
@@ -95,41 +84,11 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         
         guard !MyValue.myCoin.isEmpty else { return }
         
-        //내 코인을 포함시켜야하니까 다시 write
-        if MyValue.updatePer == .realTime {
-            writeToSocket()
-        }
-        else {
-            Api.getMyCoinTick(marketAndCode: MyValue.myCoin, complete: { isSuccess, price in
-                guard let price = price else {
-                    self.updateStatusText("Update fail")
-                    return
-                }
-                
-                self.updateStatusText(MyValue.isHiddenStatusbarMarket ? price : "\(MyValue.myCoin.split(separator: "-")[1]) \(price)")
-            })
-        }
+        writeToSocket()
     }
     
     public func updateStatusText(_ text: String) {
         statusItem.button?.title = text
-    }
-    
-    //set timer sec that for update status bar title
-    // default: realtime(websocket)
-    func initUpdatePerTimer() {
-        print("--------setTimerSec")
-        terminateTimer()
-        
-        //0초에 실행되는 효과
-        updateStatusItem()
-        
-        print("setTimerSec : Timer!")
-        timer = Timer.scheduledTimer(timeInterval: MyValue.updatePer.sec,
-                                                 target: self,
-                                                 selector: #selector(updateStatusItem),
-                                                 userInfo: nil,
-                                                 repeats: true)
     }
     
     @objc func togglePopover(_ sender: AnyObject?) {
@@ -142,12 +101,6 @@ class AppDelegate: NSObject, NSApplicationDelegate {
                 popover.show(relativeTo: button.bounds, of: button, preferredEdge: NSRectEdge.minY)
             }
         }
-    }
-    
-    func terminateTimer() {
-        print("--------terminateTimer")
-        timer?.invalidate()
-        timer = nil
     }
     
     func initWebSocket() {

@@ -12,7 +12,6 @@
                 <outlet property="btMinimode" destination="pce-U1-erj" id="0Ec-d8-oZO"/>
                 <outlet property="btStatusCoin" destination="hC2-lS-lZ9" id="B6d-KR-eMb"/>
                 <outlet property="btStatusSite" destination="FIh-G9-J5h" id="RYQ-JK-9sZ"/>
-                <outlet property="btStatusUpdatePer" destination="lU9-Gp-3Ts" id="wvC-hS-Fj2"/>
                 <outlet property="cHeightTick" destination="7eg-5p-imA" id="icw-II-ISv"/>
                 <outlet property="cbShowIcon" destination="Hzh-YP-XGZ" id="Bvh-QS-Yvb"/>
                 <outlet property="cbShowMarket" destination="BED-b9-0Eg" id="ajL-XE-XrP"/>
@@ -63,27 +62,8 @@
                                         <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                                     </textFieldCell>
                                 </textField>
-                                <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="7ZD-1w-TVI">
-                                    <rect key="frame" x="-2" y="36" width="68" height="15"/>
-                                    <textFieldCell key="cell" lineBreakMode="truncatingTail" sendsActionOnEndEditing="YES" title="Update per" usesSingleLineMode="YES" id="8sx-P7-atB">
-                                        <font key="font" metaFont="cellTitle"/>
-                                        <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
-                                        <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
-                                    </textFieldCell>
-                                </textField>
-                                <popUpButton verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="lU9-Gp-3Ts">
-                                    <rect key="frame" x="66" y="30" width="39" height="25"/>
-                                    <popUpButtonCell key="cell" type="push" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" borderStyle="borderAndBezel" imageScaling="proportionallyDown" inset="2" id="lRI-hz-YSg">
-                                        <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
-                                        <font key="font" metaFont="menu"/>
-                                        <menu key="menu" id="W3K-m7-mOs"/>
-                                    </popUpButtonCell>
-                                    <connections>
-                                        <action selector="changeUpdatePer:" target="-2" id="Z1h-3U-YDb"/>
-                                    </connections>
-                                </popUpButton>
                                 <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="sJy-qa-5Ko">
-                                    <rect key="frame" x="109" y="36" width="63" height="15"/>
+                                    <rect key="frame" x="-2" y="36" width="63" height="15"/>
                                     <textFieldCell key="cell" sendsActionOnEndEditing="YES" alignment="center" title="Exchange" id="Ggy-42-tJJ">
                                         <font key="font" metaFont="cellTitle"/>
                                         <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
@@ -91,10 +71,10 @@
                                     </textFieldCell>
                                 </textField>
                                 <popUpButton verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="FIh-G9-J5h" userLabel="Button Site">
-                                    <rect key="frame" x="172" y="30" width="39" height="25"/>
+                                    <rect key="frame" x="61" y="30" width="39" height="25"/>
                                     <popUpButtonCell key="cell" type="push" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" borderStyle="borderAndBezel" imageScaling="proportionallyDown" inset="2" id="fhp-Bp-wVU">
                                         <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
-                                        <font key="font" metaFont="smallSystem"/>
+                                        <font key="font" metaFont="menu"/>
                                         <menu key="menu" id="BWN-ht-Iax"/>
                                     </popUpButtonCell>
                                     <connections>
@@ -102,7 +82,7 @@
                                     </connections>
                                 </popUpButton>
                                 <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="wVh-S1-VQA">
-                                    <rect key="frame" x="215" y="36" width="30" height="15"/>
+                                    <rect key="frame" x="104" y="36" width="30" height="15"/>
                                     <textFieldCell key="cell" lineBreakMode="truncatingTail" sendsActionOnEndEditing="YES" title="Coin" usesSingleLineMode="YES" id="MBT-wC-ual">
                                         <font key="font" metaFont="cellTitle"/>
                                         <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
@@ -110,7 +90,7 @@
                                     </textFieldCell>
                                 </textField>
                                 <popUpButton verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="hC2-lS-lZ9">
-                                    <rect key="frame" x="245" y="30" width="39" height="25"/>
+                                    <rect key="frame" x="134" y="30" width="39" height="25"/>
                                     <popUpButtonCell key="cell" type="push" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" borderStyle="borderAndBezel" imageScaling="proportionallyDown" inset="2" id="gXV-5o-yiN">
                                         <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
                                         <font key="font" metaFont="menu"/>
@@ -144,21 +124,17 @@
                             <constraints>
                                 <constraint firstItem="wix-Pa-lMa" firstAttribute="top" secondItem="Lt9-nb-WLc" secondAttribute="top" id="1YL-dg-Hf6"/>
                                 <constraint firstItem="BED-b9-0Eg" firstAttribute="leading" secondItem="Hzh-YP-XGZ" secondAttribute="trailing" constant="10" id="2n6-Pc-AH0"/>
-                                <constraint firstItem="lU9-Gp-3Ts" firstAttribute="centerY" secondItem="7ZD-1w-TVI" secondAttribute="centerY" id="6i2-gI-bQZ"/>
                                 <constraint firstAttribute="bottom" secondItem="Hzh-YP-XGZ" secondAttribute="bottom" constant="5" id="8OP-4X-1rW"/>
+                                <constraint firstItem="sJy-qa-5Ko" firstAttribute="leading" secondItem="Lt9-nb-WLc" secondAttribute="leading" id="C1i-44-hLr"/>
                                 <constraint firstItem="wVh-S1-VQA" firstAttribute="leading" secondItem="FIh-G9-J5h" secondAttribute="trailing" constant="10" id="C7y-PA-qhR"/>
-                                <constraint firstItem="lU9-Gp-3Ts" firstAttribute="leading" secondItem="7ZD-1w-TVI" secondAttribute="trailing" constant="5" id="EgG-Ds-meN"/>
-                                <constraint firstItem="7ZD-1w-TVI" firstAttribute="top" secondItem="wix-Pa-lMa" secondAttribute="bottom" constant="15" id="GXk-hI-mfa"/>
-                                <constraint firstItem="sJy-qa-5Ko" firstAttribute="leading" secondItem="lU9-Gp-3Ts" secondAttribute="trailing" constant="10" id="Ipf-G6-0hV"/>
                                 <constraint firstItem="wix-Pa-lMa" firstAttribute="leading" secondItem="Lt9-nb-WLc" secondAttribute="leading" id="SPe-n2-5hV"/>
                                 <constraint firstItem="FIh-G9-J5h" firstAttribute="centerY" secondItem="sJy-qa-5Ko" secondAttribute="centerY" id="WAs-sW-442"/>
                                 <constraint firstItem="Hzh-YP-XGZ" firstAttribute="leading" secondItem="Lt9-nb-WLc" secondAttribute="leading" id="YP0-KD-zlz"/>
                                 <constraint firstItem="BED-b9-0Eg" firstAttribute="bottom" secondItem="Hzh-YP-XGZ" secondAttribute="bottom" id="b4M-L6-e4n"/>
-                                <constraint firstItem="7ZD-1w-TVI" firstAttribute="leading" secondItem="Lt9-nb-WLc" secondAttribute="leading" id="bYV-mG-b5H"/>
                                 <constraint firstItem="wVh-S1-VQA" firstAttribute="bottom" secondItem="sJy-qa-5Ko" secondAttribute="bottom" id="czp-Xg-ITV"/>
                                 <constraint firstItem="hC2-lS-lZ9" firstAttribute="centerY" secondItem="wVh-S1-VQA" secondAttribute="centerY" id="fNN-U8-A8i"/>
+                                <constraint firstItem="sJy-qa-5Ko" firstAttribute="top" secondItem="wix-Pa-lMa" secondAttribute="bottom" constant="15" id="gAw-4p-WqH"/>
                                 <constraint firstItem="hC2-lS-lZ9" firstAttribute="leading" secondItem="wVh-S1-VQA" secondAttribute="trailing" constant="5" id="ibi-F4-lQ6"/>
-                                <constraint firstItem="sJy-qa-5Ko" firstAttribute="bottom" secondItem="7ZD-1w-TVI" secondAttribute="bottom" id="siV-aX-FfT"/>
                                 <constraint firstAttribute="height" constant="85" id="wq9-ym-5kc"/>
                                 <constraint firstItem="FIh-G9-J5h" firstAttribute="leading" secondItem="sJy-qa-5Ko" secondAttribute="trailing" constant="5" id="yLo-Kv-rAl"/>
                             </constraints>
