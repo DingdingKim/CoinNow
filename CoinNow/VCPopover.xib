@@ -211,12 +211,13 @@
                                     </userDefinedRuntimeAttributes>
                                 </scrollView>
                                 <segmentedControl verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="ACg-L5-msR">
-                                    <rect key="frame" x="175" y="177" width="170" height="24"/>
+                                    <rect key="frame" x="105" y="177" width="309" height="24"/>
                                     <segmentedCell key="cell" borderStyle="border" alignment="left" segmentDistribution="fillEqually" style="rounded" trackingMode="selectOne" id="1AQ-6u-H7P">
                                         <font key="font" metaFont="system"/>
                                         <segments>
                                             <segment label="Upbit" width="80" selected="YES"/>
                                             <segment label="Binance"/>
+                                            <segment label="Binance(Future)"/>
                                         </segments>
                                     </segmentedCell>
                                     <connections>

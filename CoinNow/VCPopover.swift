@@ -44,6 +44,7 @@ class VCPopover: NSViewController {
     //이걸 하나로 묶어서 관리 할 수 있을거같다(얘는 팝오버 열릴때만 생성)
     private var socketUpbit: WebSocket!
     private var socketBinance: WebSocket!
+    private var socketBinanceF: WebSocket!//선물
     
     var isSocketConnectedUpbit: Bool = false {
         didSet {
@@ -58,6 +59,14 @@ class VCPopover: NSViewController {
             NotificationCenter.default.post(name: NSNotification.Name(rawValue: "socketStateChanged"),
                                             object: nil,
                                             userInfo: ["isConnected" : isSocketConnectedBinance, "siteType": SiteType.binance])
+        }
+    }
+    
+    var isSocketConnectedBinanceF: Bool = false {
+        didSet {
+            NotificationCenter.default.post(name: NSNotification.Name(rawValue: "socketStateChanged"),
+                                            object: nil,
+                                            userInfo: ["isConnected" : isSocketConnectedBinanceF, "siteType": SiteType.binanceF])
         }
     }
     
@@ -83,7 +92,10 @@ class VCPopover: NSViewController {
         print("**********viewWillAppear")
         
         //팝업이 뜰때마다 소켓을 다시 연결
-        initWebSocket()
+        initWebSocket(.upbit)
+        initWebSocket(.binance)
+        initWebSocket(.binanceF)
+        
         updateView()
         
         NSRunningApplication.current.activate(options: .activateIgnoringOtherApps)
@@ -240,8 +252,8 @@ class VCPopover: NSViewController {
                         if coin.site == .upbit {
                             writeToSocket(coin.site)
                         }
-                        else if coin.site == .binance {
-                            unSubscribeBinance(marketAndCode: coin.marketAndCode)
+                        else if coin.site == .binance || coin.site == .binanceF {
+                            unSubscribeBinance(coin: coin)
                         }
                         break
                     }
@@ -264,53 +276,41 @@ class VCPopover: NSViewController {
     }
     
     //TODO 생긴게 맘에 안든다
-    func initWebSocket(_ siteType: SiteType? = nil) {
+    func initWebSocket(_ siteType: SiteType) {
         print("--------initWebSocket")
         
-        if let siteType = siteType {
-            if siteType == .upbit {
-                print("--------initWebSocket 업비트")
-                var request = URLRequest(url: URL(string: Const.WEBSOCKET_UPBIT)!)
-                request.timeoutInterval = 5
-                
-                disconnectSockets(.upbit)
-                
-                socketUpbit = WebSocket(request: request)
-                socketUpbit.delegate = self
-                socketUpbit.connect()
-            }
-            else if siteType == .binance {
-                print("--------initWebSocket 바낸")
-                var request = URLRequest(url: URL(string: Const.WEBSOCKET_BINANCE)!)
-                request.timeoutInterval = 5
-                
-                disconnectSockets(.binance)
-                
-                socketBinance = WebSocket(request: request)
-                socketBinance.delegate = self
-                socketBinance.connect()
-            }
-        }
-        else {
-            print("--------initWebSocket 둘다")
-            
-            var requestUpbit = URLRequest(url: URL(string: Const.WEBSOCKET_UPBIT)!)
-            requestUpbit.timeoutInterval = 5
+        if siteType == .upbit {
+            print("--------initWebSocket 업비트")
+            var request = URLRequest(url: URL(string: Const.WEBSOCKET_UPBIT)!)
+            request.timeoutInterval = 5
             
             disconnectSockets(.upbit)
             
-            socketUpbit = WebSocket(request: requestUpbit)
+            socketUpbit = WebSocket(request: request)
             socketUpbit.delegate = self
             socketUpbit.connect()
-            
-            var requestBinance = URLRequest(url: URL(string: Const.WEBSOCKET_BINANCE)!)
-            requestBinance.timeoutInterval = 5
+        }
+        else if siteType == .binance {
+            print("--------initWebSocket 바낸")
+            var request = URLRequest(url: URL(string: Const.WEBSOCKET_BINANCE)!)
+            request.timeoutInterval = 5
             
             disconnectSockets(.binance)
             
-            socketBinance = WebSocket(request: requestBinance)
+            socketBinance = WebSocket(request: request)
             socketBinance.delegate = self
             socketBinance.connect()
+        }
+        else if siteType == .binanceF {
+            print("--------initWebSocket 바낸(F)")
+            var request = URLRequest(url: URL(string: Const.WEBSOCKET_BINANCE_F)!)
+            request.timeoutInterval = 5
+            
+            disconnectSockets(.binanceF)
+            
+            socketBinanceF = WebSocket(request: request)
+            socketBinanceF.delegate = self
+            socketBinanceF.connect()
         }
     }
     
@@ -328,6 +328,11 @@ class VCPopover: NSViewController {
                     socketBinance.forceDisconnect()
                 }
             }
+            else if siteType == .binanceF {
+                if socketBinanceF != nil {
+                    socketBinanceF.forceDisconnect()
+                }
+            }
         }
         else {
             if socketUpbit != nil {
@@ -337,19 +342,30 @@ class VCPopover: NSViewController {
             if socketBinance != nil {
                 socketBinance.forceDisconnect()
             }
+            
+            if socketBinanceF != nil {
+                socketBinanceF.forceDisconnect()
+            }
         }
     }
     
-    func unSubscribeBinance(marketAndCode: String) {
-        let splited = marketAndCode.split(separator: "-")
+    func unSubscribeBinance(coin: Coin) {
+        let splited = coin.marketAndCode.split(separator: "-")
         let symbol = String(splited[1]) + String(splited[0])
         
         let param = "{\"method\": \"UNSUBSCRIBE\",\"params\":[\"\(symbol.lowercased())@ticker\"],\"id\": 1}"
         print("구독해제: \(param)")
 
         //기존거 다 삭제하고 다시 받도록 한다
-        socketBinance.write(string: param) {
-            print("바낸 전송 완료")
+        if coin.site == .binanceF {
+            socketBinanceF.write(string: param) {
+                print("바낸 선물 전송 완료")
+            }
+        }
+        else {
+            socketBinance.write(string: param) {
+                print("바낸 전송 완료")
+            }
         }
     }
     
@@ -364,17 +380,11 @@ class VCPopover: NSViewController {
             }
             
             //팝오버가 안보이면 내꺼만 가져오고 보이면 선택코인 다가져와
-            var marketAndCodes = MyValue.selectedCoins.filter({ $0.site == .upbit })
+            let marketAndCodes = MyValue.selectedCoins.filter({ $0.site == .upbit })
                                                                         .map { $0.marketAndCode }
             
-            //상태바 코인도 포함시켜서 요청한다. 같은 코드 두개보내면 응답을 아예 안하기 때문에 확인하고 넣기
-            //TODO Set으로 만들면 중복안되고 괜찮을거같은데 검토해보쟈
-            if MyValue.mySiteType == .upbit, !marketAndCodes.contains(MyValue.myCoin) {
-                marketAndCodes.append(MyValue.myCoin)
-            }
-            
             let marketAndCodesString = marketAndCodes.joined(separator: "\",\"")
-            let param = "[{\"ticket\":\"test\"},{\"type\":\"ticker\",\"codes\":[\"\(marketAndCodesString)\"]}]"
+            let param = "[{\"ticket\":\"popup\"},{\"type\":\"ticker\",\"codes\":[\"\(marketAndCodesString)\"]}]"
             print("writeToSocket 업빗: \(param)")
             
             socketUpbit.write(string: param) {
@@ -382,26 +392,28 @@ class VCPopover: NSViewController {
             }
         }
         
-        else if siteType == .binance {
-            guard socketBinance != nil, isSocketConnectedBinance else {
-                initWebSocket(.binance)
-                
-                print("연결안됨. 바낸 소켓 다시 세팅");
-                return
+        else if siteType == .binance || siteType == .binanceF {
+            if siteType == .binance {
+                guard socketBinance != nil, isSocketConnectedBinance else {
+                    initWebSocket(.binance)
+                    
+                    print("연결안됨. 바낸 소켓 다시 세팅");
+                    return
+                }
+            }
+            else if siteType == .binanceF {
+                guard socketBinanceF != nil, isSocketConnectedBinanceF else {
+                    initWebSocket(.binanceF)
+                    
+                    print("연결안됨. 바낸(선물) 소켓 다시 세팅");
+                    return
+                }
             }
             
-            var marketAndCodes = MyValue.selectedCoins.filter({ $0.site == .binance })
+            let marketAndCodes = MyValue.selectedCoins.filter({ $0.site == siteType })
                                                                         .map {
                                                                             return $0.code + $0.market + "@ticker"
                                                                         }
-            
-            //상태바 코인도 포함시켜서 요청한다. 같은 코드 두개보내면 응답을 아예 안하기 때문에 확인하고 넣기
-            //TODO Set으로 만들면 중복안되고 괜찮을거같은데 검토해보쟈
-            if MyValue.mySiteType == .binance, !marketAndCodes.contains(MyValue.myCoin) {
-                let splited = MyValue.myCoin.split(separator: "-")
-                marketAndCodes.append("\(String(splited[1]))\(String(splited[0]))@ticker")
-            }
-            //wss://stream.binance.com:9443/ws/btcusdt@ticker/etcusdt@ticker
             
             //구독할게 없다
             guard marketAndCodes.count > 0 else { print( "구독할게없다"); return }
@@ -409,11 +421,21 @@ class VCPopover: NSViewController {
             let marketAndCodesString = marketAndCodes.joined(separator: "\",\"")
             let param = "{\"method\": \"SUBSCRIBE\",\"params\":[\"\(marketAndCodesString.lowercased())\"],\"id\": 1}"
             print("writeToSocket 바낸: \(param)")
+            //wss://stream.binance.com:9443/ws/btcusdt@ticker/etcusdt@ticker
             //{"method": "SUBSCRIBE","params":["etcusdt@ticker", "btcusdt@ticker"],"id": 312}
+            //{"method": "SUBSCRIBE","params":["btcusdt@ticker"],"id": 312}
             
             //기존거 다 삭제하고 다시 받도록 한다
-            socketBinance.write(string: param) {
-                print("바낸 전송 완료")
+            
+            if siteType == .binanceF {
+                socketBinanceF.write(string: param) {
+                    print("바낸(선물) 전송 완료")
+                }
+            }
+            else {
+                socketBinance.write(string: param) {
+                    print("바낸 전송 완료")
+                }
             }
         }
     }
@@ -597,7 +619,17 @@ extension VCPopover: NSCollectionViewDelegateFlowLayout {
 
 extension VCPopover: WebSocketDelegate {
     func didReceive(event: WebSocketEvent, client: WebSocket) {
-        let siteType: SiteType = (client.request.url == socketUpbit.request.url) ? .upbit : .binance
+        var siteType: SiteType = .upbit
+        
+        if client.request.url == socketUpbit.request.url {
+            siteType = .upbit
+        }
+        else if client.request.url == socketBinance.request.url {
+            siteType = .binance
+        }
+        else if client.request.url == socketBinanceF.request.url {
+            siteType = .binanceF
+        }
         
         switch event {
         case .connected( _):
@@ -606,6 +638,9 @@ extension VCPopover: WebSocketDelegate {
             }
             else if socketBinance != nil, siteType == .binance {
                 self.isSocketConnectedBinance = true
+            }
+            else if socketBinanceF != nil, siteType == .binanceF {
+                self.isSocketConnectedBinanceF = true
             }
             
             print("연결성공: \(siteType)")
@@ -619,6 +654,9 @@ extension VCPopover: WebSocketDelegate {
             }
             else if socketBinance != nil, siteType == .binance {
                 self.isSocketConnectedBinance = false
+            }
+            else if socketBinanceF != nil, siteType == .binanceF {
+                self.isSocketConnectedBinanceF = false
             }
             
         case .text(let data):
@@ -641,6 +679,9 @@ extension VCPopover: WebSocketDelegate {
             }
             else if socketBinance != nil, client.request.url == socketBinance.request.url {
                 self.isSocketConnectedBinance = false
+            }
+            else if socketBinanceF != nil, client.request.url == socketBinanceF.request.url {
+                self.isSocketConnectedBinanceF = false
             }
             
         case .error(let error):

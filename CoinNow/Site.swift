@@ -9,7 +9,7 @@
 import Foundation
 
 enum SiteType: String, Codable, CaseIterable {
-    case upbit = "Upbit", binance = "Binance"
+    case upbit = "Upbit", binance = "Binance", binanceF = "Binance(Future)"
     
     var markets: [String] {
         switch self {
@@ -18,6 +18,9 @@ enum SiteType: String, Codable, CaseIterable {
             
         case .binance:
             return ["BTC", "USDT"]
+            
+        case .binanceF:
+            return ["USDT"]
         }
     }
 }
@@ -60,6 +63,18 @@ class Site {
                 
                 //마켓을 강제로 넣어주는게 나을것같다. 특히나 바낸은 너무 많다
                 //let markets: [String] = Array(Set(result.map { $0.market }.sorted(by: { $0.first! > $1.first! })))
+                
+                for market in self.siteType.markets {
+                    self.marketAndCoins.append((market: market, coins: result.filter { $0.market == market }))
+                }
+                
+                complete()
+            })
+            
+        case .binanceF:
+            Api.getBinanceFutureCoins(complete: {isSuccess, result in
+                self.coins.removeAll()
+                self.coins.append(contentsOf: result.sorted(by: { $0.market > $1.market }))
                 
                 for market in self.siteType.markets {
                     self.marketAndCoins.append((market: market, coins: result.filter { $0.market == market }))
