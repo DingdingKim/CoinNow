@@ -74,6 +74,10 @@ extension NSViewController {
     func isDarkMode() -> Bool{
         return UserDefaults.standard.string(forKey: "AppleInterfaceStyle") ?? "Light" == "Dark"
     }
+    
+    var appDelegate: AppDelegate {
+        return NSApplication.shared.delegate as! AppDelegate
+    }
 }
 
 extension NSView {

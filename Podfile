@@ -3,8 +3,9 @@ target 'CoinNow' do
   use_frameworks!
 
   # Pods for CoinState
-  pod 'Alamofire'
+  pod 'Alamofire', '~> 4.8.1'
   pod 'SwiftyJSON'
+  pod 'Starscream', '~> 4.0.0'
 end
 
 post_install do |installer|

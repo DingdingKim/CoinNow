@@ -8,20 +8,37 @@
 
 import Foundation
 
+enum UpdatePer: String, CaseIterable {
+    case realTime = "RealTime", sec5 = "5 sec", sec15 = "15 sec", sec30 = "30 sec", min1 = "1 min", min5 = "5 min", min15 = "15 min", min30 = "30 min", min60 = "1 hour"
+    
+    var sec: Double {
+        switch self {
+        case .realTime: return 0
+        case .sec5: return 5
+        case .sec15: return 15
+        case .sec30: return 30
+        case .min1: return 60
+        case .min5: return 300
+        case .min15: return 900
+        case .min30: return 1800
+        case .min60: return 3600
+        }
+    }
+}
+
 struct Const {
-    static var dicUpdatePerSec: [String : Double] = ["10sec": 10, "20sec": 20, "30sec": 30, "1min": 60, "5min": 300, "10min": 600, "20min": 1200, "30min": 1800, "40min": 2400, "50min": 3000, "1hour": 3600]
-    
-//    static let HOST_CRYPTOWATCH = "https://api.cryptowat.ch"
-    
-//    static let COIN_PRICE_LOAD_FAIL = -1.0 //When server does not receive a value
-//    static let COIN_PRICE_NO_VALUE = 0.0 //When there is no value to display. This is not fail. (Conin that can not be traded on the site.)
-    
     //Default values
-    static let DEFAULT_UPDATE_PER: (stirng: String, double: Double) = ("1min", 60)
+    static let DEFAULT_UPDATE_PER: UpdatePer = .realTime
     static let DEFAULT_MY_COIN = "KRW-BTC"// TODO Coin.btc.rawValue
     static let DEFAULT_MY_SITE = SiteType.upbit.rawValue
     static let DEFAULT_SITE_TYPE: SiteType = .upbit
     static let DEFAULT_LOADING_TEXT = "Loading.."
+    
+    static let REST_UPBIT = "https://api.upbit.com"
+    static let REST_BINANCE = "https://api.binance.com"
+
+    static let WEBSOCKET_UPBIT = "wss://api.upbit.com/websocket/v1"
+    static let WEBSOCKET_BINANCE = "wss://stream.binance.com:9443/ws"
     
     struct UserDefaultKey {
         static let MY_COIN = "MY_COIN" //Coin that show in status bar
@@ -32,7 +49,6 @@ struct Const {
         
         //will update by selected coin
         static let SELECTED_COINS = "SELECTED_COINS"
-        
         static let IS_SIMPLE_MODE = "IS_SIMPLE_MODE"
     }
 }

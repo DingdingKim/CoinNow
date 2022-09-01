@@ -44,5 +44,9 @@ class ItemCoin: NSCollectionViewItem {
                 }
             }
         }
+        
+        NotificationCenter.default.post(name: NSNotification.Name(rawValue: "VCPopover.updateSelectedCoins"),
+                                        object: nil,
+                                        userInfo: ["coin": data!, "isAdded": sender.state == .on])
     }
 }

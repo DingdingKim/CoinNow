@@ -11,24 +11,24 @@ import Cocoa
 
 struct MyValue {
     //상태바 코인 업데이트 주기
-    static var updatePer = UserDefaults.standard.string(forKey: Const.UserDefaultKey.UPDATE_PER) ?? Const.DEFAULT_UPDATE_PER.stirng {
+    static var updatePer: UpdatePer = UpdatePer(rawValue: UserDefaults.standard.string(forKey: Const.UserDefaultKey.UPDATE_PER) ?? Const.DEFAULT_UPDATE_PER.rawValue) ?? .realTime {
         didSet {
-            UserDefaults.standard.set(updatePer, forKey: Const.UserDefaultKey.UPDATE_PER)
+            UserDefaults.standard.set(updatePer.rawValue, forKey: Const.UserDefaultKey.UPDATE_PER)
             UserDefaults.standard.synchronize()
+            debugPrint("updatePer >> didSet \(updatePer)")
             
-            (NSApplication.shared.delegate as! AppDelegate).setTimerSec(updatePer: updatePer)
-            //debugPrint("updatePer >> didSet \(updatePer)")
+            (NSApplication.shared.delegate as! AppDelegate).updateUpdatePer()
         }
     }
     
     //상태바 거래소
-    static var mySiteType : SiteType = SiteType(rawValue: UserDefaults.standard.string(forKey: Const.UserDefaultKey.MY_SITE) ?? Const.DEFAULT_MY_SITE) ?? .upbit {
+    static var mySiteType: SiteType = SiteType(rawValue: UserDefaults.standard.string(forKey: Const.UserDefaultKey.MY_SITE) ?? Const.DEFAULT_MY_SITE) ?? .upbit {
         didSet {
             UserDefaults.standard.set(mySiteType.rawValue, forKey: Const.UserDefaultKey.MY_SITE)
             UserDefaults.standard.synchronize()
+            debugPrint("mySiteType >> didSet \(mySiteType.rawValue)")
             
-            (NSApplication.shared.delegate as! AppDelegate).updateStatusItem(willShowLoadingText: false)
-            //debugPrint("mySiteType >> didSet \(mySiteType.rawValue)")
+            (NSApplication.shared.delegate as! AppDelegate).updateStatusItem()
         }
     }
     
@@ -37,9 +37,9 @@ struct MyValue {
         didSet {
             UserDefaults.standard.set(myCoin, forKey: Const.UserDefaultKey.MY_COIN)
             UserDefaults.standard.synchronize()
-
-            (NSApplication.shared.delegate as! AppDelegate).updateStatusItem(willShowLoadingText: false)
             debugPrint("myCoin >> didSet \(String(describing: myCoin))")
+
+            (NSApplication.shared.delegate as! AppDelegate).updateStatusItem()
         }
     }
     
@@ -49,11 +49,12 @@ struct MyValue {
             if let data = try? PropertyListEncoder().encode(selectedCoins) {
                 UserDefaults.standard.set(data, forKey: Const.UserDefaultKey.SELECTED_COINS)
                 UserDefaults.standard.synchronize()
+                
+                debugPrint("selectedCoins >> didSet \(selectedCoins)")
             }
             
-            NotificationCenter.default.post(name: NSNotification.Name(rawValue: "VCPopover.updateSelectedCoins"), object: nil)
-            
-            //debugPrint("selectedCoins >> didSet \(selectedCoins)")
+            //소켓에 업데이트된 코인 선택 목록으로 다시 요청한다
+            //(NSApplication.shared.delegate as! AppDelegate).writeToSocket()
         }
     }
     
@@ -62,26 +63,32 @@ struct MyValue {
         didSet {
             UserDefaults.standard.set(isSimpleMode, forKey: Const.UserDefaultKey.IS_SIMPLE_MODE)
             UserDefaults.standard.synchronize()
+            
+            debugPrint("isSimpleMode >> didSet \(String(describing: isSimpleMode))")
         }
     }
     
     //상태바에 번개 아이콘 표시 여부
-    static var isShowStatusbarIcon: Bool = UserDefaults.standard.bool(forKey: Const.UserDefaultKey.IS_SHOW_ICON) {
+    static var isHiddenStatusbarIcon: Bool = UserDefaults.standard.bool(forKey: Const.UserDefaultKey.IS_SHOW_ICON) {
         didSet {
-            UserDefaults.standard.set(isShowStatusbarIcon, forKey: Const.UserDefaultKey.IS_SHOW_ICON)
+            UserDefaults.standard.set(isHiddenStatusbarIcon, forKey: Const.UserDefaultKey.IS_SHOW_ICON)
             UserDefaults.standard.synchronize()
             
-            (NSApplication.shared.delegate as! AppDelegate).updateStatusItem(willShowLoadingText: false)
+            debugPrint("isHiddenStatusbarIcon >> didSet \(String(describing: isHiddenStatusbarIcon))")
+            
+            (NSApplication.shared.delegate as! AppDelegate).updateStatusItem()
         }
     }
     
     //상태바에 마켓 코드 표시 여부
-    static var isShowStatusbarMarket: Bool = UserDefaults.standard.bool(forKey: Const.UserDefaultKey.IS_SHOW_MARKET) {
+    static var isHiddenStatusbarMarket: Bool = UserDefaults.standard.bool(forKey: Const.UserDefaultKey.IS_SHOW_MARKET) {
         didSet {
-            UserDefaults.standard.set(isShowStatusbarMarket, forKey: Const.UserDefaultKey.IS_SHOW_MARKET)
+            UserDefaults.standard.set(isHiddenStatusbarMarket, forKey: Const.UserDefaultKey.IS_SHOW_MARKET)
             UserDefaults.standard.synchronize()
             
-            (NSApplication.shared.delegate as! AppDelegate).updateStatusItem(willShowLoadingText: false)
+            debugPrint("isHiddenStatusbarMarket >> didSet \(String(describing: isHiddenStatusbarMarket))")
+            
+            (NSApplication.shared.delegate as! AppDelegate).updateStatusItem()
         }
     }
     
@@ -99,4 +106,3 @@ struct MyValue {
         UserDefaults.standard.synchronize()
     }
 }
-

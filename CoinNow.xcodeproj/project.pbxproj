@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		1FA6BEFCAF295EDD9D40BE92 /* Pods_CoinNow.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FC71B95B1EFD5F5A565D27C8 /* Pods_CoinNow.framework */; };
 		75021374286227C60078453E /* ItemTick.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75021372286227C60078453E /* ItemTick.swift */; };
 		75021375286227C60078453E /* ItemTick.xib in Resources */ = {isa = PBXBuildFile; fileRef = 75021373286227C60078453E /* ItemTick.xib */; };
 		755129F32862F8E800EC3CDF /* upbit.png in Resources */ = {isa = PBXBuildFile; fileRef = 755129F12862F8E800EC3CDF /* upbit.png */; };
@@ -29,6 +28,9 @@
 		75F538251F1946F200884EAA /* PopoverContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75F538241F1946F200884EAA /* PopoverContentView.swift */; };
 		75F86F7F28640CDE0048132C /* HeaderCoin.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75F86F7E28640CDE0048132C /* HeaderCoin.swift */; };
 		75F86F8128640CEA0048132C /* HeaderCoin.xib in Resources */ = {isa = PBXBuildFile; fileRef = 75F86F8028640CEA0048132C /* HeaderCoin.xib */; };
+		75F86F87286586F40048132C /* WSocket.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75F86F86286586F40048132C /* WSocket.swift */; };
+		75F8CFE028BA009500DD568A /* Reachability.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75F8CFDF28BA009400DD568A /* Reachability.swift */; };
+		F35E1CEBDC7C0FE4DB485CE4 /* Pods_CoinNow.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F5F6BC7F04A8C1BABF219E22 /* Pods_CoinNow.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -58,9 +60,11 @@
 		75F538241F1946F200884EAA /* PopoverContentView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PopoverContentView.swift; sourceTree = "<group>"; };
 		75F86F7E28640CDE0048132C /* HeaderCoin.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeaderCoin.swift; sourceTree = "<group>"; };
 		75F86F8028640CEA0048132C /* HeaderCoin.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = HeaderCoin.xib; sourceTree = "<group>"; };
-		F212CE6EE9DF95734B9FD749 /* Pods-CoinNow.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CoinNow.debug.xcconfig"; path = "Pods/Target Support Files/Pods-CoinNow/Pods-CoinNow.debug.xcconfig"; sourceTree = "<group>"; };
-		F3BC805D8FF828DC94118A9A /* Pods-CoinNow.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CoinNow.release.xcconfig"; path = "Pods/Target Support Files/Pods-CoinNow/Pods-CoinNow.release.xcconfig"; sourceTree = "<group>"; };
-		FC71B95B1EFD5F5A565D27C8 /* Pods_CoinNow.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_CoinNow.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		75F86F86286586F40048132C /* WSocket.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WSocket.swift; sourceTree = "<group>"; };
+		75F8CFDF28BA009400DD568A /* Reachability.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Reachability.swift; sourceTree = "<group>"; };
+		92E6AA2306FBF5724776A975 /* Pods-CoinNow.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CoinNow.debug.xcconfig"; path = "Target Support Files/Pods-CoinNow/Pods-CoinNow.debug.xcconfig"; sourceTree = "<group>"; };
+		CCFB8EBBE8B1EC4CB0401A13 /* Pods-CoinNow.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CoinNow.release.xcconfig"; path = "Target Support Files/Pods-CoinNow/Pods-CoinNow.release.xcconfig"; sourceTree = "<group>"; };
+		F5F6BC7F04A8C1BABF219E22 /* Pods_CoinNow.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_CoinNow.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -68,29 +72,20 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				1FA6BEFCAF295EDD9D40BE92 /* Pods_CoinNow.framework in Frameworks */,
+				F35E1CEBDC7C0FE4DB485CE4 /* Pods_CoinNow.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		1E97F21E496519AB340BE229 /* Pods */ = {
-			isa = PBXGroup;
-			children = (
-				F212CE6EE9DF95734B9FD749 /* Pods-CoinNow.debug.xcconfig */,
-				F3BC805D8FF828DC94118A9A /* Pods-CoinNow.release.xcconfig */,
-			);
-			name = Pods;
-			sourceTree = "<group>";
-		};
 		755E39141F081FA400CA6BBC = {
 			isa = PBXGroup;
 			children = (
 				755E391F1F081FA400CA6BBC /* CoinNow */,
 				755E391E1F081FA400CA6BBC /* Products */,
-				1E97F21E496519AB340BE229 /* Pods */,
-				B19A20E68A53B1DDCBBD58D4 /* Frameworks */,
+				A1D1776452D6690F25A42106 /* Pods */,
+				F1B0EBF2BA831BFD2239AD6E /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -123,6 +118,7 @@
 			children = (
 				75E6549E1F175B8400230402 /* Site.swift */,
 				75E654A01F175C9F00230402 /* Coin.swift */,
+				75F86F86286586F40048132C /* WSocket.swift */,
 				755E393E1F08208600CA6BBC /* Tick.swift */,
 				75E654A21F1761A400230402 /* MyValue.swift */,
 			);
@@ -136,6 +132,7 @@
 				755E39361F08208000CA6BBC /* Const.swift */,
 				755E39371F08208000CA6BBC /* Extension.swift */,
 				75F538241F1946F200884EAA /* PopoverContentView.swift */,
+				75F8CFDF28BA009400DD568A /* Reachability.swift */,
 			);
 			name = Util;
 			sourceTree = "<group>";
@@ -166,10 +163,19 @@
 			name = VC;
 			sourceTree = "<group>";
 		};
-		B19A20E68A53B1DDCBBD58D4 /* Frameworks */ = {
+		A1D1776452D6690F25A42106 /* Pods */ = {
 			isa = PBXGroup;
 			children = (
-				FC71B95B1EFD5F5A565D27C8 /* Pods_CoinNow.framework */,
+				92E6AA2306FBF5724776A975 /* Pods-CoinNow.debug.xcconfig */,
+				CCFB8EBBE8B1EC4CB0401A13 /* Pods-CoinNow.release.xcconfig */,
+			);
+			path = Pods;
+			sourceTree = "<group>";
+		};
+		F1B0EBF2BA831BFD2239AD6E /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				F5F6BC7F04A8C1BABF219E22 /* Pods_CoinNow.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -181,12 +187,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 755E392C1F081FA400CA6BBC /* Build configuration list for PBXNativeTarget "CoinNow" */;
 			buildPhases = (
-				8520BBF7B14E12A678777CAF /* [CP] Check Pods Manifest.lock */,
+				DC3CFE3E05EA3F3032B4FE37 /* [CP] Check Pods Manifest.lock */,
 				755E39191F081FA400CA6BBC /* Sources */,
 				755E391A1F081FA400CA6BBC /* Frameworks */,
 				755E391B1F081FA400CA6BBC /* Resources */,
-				F38CFD9C39B1AB39632D5DC6 /* [CP] Embed Pods Frameworks */,
 				75F86F7A2862FE640048132C /* ShellScript */,
+				41DAA717210DEAA3F7B0D1FC /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -257,6 +263,28 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
+		41DAA717210DEAA3F7B0D1FC /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-CoinNow/Pods-CoinNow-frameworks.sh",
+				"${BUILT_PRODUCTS_DIR}/Alamofire/Alamofire.framework",
+				"${BUILT_PRODUCTS_DIR}/Starscream/Starscream.framework",
+				"${BUILT_PRODUCTS_DIR}/SwiftyJSON/SwiftyJSON.framework",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputPaths = (
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Alamofire.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Starscream.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SwiftyJSON.framework",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-CoinNow/Pods-CoinNow-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
 		75F86F7A2862FE640048132C /* ShellScript */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -274,42 +302,26 @@
 			shellPath = /bin/sh;
 			shellScript = "# Type a script or drag a script file from your workspace to insert its path.\nxattr -cr ~/Library/Developer/Xcode/DerivedData || echo Clear\n";
 		};
-		8520BBF7B14E12A678777CAF /* [CP] Check Pods Manifest.lock */ = {
+		DC3CFE3E05EA3F3032B4FE37 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+			);
+			inputFileListPaths = (
 			);
 			inputPaths = (
 				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
 				"${PODS_ROOT}/Manifest.lock",
 			);
 			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
 			outputPaths = (
 				"$(DERIVED_FILE_DIR)/Pods-CoinNow-checkManifestLockResult.txt",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
-			showEnvVarsInLog = 0;
-		};
-		F38CFD9C39B1AB39632D5DC6 /* [CP] Embed Pods Frameworks */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-CoinNow/Pods-CoinNow-frameworks.sh",
-				"${BUILT_PRODUCTS_DIR}/Alamofire/Alamofire.framework",
-				"${BUILT_PRODUCTS_DIR}/SwiftyJSON/SwiftyJSON.framework",
-			);
-			name = "[CP] Embed Pods Frameworks";
-			outputPaths = (
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Alamofire.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SwiftyJSON.framework",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-CoinNow/Pods-CoinNow-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 /* End PBXShellScriptBuildPhase section */
@@ -319,6 +331,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				75F86F87286586F40048132C /* WSocket.swift in Sources */,
 				755E393B1F08208000CA6BBC /* Extension.swift in Sources */,
 				755E39391F08208000CA6BBC /* Api.swift in Sources */,
 				75E6549F1F175B8400230402 /* Site.swift in Sources */,
@@ -326,6 +339,7 @@
 				75E654A31F1761A400230402 /* MyValue.swift in Sources */,
 				755E393A1F08208000CA6BBC /* Const.swift in Sources */,
 				755E39311F08206E00CA6BBC /* VCPopover.swift in Sources */,
+				75F8CFE028BA009500DD568A /* Reachability.swift in Sources */,
 				755E39401F08208600CA6BBC /* Tick.swift in Sources */,
 				75021374286227C60078453E /* ItemTick.swift in Sources */,
 				75F86F7F28640CDE0048132C /* HeaderCoin.swift in Sources */,
@@ -463,7 +477,7 @@
 		};
 		755E392D1F081FA400CA6BBC /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = F212CE6EE9DF95734B9FD749 /* Pods-CoinNow.debug.xcconfig */;
+			baseConfigurationReference = 92E6AA2306FBF5724776A975 /* Pods-CoinNow.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = CoinNow/CoinNow.entitlements;
@@ -474,7 +488,7 @@
 				ENABLE_HARDENED_RUNTIME = YES;
 				INFOPLIST_FILE = CoinNow/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
-				MACOSX_DEPLOYMENT_TARGET = 10.11;
+				MACOSX_DEPLOYMENT_TARGET = 10.14;
 				PRODUCT_BUNDLE_IDENTIFIER = com.dingding.CoinNow;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -484,7 +498,7 @@
 		};
 		755E392E1F081FA400CA6BBC /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = F3BC805D8FF828DC94118A9A /* Pods-CoinNow.release.xcconfig */;
+			baseConfigurationReference = CCFB8EBBE8B1EC4CB0401A13 /* Pods-CoinNow.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = CoinNow/CoinNow.entitlements;
@@ -495,7 +509,7 @@
 				ENABLE_HARDENED_RUNTIME = YES;
 				INFOPLIST_FILE = CoinNow/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
-				MACOSX_DEPLOYMENT_TARGET = 10.11;
+				MACOSX_DEPLOYMENT_TARGET = 10.14;
 				PRODUCT_BUNDLE_IDENTIFIER = com.dingding.CoinNow;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";

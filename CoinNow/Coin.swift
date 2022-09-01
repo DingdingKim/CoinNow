@@ -16,12 +16,13 @@ struct Coin: Codable {
     var code: String = "" // btc
     var market: String = "" // krw
     var site: SiteType // upbit
-    var uniqueId: String = "" // marketAndCode + site
+    
+    var uniqueId: String {
+        return "\(self.marketAndCode)/\(self.site.rawValue)"
+    }
     
     var isChecked: Bool {
-        get {
-            return MyValue.selectedCoins.filter { $0.marketAndCode == self.marketAndCode && $0.site.rawValue == self.site.rawValue }.count > 0
-        }
+        return MyValue.selectedCoins.filter { $0.marketAndCode == self.marketAndCode && $0.site.rawValue == self.site.rawValue }.count > 0
     }
     
     init(from site: SiteType, data: JSON) {
@@ -33,10 +34,12 @@ struct Coin: Codable {
             self.name = data["english_name"].stringValue
             self.market = String(data["market"].stringValue.split(separator: "-")[0])
             self.code = String(data["market"].stringValue.split(separator: "-")[1])
-            self.uniqueId = "\(self.marketAndCode)/\(self.site.rawValue)"
             
-        default:
-            print("nothing")
+        case .binance:
+            self.marketAndCode = "\(data["quoteAsset"].stringValue)-\(data["baseAsset"].stringValue)"
+            self.name = data["baseAsset"].stringValue //바낸은 영어이름 안준다ㅠ 그냥 코인(심볼) 코드명으로 적는다
+            self.market = data["quoteAsset"].stringValue
+            self.code = data["baseAsset"].stringValue
         }
     }
 }
