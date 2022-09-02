@@ -13,7 +13,7 @@ class ItemTick: NSCollectionViewItem {
     @IBOutlet weak var lbExchange: NSTextField!
     @IBOutlet weak var lbMarket: NSTextField!
     @IBOutlet weak var lbPrice: NSTextField!
-    @IBOutlet weak var lbKPremium: NSTextField!
+    @IBOutlet weak var lbUpdateTime: NSTextField!
     @IBOutlet weak var lineBottom: NSTextField!
     @IBOutlet weak var lineRight: NSTextField!
     
@@ -25,11 +25,11 @@ class ItemTick: NSCollectionViewItem {
     
     //Called when coin price data is updated
     func updateView(tick: Tick, index: Int, isLastRow: Bool) {
-        lbCoin.stringValue = tick.coin.name
+        lbCoin.stringValue = "\(tick.coin.code)/\(tick.coin.market)"// tick.coin.name
         lbPrice.stringValue = tick.displayCurrentPrice
         lbExchange.stringValue = tick.coin.site.rawValue
         lbMarket.stringValue = "\(tick.coin.code)/\(tick.coin.market)"
-        lbKPremium.stringValue = ""
+        lbUpdateTime.stringValue = tick.displayUpdateTime
         
         lbPrice.textColor = tick.changeState.textColor
         

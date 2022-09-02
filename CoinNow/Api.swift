@@ -57,7 +57,7 @@ class Api {
             for coin in selectedCoins {
                 for tick in resultTicks {
                     if tick["market"].stringValue == coin.marketAndCode {
-                        ticks.append(Tick(coin: coin, currentPrice: tick["trade_price"].doubleValue))
+                        ticks.append(Tick(coin: coin, currentPrice: tick["trade_price"].doubleValue, updateTime: 0))
                     }
                 }
             }
@@ -82,7 +82,7 @@ class Api {
             for coin in selectedCoins {
                 if let symbol = resultTick["symbol"] as? String, symbol == coin.marketAndCode,
                     let price = resultTick["price"] as? Double {
-                    ticks.append(Tick(coin: coin, currentPrice: price))
+                    ticks.append(Tick(coin: coin, currentPrice: price, updateTime: 0))
                 }
             }
             

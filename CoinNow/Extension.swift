@@ -32,10 +32,19 @@ extension Double {
             return numberFormatter.string(from: NSNumber(value:self)) ?? ""
         }
     }
+    
     //Get https://stackoverflow.com/questions/27338573/rounding-a-double-value-to-x-number-of-decimal-places-in-swift
     func roundTo(places:Int) -> Double {
         let divisor = pow(10.0, Double(places))
         return (self * divisor).rounded() / divisor
+    }
+    
+    func getDateString(format: String) -> String {
+        guard self > 0 else { return "" }
+        
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = format
+        return dateFormatter.string(from: Date(timeIntervalSince1970: self/1000))
     }
 }
 
@@ -48,7 +57,7 @@ extension Int {
 }
 
 extension Date {
-    func todayString(format:String) -> String{
+    func todayString(format: String) -> String{
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = format
         let dateString = dateFormatter.string(from: self)

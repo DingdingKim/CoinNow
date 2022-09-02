@@ -83,6 +83,9 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     
     public func updateStatusText(_ text: String) {
         statusItem.button?.title = text
+        //폰트색깔 바꾸고 싶을때
+        //let myAttrString = NSAttributedString(string: text, attributes: [.foregroundColor: NSColor.blue ])
+        //statusItem.button?.attributedTitle = myAttrString
     }
     
     @objc func togglePopover(_ sender: AnyObject?) {

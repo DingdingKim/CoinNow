@@ -117,7 +117,7 @@ class VCPopover: NSViewController {
         }
         
         for coin in MyValue.selectedCoins {
-            ticks.append(Tick(coin: coin, currentPrice: -1))
+            ticks.append(Tick(coin: coin, currentPrice: -1, updateTime: 0))
         }
     }
     
@@ -193,7 +193,7 @@ class VCPopover: NSViewController {
                 MyValue.selectedCoins.append(contentsOf: data.marketAndCoins[0].coins.sorted(by: { $0.market > $1.market })[0...3])
                 
                 for coin in MyValue.selectedCoins {
-                    ticks.append( (Tick(coin: coin, currentPrice: -1)))
+                    ticks.append( (Tick(coin: coin, currentPrice: -1, updateTime: 0)))
                 }
                 
                 NotificationCenter.default.post(name: NSNotification.Name(rawValue: "VCPopover.updateSelectedCoins"), object: nil)
@@ -224,6 +224,7 @@ class VCPopover: NSViewController {
             if tick.coin.site == data.siteType, tick.coin.marketAndCode == (data.marketAndCode) {
                 self.ticks[index].currentPrice = data.trade_price
                 self.ticks[index].changeState = data.changeState
+                self.ticks[index].updateTime = data.timestamp
                 
                 break
             }
@@ -238,7 +239,7 @@ class VCPopover: NSViewController {
             
             //추가된것 등록하기
             if isAdded {
-                ticks.append(Tick(coin: coin, currentPrice: -1))
+                ticks.append(Tick(coin: coin, currentPrice: -1, updateTime: 0))
                 
                 //바뀐 코인리스트를 가지고 틱을 가지고 오도록 웹소켓에 write
                 writeToSocket(coin.site)

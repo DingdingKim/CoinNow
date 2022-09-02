@@ -16,10 +16,10 @@ enum WebSocketPriceChangeType: String, Codable {
     var textColor: NSColor {
         switch self {
         case .rise:
-            return .red
+            return .systemRed
             
         case .fall:
-            return .blue
+            return .systemBlue
             
         default:
             return .black
@@ -37,6 +37,7 @@ struct WSocket: Codable {
     }
     var trade_price: Double // 현재가
     var changeState: WebSocketPriceChangeType //전일대비 업다운
+    var timestamp: Double // trade_timestamp 최근 거래 일시(UTC) 포맷: Unix Timestamp
     
     //상태바에서 필요
     var displayCurrentPrice: String {
@@ -52,6 +53,7 @@ struct WSocket: Codable {
             self.market = String(data["code"].stringValue.split(separator: "-")[0])
             self.trade_price = data["trade_price"].doubleValue
             self.changeState = WebSocketPriceChangeType(rawValue: data["change"].stringValue) ?? .unknown
+            self.timestamp = data["trade_timestamp"].doubleValue
             
         case .binance, .binanceF:
             let market = String(MyValue.myCoin.split(separator: "-")[0])
@@ -87,6 +89,8 @@ struct WSocket: Codable {
             else {
                 self.changeState = .even
             }
+            
+            self.timestamp = Double(data["E"].doubleValue) //Event time
         }
     }
 }

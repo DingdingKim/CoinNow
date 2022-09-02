@@ -13,16 +13,16 @@
             <connections>
                 <outlet property="lbCoin" destination="eaF-L1-UOZ" id="PWh-RT-Hn0"/>
                 <outlet property="lbExchange" destination="Qlb-wM-0tC" id="eIj-Ne-7sk"/>
-                <outlet property="lbKPremium" destination="txo-Lg-ZYo" id="F1R-ja-enK"/>
                 <outlet property="lbMarket" destination="A7i-xk-JKQ" id="Fiz-UK-YUz"/>
                 <outlet property="lbPrice" destination="1xC-2Y-1SY" id="Thp-kA-qKa"/>
+                <outlet property="lbUpdateTime" destination="txo-Lg-ZYo" id="NnK-tG-qGc"/>
                 <outlet property="lineBottom" destination="76L-aa-r5m" id="iIN-PT-Jle"/>
                 <outlet property="lineRight" destination="IyM-bJ-3sI" id="nQv-B6-ois"/>
                 <outlet property="view" destination="jUT-tF-pmk" id="6ON-JK-Z0W"/>
             </connections>
         </collectionViewItem>
         <customView misplaced="YES" id="jUT-tF-pmk">
-            <rect key="frame" x="0.0" y="0.0" width="229" height="54"/>
+            <rect key="frame" x="0.0" y="0.0" width="229" height="106"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
             <subviews>
                 <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="D35-bd-GV7">
@@ -46,11 +46,11 @@
                     <rect key="frame" x="8" y="5" width="28" height="11"/>
                     <textFieldCell key="cell" lineBreakMode="clipping" title="Upbit" id="adb-hl-OD7">
                         <font key="font" metaFont="systemLight" size="9"/>
-                        <color key="textColor" name="systemPurpleColor" catalog="System" colorSpace="catalog"/>
+                        <color key="textColor" name="systemIndigoColor" catalog="System" colorSpace="catalog"/>
                         <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                     </textFieldCell>
                 </textField>
-                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="A7i-xk-JKQ">
+                <textField hidden="YES" horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="A7i-xk-JKQ">
                     <rect key="frame" x="35" y="5" width="35" height="11"/>
                     <textFieldCell key="cell" lineBreakMode="clipping" title="market" id="3VD-e0-9HM">
                         <font key="font" metaFont="systemLight" size="9"/>
@@ -66,11 +66,11 @@
                         <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                     </textFieldCell>
                 </textField>
-                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="txo-Lg-ZYo">
-                    <rect key="frame" x="178" y="-10" width="43" height="11"/>
+                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="txo-Lg-ZYo" userLabel="updateTime">
+                    <rect key="frame" x="186" y="-8" width="35" height="9"/>
                     <textFieldCell key="cell" lineBreakMode="clipping" title="premium" id="UPD-si-dEi">
-                        <font key="font" metaFont="miniSystem"/>
-                        <color key="textColor" name="systemRedColor" catalog="System" colorSpace="catalog"/>
+                        <font key="font" metaFont="system" size="7"/>
+                        <color key="textColor" name="tertiaryLabelColor" catalog="System" colorSpace="catalog"/>
                         <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                     </textFieldCell>
                 </textField>
@@ -117,7 +117,7 @@
                 <constraint firstItem="txo-Lg-ZYo" firstAttribute="top" secondItem="1xC-2Y-1SY" secondAttribute="bottom" id="qGY-bM-lf1"/>
                 <constraint firstItem="txo-Lg-ZYo" firstAttribute="trailing" secondItem="1xC-2Y-1SY" secondAttribute="trailing" id="xRS-PM-yL5"/>
             </constraints>
-            <point key="canvasLocation" x="13.5" y="24"/>
+            <point key="canvasLocation" x="13.5" y="-2"/>
         </customView>
     </objects>
     <resources>
