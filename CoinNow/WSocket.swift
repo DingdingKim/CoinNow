@@ -41,7 +41,22 @@ struct WSocket: Codable {
     
     //상태바에서 필요
     var displayCurrentPrice: String {
-        return trade_price > 0 ? trade_price.withCommas() : ""
+        if trade_price <= 0 { return "-" }
+        
+        // 거래소 마다 마켓마다 소수점 표현방식이 다르네ㅠ 어쩔수없다ㅠ 하드코딩 가즈아~
+        switch siteType {
+        case .upbit:
+            if market == "USDT" {
+                return trade_price.withCommas(minimumFractionDigits: trade_price >= 100 ? 0 : (trade_price >= 1 ? 2 : 4), maximumFractionDigits: 3)
+            }
+            else {
+                return trade_price.withCommas(minimumFractionDigits: trade_price >= 100 ? 0 : (trade_price >= 1 ? 2 : 4))
+            }
+        case .binance:
+            return trade_price.withCommas(minimumFractionDigits: 2)
+        case .binanceF:
+            return trade_price.withCommas(minimumFractionDigits: 1)
+        }
     }
     
     init(from: SiteType, data: JSON) {

@@ -19,18 +19,13 @@ extension NSNumber {
 }
 
 extension Double {
-    func withCommas() -> String {
+    func withCommas(minimumFractionDigits: Int = 0, maximumFractionDigits: Int = 100) -> String {
         let numberFormatter = NumberFormatter()
         numberFormatter.numberStyle = .decimal
-        numberFormatter.maximumFractionDigits = 100
+        numberFormatter.maximumFractionDigits = maximumFractionDigits
+        numberFormatter.minimumFractionDigits = minimumFractionDigits
         
-        //large price(>100) no need to show floating point.
-        if(self > 100){
-            return numberFormatter.string(from: NSNumber(value:self)) ?? ""
-        }
-        else{
-            return numberFormatter.string(from: NSNumber(value:self)) ?? ""
-        }
+        return numberFormatter.string(from: NSNumber(value:self)) ?? ""
     }
     
     //Get https://stackoverflow.com/questions/27338573/rounding-a-double-value-to-x-number-of-decimal-places-in-swift

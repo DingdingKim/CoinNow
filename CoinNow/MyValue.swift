@@ -17,8 +17,7 @@ struct MyValue {
             UserDefaults.standard.set(mySiteType.rawValue, forKey: Const.UserDefaultKey.MY_SITE)
             UserDefaults.standard.synchronize()
             debugPrint("mySiteType >> didSet \(mySiteType.rawValue)")
-            
-            (NSApplication.shared.delegate as! AppDelegate).updateStatusItem()
+            //거래소 변경은 아래 코인 업데이트 때 한번에 같이 이루어진다
         }
     }
     

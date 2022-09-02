@@ -458,17 +458,6 @@ class VCPopover: NSViewController {
         btStatusCoin.removeAllItems()
         btStatusCoin.addItems(withTitles: mySiteCoins)
 
-        //Current my coin is not tradable in changed market. So change my coin to first coin of tradable coins in my market.
-        //사이트 바뀌면 무조건 바꾸는걸로 수정했다
-        /*
-        if mySiteCoins.count > 0,
-           !mySiteCoins.contains(MyValue.myCoin) {
-            btStatusCoin.selectItem(at: 0)
-
-            MyValue.myCoin = mySiteCoins[0]
-        }
-         */
-        
         MyValue.myCoin = mySiteCoins[0]
     }
     
