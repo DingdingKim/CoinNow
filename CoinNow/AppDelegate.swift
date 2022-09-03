@@ -10,6 +10,7 @@ import Cocoa
 import Starscream
 import SwiftyJSON
 import Network
+import FirebaseCore
 
 @NSApplicationMain
 class AppDelegate: NSObject, NSApplicationDelegate {
@@ -26,6 +27,8 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     func applicationDidFinishLaunching(_ notification: Notification) {
         print("--------applicationDidFinishLaunching")
         //MyValue.clear() //For test
+        
+        FirebaseApp.configure()
         
         NSWorkspace.shared.notificationCenter.addObserver(self, selector: #selector(wakeUp), name: NSWorkspace.didWakeNotification, object: nil)
         

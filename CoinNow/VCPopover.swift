@@ -9,6 +9,7 @@
 import Cocoa
 import Starscream
 import SwiftyJSON
+import FirebaseRemoteConfig
 
 class VCPopover: NSViewController {
     @IBOutlet weak var stackViewRoot: NSStackView!
@@ -21,11 +22,11 @@ class VCPopover: NSViewController {
     @IBOutlet weak var cbShowIcon: NSButton!
     @IBOutlet weak var cbShowMarket: NSButton!
     
-    @IBOutlet weak var lbLine: NSTextField!
-    
-    @IBOutlet weak var lbUpdateTime: NSTextField!
+    @IBOutlet weak var viewDingMessage: NSView!
+    @IBOutlet weak var lbDingMessage: NSTextField!
     
     @IBOutlet weak var viewSelectCoins: NSView!
+    @IBOutlet weak var segmentCoins: NSSegmentedControl!
     @IBOutlet weak var collectionViewCoin: NSCollectionView!
     @IBOutlet weak var collectionViewTick: NSCollectionView!
     
@@ -45,6 +46,8 @@ class VCPopover: NSViewController {
     private var socketUpbit: WebSocket!
     private var socketBinance: WebSocket!
     private var socketBinanceF: WebSocket!//선물
+    
+    var remoteConfig: RemoteConfig!
     
     var isSocketConnectedUpbit: Bool = false {
         didSet {
@@ -84,6 +87,7 @@ class VCPopover: NSViewController {
         
         initView()
         initData()
+        initRemoteConfig()
     }
     
     override func viewWillAppear() {
@@ -121,12 +125,40 @@ class VCPopover: NSViewController {
         }
     }
     
+    func initRemoteConfig() {
+        remoteConfig = RemoteConfig.remoteConfig()
+        
+        let settings = RemoteConfigSettings()
+        settings.minimumFetchInterval = 0
+        remoteConfig.configSettings = settings
+        //remoteConfig.setDefaults(fromPlist: "RemoteConfigDefaults")
+        
+        remoteConfig.fetch { (status, error) -> Void in
+            if status == .success {
+                print("Config fetched!")
+                self.remoteConfig.activate { changed, error in
+                    if let message = self.remoteConfig["message"].stringValue {
+                        DispatchQueue.main.async {
+                            self.lbDingMessage.stringValue = message
+                        }
+                    }
+                }
+              }
+            else {
+                print("Config not fetched")
+                print("Error: \(error?.localizedDescription ?? "No error available.")")
+            }
+        }
+    }
+    
     func initView() {
         print("**********initView")
         
         //일단 숨겨놓는다
         viewDonateToggle.isHidden = true
         viewDonate.isHidden = true
+        
+        segmentCoins.selectedSegmentBezelColor = .controlAccentColor
         
         collectionViewCoin.customBackgroundColor = NSColor.black.withAlphaComponent(0.1)
         
@@ -471,7 +503,7 @@ class VCPopover: NSViewController {
         if(MyValue.isSimpleMode) {
             viewStatusSetting.isHidden = true
             viewSelectCoins.isHidden = true
-            lbLine.isHidden = true
+            viewDingMessage.isHidden = true
             
             btMinimode.image = NSImage.init(named: "ic_fullscreen")
         }
