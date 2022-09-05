@@ -10,6 +10,7 @@ import Cocoa
 import Starscream
 import SwiftyJSON
 import FirebaseRemoteConfig
+import FirebaseDatabase
 
 class VCPopover: NSViewController {
     @IBOutlet weak var stackViewRoot: NSStackView!
@@ -30,11 +31,16 @@ class VCPopover: NSViewController {
     @IBOutlet weak var collectionViewCoin: NSCollectionView!
     @IBOutlet weak var collectionViewTick: NSCollectionView!
     
+    @IBOutlet weak var tfSendMessage: NSTextField!
+    @IBOutlet weak var btToggleSendMessage: NSButton!
+    @IBOutlet weak var btSendMessage: NSButton!
+    
     @IBOutlet weak var btDonate: NSButton!
     @IBOutlet weak var viewDonateToggle: NSView!
     @IBOutlet weak var viewDonate: NSView!
     
     @IBOutlet weak var cHeightTick: NSLayoutConstraint!
+    @IBOutlet weak var cHeightSendMessage: NSLayoutConstraint!
     @IBOutlet weak var viewNetworkError: NSView!
     
     var currentTab: Site?
@@ -48,6 +54,7 @@ class VCPopover: NSViewController {
     private var socketBinanceF: WebSocket!//선물
     
     var remoteConfig: RemoteConfig!
+    var realtimeDatabase: DatabaseReference!
     
     var isSocketConnectedUpbit: Bool = false {
         didSet {
@@ -88,6 +95,7 @@ class VCPopover: NSViewController {
         initView()
         initData()
         initRemoteConfig()
+        initRealtimeDatabase()
     }
     
     override func viewWillAppear() {
@@ -149,6 +157,10 @@ class VCPopover: NSViewController {
                 print("Error: \(error?.localizedDescription ?? "No error available.")")
             }
         }
+    }
+    
+    func initRealtimeDatabase() {
+        realtimeDatabase = Database.database().reference()
     }
     
     func initView() {
@@ -542,7 +554,7 @@ class VCPopover: NSViewController {
     
     @IBAction func clickDonate(_ sender: NSButton) {
         //close
-        if(sender.tag == 0){
+        if(sender.tag == 0) {
             btDonate.image = NSImage.init(named: "ic_expand_less")
             viewDonate.isHidden = false
             sender.tag = 1
@@ -552,6 +564,31 @@ class VCPopover: NSViewController {
             viewDonate.isHidden = true
             sender.tag = 0
         }
+    }
+    
+    @IBAction func clickToggleSendMessage(_ sender: NSButton) {
+        //닫힌상태에서 열기
+        if(sender.tag == 0){
+            btToggleSendMessage.image = NSImage.init(named: "ic_expand_less")
+            cHeightSendMessage.constant = 50
+            sender.tag = 1
+        }
+        else {
+            btToggleSendMessage.image = NSImage.init(named: "ic_expand_more")
+            cHeightSendMessage.constant = 0
+            sender.tag = 0
+        }
+    }
+    
+    @IBAction func clickSendMessage(_ sender: NSButton) {
+        realtimeDatabase.child("userMessage").setValue(tfSendMessage.stringValue, withCompletionBlock: { error,_ in
+            self.tfSendMessage.stringValue = ""
+            self.tfSendMessage.placeholderString = error == nil ? "전송 완료!👍" : "전송 실패!😭"
+        
+            DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
+                self.tfSendMessage.placeholderString = "개발자에게 한마디 😎"
+            }
+        })
     }
     
     //Click to copy donate address

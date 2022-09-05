@@ -3,6 +3,7 @@
     <dependencies>
         <deployment identifier="macosx"/>
         <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="20037"/>
+        <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="System colors introduced in macOS 10.14" minToolsVersion="10.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -11,8 +12,11 @@
             <connections>
                 <outlet property="btDonate" destination="tKF-7c-ZiL" id="43w-qC-xYh"/>
                 <outlet property="btMinimode" destination="pce-U1-erj" id="0Ec-d8-oZO"/>
+                <outlet property="btSendMessage" destination="AnE-Qs-17K" id="3oJ-LO-UGS"/>
                 <outlet property="btStatusCoin" destination="hC2-lS-lZ9" id="B6d-KR-eMb"/>
                 <outlet property="btStatusSite" destination="FIh-G9-J5h" id="RYQ-JK-9sZ"/>
+                <outlet property="btToggleSendMessage" destination="K0x-BN-kuE" id="UWA-gh-YC5"/>
+                <outlet property="cHeightSendMessage" destination="F3D-iX-a34" id="GHG-SH-YI1"/>
                 <outlet property="cHeightTick" destination="7eg-5p-imA" id="icw-II-ISv"/>
                 <outlet property="cbShowIcon" destination="Hzh-YP-XGZ" id="Bvh-QS-Yvb"/>
                 <outlet property="cbShowMarket" destination="BED-b9-0Eg" id="ajL-XE-XrP"/>
@@ -21,6 +25,7 @@
                 <outlet property="lbDingMessage" destination="fAc-Od-BMc" id="a8U-ma-L5o"/>
                 <outlet property="segmentCoins" destination="ACg-L5-msR" id="G7Z-jH-14k"/>
                 <outlet property="stackViewRoot" destination="E8k-QV-wP3" id="PBh-Cd-1n5"/>
+                <outlet property="tfSendMessage" destination="fvb-XO-FsR" id="EJE-ox-DCM"/>
                 <outlet property="view" destination="Hz6-mo-xeY" id="kkN-F2-eo5"/>
                 <outlet property="viewDingMessage" destination="IDc-yy-CRM" id="XjG-Cz-THK"/>
                 <outlet property="viewDonate" destination="lUP-Lp-Wel" id="HdP-ks-SEe"/>
@@ -32,12 +37,12 @@
         </customObject>
         <customObject id="-1" userLabel="First Responder" customClass="FirstResponder"/>
         <customObject id="-3" userLabel="Application" customClass="NSObject"/>
-        <customView misplaced="YES" id="Hz6-mo-xeY">
-            <rect key="frame" x="0.0" y="0.0" width="569" height="853"/>
+        <customView id="Hz6-mo-xeY">
+            <rect key="frame" x="0.0" y="0.0" width="569" height="844"/>
             <autoresizingMask key="autoresizingMask"/>
             <subviews>
                 <button imageHugsTitle="YES" translatesAutoresizingMaskIntoConstraints="NO" id="pce-U1-erj">
-                    <rect key="frame" x="479" y="823" width="85" height="20"/>
+                    <rect key="frame" x="479" y="819" width="85" height="20"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="20" id="c4h-LS-OtQ"/>
                         <constraint firstAttribute="width" constant="85" id="gxr-IZ-8ov"/>
@@ -51,10 +56,10 @@
                     </connections>
                 </button>
                 <stackView distribution="fill" orientation="vertical" alignment="leading" spacing="0.0" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="E8k-QV-wP3" userLabel="Stack View Root">
-                    <rect key="frame" x="25" y="15" width="519" height="808"/>
+                    <rect key="frame" x="25" y="15" width="519" height="804"/>
                     <subviews>
-                        <customView translatesAutoresizingMaskIntoConstraints="NO" id="Lt9-nb-WLc" userLabel="View_Coin in status bar">
-                            <rect key="frame" x="0.0" y="723" width="519" height="85"/>
+                        <customView translatesAutoresizingMaskIntoConstraints="NO" id="Lt9-nb-WLc" userLabel="StatusBarTitle">
+                            <rect key="frame" x="0.0" y="719" width="519" height="85"/>
                             <subviews>
                                 <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="wix-Pa-lMa">
                                     <rect key="frame" x="-2" y="66" width="129" height="19"/>
@@ -142,10 +147,10 @@
                             </constraints>
                         </customView>
                         <customView translatesAutoresizingMaskIntoConstraints="NO" id="IDc-yy-CRM" userLabel="DingMessage">
-                            <rect key="frame" x="0.0" y="668" width="519" height="55"/>
+                            <rect key="frame" x="0.0" y="668" width="519" height="51"/>
                             <subviews>
                                 <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="Wou-lk-jUJ" userLabel="Line">
-                                    <rect key="frame" x="0.0" y="44" width="519" height="1"/>
+                                    <rect key="frame" x="0.0" y="45" width="519" height="1"/>
                                     <constraints>
                                         <constraint firstAttribute="height" constant="1" id="qZg-95-xo4"/>
                                     </constraints>
@@ -156,16 +161,81 @@
                                     </textFieldCell>
                                 </textField>
                                 <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" allowsCharacterPickerTouchBarItem="YES" translatesAutoresizingMaskIntoConstraints="NO" id="fAc-Od-BMc">
-                                    <rect key="frame" x="-2" y="20" width="523" height="15"/>
+                                    <rect key="frame" x="-2" y="21" width="523" height="15"/>
                                     <constraints>
                                         <constraint firstAttribute="height" constant="15" id="QEe-nf-KiK"/>
                                     </constraints>
-                                    <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="left" id="6Dq-ly-jDX">
+                                    <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="left" title="공지 불러오는 중..." id="6Dq-ly-jDX">
                                         <font key="font" size="11" name="AppleSDGothicNeo-Medium"/>
-                                        <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                        <color key="textColor" name="systemPinkColor" catalog="System" colorSpace="catalog"/>
                                         <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                                     </textFieldCell>
                                 </textField>
+                                <button focusRingType="none" imageHugsTitle="YES" translatesAutoresizingMaskIntoConstraints="NO" id="K0x-BN-kuE">
+                                    <rect key="frame" x="478" y="19" width="41" height="20"/>
+                                    <constraints>
+                                        <constraint firstAttribute="height" constant="20" id="0p4-Na-ZlS"/>
+                                    </constraints>
+                                    <buttonCell key="cell" type="square" title="👋" bezelStyle="shadowlessSquare" image="ic_expand_more" imagePosition="right" alignment="center" refusesFirstResponder="YES" state="on" focusRingType="none" imageScaling="proportionallyUpOrDown" inset="2" id="WCO-GZ-xPA">
+                                        <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES" changeBackground="YES" changeGray="YES"/>
+                                        <font key="font" size="10" name="HelveticaNeue"/>
+                                    </buttonCell>
+                                    <color key="contentTintColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                    <connections>
+                                        <action selector="clickToggleSendMessage:" target="-2" id="TCs-pA-4JW"/>
+                                    </connections>
+                                </button>
+                                <customView translatesAutoresizingMaskIntoConstraints="NO" id="990-1t-qpW" userLabel="SendMessage">
+                                    <rect key="frame" x="0.0" y="21" width="519" height="0.0"/>
+                                    <subviews>
+                                        <textField focusRingType="none" verticalHuggingPriority="750" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="fvb-XO-FsR">
+                                            <rect key="frame" x="0.0" y="20" width="463" height="20"/>
+                                            <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" borderStyle="bezel" focusRingType="none" placeholderString="개발자에게 한마디..." id="KBj-4N-FBE">
+                                                <font key="font" metaFont="system"/>
+                                                <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                                                <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                            </textFieldCell>
+                                        </textField>
+                                        <button verticalHuggingPriority="750" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="AnE-Qs-17K">
+                                            <rect key="frame" x="461" y="13" width="65" height="32"/>
+                                            <buttonCell key="cell" type="push" bezelStyle="rounded" alignment="center" state="on" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="avb-xB-35S">
+                                                <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                                <string key="title" base64-UTF8="YES">
+UxBlbmQ
+</string>
+                                                <font key="font" metaFont="system"/>
+                                            </buttonCell>
+                                            <color key="bezelColor" name="controlAccentColor" catalog="System" colorSpace="catalog"/>
+                                            <color key="contentTintColor" name="AccentColor"/>
+                                            <connections>
+                                                <action selector="clickSendMessage:" target="-2" id="EOn-n0-zdV"/>
+                                            </connections>
+                                        </button>
+                                        <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" ambiguous="YES" allowsCharacterPickerTouchBarItem="YES" translatesAutoresizingMaskIntoConstraints="NO" id="c6B-rK-6dc">
+                                            <rect key="frame" x="-2" y="-45" width="192" height="15"/>
+                                            <constraints>
+                                                <constraint firstAttribute="height" constant="15" id="8R4-Mo-Wo0"/>
+                                            </constraints>
+                                            <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" sendsActionOnEndEditing="YES" alignment="left" title="긴히 할말이 있으시다면..👉🏻 twlovesh89@gmail.com" id="eIw-jX-dGx">
+                                                <font key="font" size="9" name="AppleSDGothicNeo-UltraLight"/>
+                                                <color key="textColor" name="systemBlueColor" catalog="System" colorSpace="catalog"/>
+                                                <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                                            </textFieldCell>
+                                        </textField>
+                                    </subviews>
+                                    <constraints>
+                                        <constraint firstItem="fvb-XO-FsR" firstAttribute="top" secondItem="990-1t-qpW" secondAttribute="top" constant="5" id="2G8-B0-CNj"/>
+                                        <constraint firstAttribute="bottom" secondItem="c6B-rK-6dc" secondAttribute="bottom" id="58e-Vu-cDb"/>
+                                        <constraint firstItem="AnE-Qs-17K" firstAttribute="leading" secondItem="fvb-XO-FsR" secondAttribute="trailing" constant="5" id="9nK-iY-jYg"/>
+                                        <constraint firstAttribute="height" id="F3D-iX-a34"/>
+                                        <constraint firstItem="AnE-Qs-17K" firstAttribute="bottom" secondItem="fvb-XO-FsR" secondAttribute="bottom" id="KOj-e6-VIt"/>
+                                        <constraint firstItem="c6B-rK-6dc" firstAttribute="top" secondItem="fvb-XO-FsR" secondAttribute="bottom" constant="5" id="amO-Fv-X9H"/>
+                                        <constraint firstItem="AnE-Qs-17K" firstAttribute="top" secondItem="fvb-XO-FsR" secondAttribute="top" id="ecw-bX-co6"/>
+                                        <constraint firstAttribute="trailing" secondItem="AnE-Qs-17K" secondAttribute="trailing" id="iqI-ZR-lPH"/>
+                                        <constraint firstItem="fvb-XO-FsR" firstAttribute="leading" secondItem="990-1t-qpW" secondAttribute="leading" id="mVu-UX-5Yc"/>
+                                        <constraint firstItem="c6B-rK-6dc" firstAttribute="leading" secondItem="fvb-XO-FsR" secondAttribute="leading" id="pCx-ON-Tmq"/>
+                                    </constraints>
+                                </customView>
                                 <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="fRR-DJ-MPz" userLabel="Line">
                                     <rect key="frame" x="0.0" y="15" width="519" height="1"/>
                                     <constraints>
@@ -179,15 +249,20 @@
                                 </textField>
                             </subviews>
                             <constraints>
-                                <constraint firstItem="fAc-Od-BMc" firstAttribute="top" secondItem="IDc-yy-CRM" secondAttribute="top" constant="20" id="99T-8R-zhu"/>
+                                <constraint firstItem="fAc-Od-BMc" firstAttribute="top" secondItem="IDc-yy-CRM" secondAttribute="top" constant="15" id="99T-8R-zhu"/>
+                                <constraint firstItem="990-1t-qpW" firstAttribute="top" secondItem="fAc-Od-BMc" secondAttribute="bottom" id="EqD-sA-YoY"/>
+                                <constraint firstItem="K0x-BN-kuE" firstAttribute="centerY" secondItem="fAc-Od-BMc" secondAttribute="centerY" id="G2E-7n-Nzg"/>
+                                <constraint firstAttribute="trailing" secondItem="990-1t-qpW" secondAttribute="trailing" id="KN8-lc-HUR"/>
                                 <constraint firstItem="fRR-DJ-MPz" firstAttribute="leading" secondItem="IDc-yy-CRM" secondAttribute="leading" id="MZV-Td-bV4"/>
                                 <constraint firstAttribute="trailing" secondItem="fAc-Od-BMc" secondAttribute="trailing" id="Meh-S2-iZF"/>
                                 <constraint firstItem="Wou-lk-jUJ" firstAttribute="leading" secondItem="IDc-yy-CRM" secondAttribute="leading" id="PsU-Gu-BPC"/>
-                                <constraint firstAttribute="bottom" secondItem="fRR-DJ-MPz" secondAttribute="bottom" constant="15" id="j5I-5K-2UW"/>
-                                <constraint firstAttribute="bottom" secondItem="fAc-Od-BMc" secondAttribute="bottom" constant="20" id="l17-Cn-25q"/>
+                                <constraint firstItem="990-1t-qpW" firstAttribute="leading" secondItem="IDc-yy-CRM" secondAttribute="leading" id="Xpt-6m-4GY"/>
+                                <constraint firstAttribute="trailing" secondItem="K0x-BN-kuE" secondAttribute="trailing" id="dEj-we-wC3"/>
+                                <constraint firstAttribute="bottom" secondItem="fRR-DJ-MPz" secondAttribute="bottom" constant="15" id="eua-uh-z8b"/>
                                 <constraint firstAttribute="trailing" secondItem="Wou-lk-jUJ" secondAttribute="trailing" id="mU3-ae-f75"/>
-                                <constraint firstItem="Wou-lk-jUJ" firstAttribute="top" secondItem="IDc-yy-CRM" secondAttribute="top" constant="10" id="oPP-1q-5h7"/>
+                                <constraint firstItem="Wou-lk-jUJ" firstAttribute="top" secondItem="IDc-yy-CRM" secondAttribute="top" constant="5" id="oPP-1q-5h7"/>
                                 <constraint firstItem="fAc-Od-BMc" firstAttribute="leading" secondItem="IDc-yy-CRM" secondAttribute="leading" id="p95-le-beh"/>
+                                <constraint firstItem="fRR-DJ-MPz" firstAttribute="top" secondItem="990-1t-qpW" secondAttribute="bottom" constant="5" id="vLh-Lv-Lfu"/>
                                 <constraint firstAttribute="trailing" secondItem="fRR-DJ-MPz" secondAttribute="trailing" id="vsl-RB-I0y"/>
                             </constraints>
                         </customView>
@@ -256,7 +331,7 @@
                                 </userDefinedRuntimeAttribute>
                             </userDefinedRuntimeAttributes>
                         </customView>
-                        <customView translatesAutoresizingMaskIntoConstraints="NO" id="9Ma-2L-eKd" userLabel="View state title">
+                        <customView translatesAutoresizingMaskIntoConstraints="NO" id="9Ma-2L-eKd" userLabel="PriceTitle">
                             <rect key="frame" x="0.0" y="428" width="519" height="40"/>
                             <subviews>
                                 <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" allowsCharacterPickerTouchBarItem="YES" translatesAutoresizingMaskIntoConstraints="NO" id="9lg-xr-wyn">
@@ -312,7 +387,7 @@
                                 <constraint firstItem="ZqQ-ZW-sCQ" firstAttribute="leading" secondItem="d4r-G2-vJj" secondAttribute="leading" id="O3i-SC-xJm"/>
                             </constraints>
                         </customView>
-                        <customView translatesAutoresizingMaskIntoConstraints="NO" id="oT3-O0-hPW">
+                        <customView translatesAutoresizingMaskIntoConstraints="NO" id="oT3-O0-hPW" userLabel="Quit">
                             <rect key="frame" x="0.0" y="181" width="519" height="30"/>
                             <subviews>
                                 <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="85e-Gl-b47">
@@ -336,7 +411,7 @@
                                 <constraint firstItem="85e-Gl-b47" firstAttribute="top" secondItem="oT3-O0-hPW" secondAttribute="top" constant="10" id="vga-kS-zml"/>
                             </constraints>
                         </customView>
-                        <customView translatesAutoresizingMaskIntoConstraints="NO" id="NXn-AB-4RR">
+                        <customView translatesAutoresizingMaskIntoConstraints="NO" id="NXn-AB-4RR" userLabel="Donate1">
                             <rect key="frame" x="0.0" y="151" width="519" height="30"/>
                             <subviews>
                                 <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="IQf-ja-7ac">
@@ -370,7 +445,7 @@
                                 <constraint firstItem="tKF-7c-ZiL" firstAttribute="top" secondItem="NXn-AB-4RR" secondAttribute="top" constant="10" id="xd9-xr-CJD"/>
                             </constraints>
                         </customView>
-                        <customView translatesAutoresizingMaskIntoConstraints="NO" id="lUP-Lp-Wel">
+                        <customView translatesAutoresizingMaskIntoConstraints="NO" id="lUP-Lp-Wel" userLabel="Donate2">
                             <rect key="frame" x="0.0" y="0.0" width="519" height="151"/>
                             <subviews>
                                 <stackView distribution="fill" orientation="vertical" alignment="leading" spacing="2" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ktq-aT-PdM">
@@ -563,10 +638,10 @@
                     </customSpacing>
                 </stackView>
                 <visualEffectView hidden="YES" appearanceType="vibrantLight" blendingMode="behindWindow" material="mediumLight" state="active" translatesAutoresizingMaskIntoConstraints="NO" id="AzT-aQ-fNg">
-                    <rect key="frame" x="0.0" y="0.0" width="569" height="848"/>
+                    <rect key="frame" x="0.0" y="0.0" width="569" height="844"/>
                     <subviews>
                         <customView translatesAutoresizingMaskIntoConstraints="NO" id="IWU-y4-Q1T" userLabel="View state title">
-                            <rect key="frame" x="159" y="412" width="251" height="24"/>
+                            <rect key="frame" x="159" y="410" width="251" height="24"/>
                             <subviews>
                                 <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" allowsCharacterPickerTouchBarItem="YES" translatesAutoresizingMaskIntoConstraints="NO" id="cvg-OE-iZk">
                                     <rect key="frame" x="-2" y="0.0" width="255" height="24"/>
@@ -603,12 +678,15 @@
                 <constraint firstAttribute="trailing" secondItem="E8k-QV-wP3" secondAttribute="trailing" constant="25" id="hCp-RE-M3u"/>
                 <constraint firstAttribute="trailing" secondItem="pce-U1-erj" secondAttribute="trailing" constant="5" id="tYS-nA-d24"/>
             </constraints>
-            <point key="canvasLocation" x="11.5" y="-338.5"/>
+            <point key="canvasLocation" x="11.5" y="-339.5"/>
         </customView>
     </objects>
     <resources>
         <image name="ic_content_copy" width="18" height="18"/>
         <image name="ic_expand_more" width="24" height="24"/>
         <image name="ic_fullscreen_exit" width="24" height="24"/>
+        <namedColor name="AccentColor">
+            <color red="1" green="0.79199999570846558" blue="0.15700000524520874" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
     </resources>
 </document>

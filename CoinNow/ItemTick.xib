@@ -46,7 +46,7 @@
                     <rect key="frame" x="8" y="5" width="28" height="11"/>
                     <textFieldCell key="cell" lineBreakMode="clipping" title="Upbit" id="adb-hl-OD7">
                         <font key="font" metaFont="systemLight" size="9"/>
-                        <color key="textColor" name="systemIndigoColor" catalog="System" colorSpace="catalog"/>
+                        <color key="textColor" name="secondaryLabelColor" catalog="System" colorSpace="catalog"/>
                         <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                     </textFieldCell>
                 </textField>

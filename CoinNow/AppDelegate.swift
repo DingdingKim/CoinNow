@@ -211,8 +211,10 @@ extension AppDelegate: WebSocketDelegate {
 
             print("Receive Binance: \(data.marketAndCode) / \(MyValue.myCoin)")
             
+            let isFuture = MyValue.mySiteType == .binanceF ? "(F)" : ""
+            
             updateStatusText(MyValue.isHiddenStatusbarMarket ?
-                                    data.displayCurrentPrice : "\(MyValue.myCoin.split(separator: "-")[1]) \(data.displayCurrentPrice)")
+                                    data.displayCurrentPrice : "\(MyValue.myCoin.split(separator: "-")[1])\(isFuture) \(data.displayCurrentPrice)")
 
         case .binary(let data):
             let data = WSocket(from: MyValue.mySiteType, data: JSON(data))

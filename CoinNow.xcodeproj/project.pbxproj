@@ -26,6 +26,8 @@
 		75E1C85728C201330061D0B0 /* FirebaseAnalyticsSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 75E1C85628C201330061D0B0 /* FirebaseAnalyticsSwift */; };
 		75E1C85928C201330061D0B0 /* FirebaseCrashlytics in Frameworks */ = {isa = PBXBuildFile; productRef = 75E1C85828C201330061D0B0 /* FirebaseCrashlytics */; };
 		75E1C85B28C201330061D0B0 /* FirebaseRemoteConfigSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 75E1C85A28C201330061D0B0 /* FirebaseRemoteConfigSwift */; };
+		75E1C85E28C391AA0061D0B0 /* FirebaseStorage in Frameworks */ = {isa = PBXBuildFile; productRef = 75E1C85D28C391AA0061D0B0 /* FirebaseStorage */; };
+		75E1C86128C392A80061D0B0 /* FirebaseDatabaseSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 75E1C86028C392A80061D0B0 /* FirebaseDatabaseSwift */; };
 		75E6549F1F175B8400230402 /* Site.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75E6549E1F175B8400230402 /* Site.swift */; };
 		75E654A11F175C9F00230402 /* Coin.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75E654A01F175C9F00230402 /* Coin.swift */; };
 		75E654A31F1761A400230402 /* MyValue.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75E654A21F1761A400230402 /* MyValue.swift */; };
@@ -77,9 +79,11 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				75E1C86128C392A80061D0B0 /* FirebaseDatabaseSwift in Frameworks */,
 				75E1C85928C201330061D0B0 /* FirebaseCrashlytics in Frameworks */,
 				75E1C85B28C201330061D0B0 /* FirebaseRemoteConfigSwift in Frameworks */,
 				75E1C85728C201330061D0B0 /* FirebaseAnalyticsSwift in Frameworks */,
+				75E1C85E28C391AA0061D0B0 /* FirebaseStorage in Frameworks */,
 				F35E1CEBDC7C0FE4DB485CE4 /* Pods_CoinNow.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -212,6 +216,8 @@
 				75E1C85628C201330061D0B0 /* FirebaseAnalyticsSwift */,
 				75E1C85828C201330061D0B0 /* FirebaseCrashlytics */,
 				75E1C85A28C201330061D0B0 /* FirebaseRemoteConfigSwift */,
+				75E1C85D28C391AA0061D0B0 /* FirebaseStorage */,
+				75E1C86028C392A80061D0B0 /* FirebaseDatabaseSwift */,
 			);
 			productName = CoinNow;
 			productReference = 755E391D1F081FA400CA6BBC /* CoinNow.app */;
@@ -251,6 +257,8 @@
 			mainGroup = 755E39141F081FA400CA6BBC;
 			packageReferences = (
 				75E1C85528C201330061D0B0 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
+				75E1C85C28C391AA0061D0B0 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
+				75E1C85F28C392A80061D0B0 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
 			);
 			productRefGroup = 755E391E1F081FA400CA6BBC /* Products */;
 			projectDirPath = "";
@@ -574,6 +582,22 @@
 				minimumVersion = 9.0.0;
 			};
 		};
+		75E1C85C28C391AA0061D0B0 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/firebase/firebase-ios-sdk";
+			requirement = {
+				branch = master;
+				kind = branch;
+			};
+		};
+		75E1C85F28C392A80061D0B0 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/firebase/firebase-ios-sdk";
+			requirement = {
+				branch = master;
+				kind = branch;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -591,6 +615,16 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 75E1C85528C201330061D0B0 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
 			productName = FirebaseRemoteConfigSwift;
+		};
+		75E1C85D28C391AA0061D0B0 /* FirebaseStorage */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 75E1C85C28C391AA0061D0B0 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseStorage;
+		};
+		75E1C86028C392A80061D0B0 /* FirebaseDatabaseSwift */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 75E1C85C28C391AA0061D0B0 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseDatabaseSwift;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};
