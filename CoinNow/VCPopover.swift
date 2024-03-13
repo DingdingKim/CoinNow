@@ -723,14 +723,14 @@ extension VCPopover: WebSocketDelegate {
             
             //VCPopover뷰 업데이트 하라고 소리쳐~
             NotificationCenter.default.post(name: NSNotification.Name(rawValue: "receiveTick"), object: nil, userInfo: ["tick" : data])
-            print("Receive Binance: \(data.marketAndCode) / \(MyValue.myCoin)")
+            //print("Receive Binance: \(data.marketAndCode) / \(MyValue.myCoin)")
             
         case .binary(let data):
             let data = WSocket(from: siteType, data: JSON(data))
             
             //VCPopover뷰 업데이트 하라고 소리쳐~
             NotificationCenter.default.post(name: NSNotification.Name(rawValue: "receiveTick"), object: nil, userInfo: ["tick" : data])
-            print("Receive Upbit: \(data.marketAndCode) / \(MyValue.myCoin)")
+            //print("Receive Upbit: \(data.marketAndCode) / \(MyValue.myCoin)")
             
         case .cancelled:
             if socketUpbit != nil, client.request.url == socketUpbit.request.url {

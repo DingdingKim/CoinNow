@@ -1,6 +1,0 @@
-framework module Pods_CoinNow {
-  umbrella header "Pods-CoinNow-umbrella.h"
-
-  export *
-  module * { export * }
-}
