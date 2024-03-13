@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="20037" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="32700.99.1234" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
         <deployment identifier="macosx"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="20037"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="22689"/>
         <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="System colors introduced in macOS 10.14" minToolsVersion="10.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -32,25 +32,26 @@
                 <outlet property="viewDonateToggle" destination="NXn-AB-4RR" id="myo-fZ-wmI"/>
                 <outlet property="viewNetworkError" destination="AzT-aQ-fNg" id="MP8-7R-sxd"/>
                 <outlet property="viewSelectCoins" destination="wi7-nI-zqO" id="f00-g4-Hvq"/>
+                <outlet property="viewSendDingMessage" destination="990-1t-qpW" id="P0h-bv-RTY"/>
                 <outlet property="viewStatusSetting" destination="Lt9-nb-WLc" id="Rgi-Ot-30R"/>
             </connections>
         </customObject>
         <customObject id="-1" userLabel="First Responder" customClass="FirstResponder"/>
         <customObject id="-3" userLabel="Application" customClass="NSObject"/>
-        <customView id="Hz6-mo-xeY">
-            <rect key="frame" x="0.0" y="0.0" width="569" height="844"/>
+        <customView misplaced="YES" id="Hz6-mo-xeY">
+            <rect key="frame" x="0.0" y="0.0" width="569" height="900"/>
             <autoresizingMask key="autoresizingMask"/>
             <subviews>
                 <button imageHugsTitle="YES" translatesAutoresizingMaskIntoConstraints="NO" id="pce-U1-erj">
                     <rect key="frame" x="479" y="819" width="85" height="20"/>
-                    <constraints>
-                        <constraint firstAttribute="height" constant="20" id="c4h-LS-OtQ"/>
-                        <constraint firstAttribute="width" constant="85" id="gxr-IZ-8ov"/>
-                    </constraints>
                     <buttonCell key="cell" type="square" title="Mini Mode" bezelStyle="shadowlessSquare" image="ic_fullscreen_exit" imagePosition="right" alignment="center" state="on" imageScaling="proportionallyUpOrDown" inset="2" id="MBT-Ag-zZR">
                         <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                         <font key="font" metaFont="system" size="10"/>
                     </buttonCell>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="20" id="c4h-LS-OtQ"/>
+                        <constraint firstAttribute="width" constant="85" id="gxr-IZ-8ov"/>
+                    </constraints>
                     <connections>
                         <action selector="clickMinimode:" target="-2" id="srZ-4G-amb"/>
                     </connections>
@@ -107,7 +108,7 @@
                                         <action selector="changeMyCoin:" target="-2" id="RQe-Zh-vuL"/>
                                     </connections>
                                 </popUpButton>
-                                <button verticalHuggingPriority="750" tag="2" translatesAutoresizingMaskIntoConstraints="NO" id="Hzh-YP-XGZ">
+                                <button tag="2" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="Hzh-YP-XGZ">
                                     <rect key="frame" x="-2" y="4.5" width="85" height="18"/>
                                     <buttonCell key="cell" type="check" title="Show icon" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="sqB-Qm-aUW">
                                         <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
@@ -117,7 +118,7 @@
                                         <action selector="clickShowStatusbarIcon:" target="-2" id="6Y1-yz-n6z"/>
                                     </connections>
                                 </button>
-                                <button verticalHuggingPriority="750" tag="2" translatesAutoresizingMaskIntoConstraints="NO" id="BED-b9-0Eg">
+                                <button tag="2" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="BED-b9-0Eg">
                                     <rect key="frame" x="91" y="4.5" width="100" height="18"/>
                                     <buttonCell key="cell" type="check" title="Show market" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="NdZ-mN-bK1">
                                         <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
@@ -173,23 +174,23 @@
                                 </textField>
                                 <button focusRingType="none" imageHugsTitle="YES" translatesAutoresizingMaskIntoConstraints="NO" id="K0x-BN-kuE">
                                     <rect key="frame" x="478" y="19" width="41" height="20"/>
-                                    <constraints>
-                                        <constraint firstAttribute="height" constant="20" id="0p4-Na-ZlS"/>
-                                    </constraints>
                                     <buttonCell key="cell" type="square" title="👋" bezelStyle="shadowlessSquare" image="ic_expand_more" imagePosition="right" alignment="center" refusesFirstResponder="YES" state="on" focusRingType="none" imageScaling="proportionallyUpOrDown" inset="2" id="WCO-GZ-xPA">
                                         <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES" changeBackground="YES" changeGray="YES"/>
                                         <font key="font" size="10" name="HelveticaNeue"/>
                                     </buttonCell>
                                     <color key="contentTintColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                    <constraints>
+                                        <constraint firstAttribute="height" constant="20" id="0p4-Na-ZlS"/>
+                                    </constraints>
                                     <connections>
                                         <action selector="clickToggleSendMessage:" target="-2" id="TCs-pA-4JW"/>
                                     </connections>
                                 </button>
-                                <customView translatesAutoresizingMaskIntoConstraints="NO" id="990-1t-qpW" userLabel="SendMessage">
+                                <customView alphaValue="0.0" translatesAutoresizingMaskIntoConstraints="NO" id="990-1t-qpW" userLabel="SendMessage">
                                     <rect key="frame" x="0.0" y="21" width="519" height="0.0"/>
                                     <subviews>
                                         <textField focusRingType="none" verticalHuggingPriority="750" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="fvb-XO-FsR">
-                                            <rect key="frame" x="0.0" y="20" width="463" height="20"/>
+                                            <rect key="frame" x="0.0" y="20" width="463" height="5"/>
                                             <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" borderStyle="bezel" focusRingType="none" placeholderString="개발자에게 한마디..." id="KBj-4N-FBE">
                                                 <font key="font" metaFont="system"/>
                                                 <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
@@ -197,7 +198,7 @@
                                             </textFieldCell>
                                         </textField>
                                         <button verticalHuggingPriority="750" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="AnE-Qs-17K">
-                                            <rect key="frame" x="461" y="13" width="65" height="32"/>
+                                            <rect key="frame" x="461" y="13" width="65" height="17"/>
                                             <buttonCell key="cell" type="push" bezelStyle="rounded" alignment="center" state="on" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="avb-xB-35S">
                                                 <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                                 <string key="title" base64-UTF8="YES">
@@ -212,7 +213,7 @@ UxBlbmQ
                                             </connections>
                                         </button>
                                         <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" ambiguous="YES" allowsCharacterPickerTouchBarItem="YES" translatesAutoresizingMaskIntoConstraints="NO" id="c6B-rK-6dc">
-                                            <rect key="frame" x="-2" y="-45" width="192" height="15"/>
+                                            <rect key="frame" x="-2" y="0.0" width="192" height="15"/>
                                             <constraints>
                                                 <constraint firstAttribute="height" constant="15" id="8R4-Mo-Wo0"/>
                                             </constraints>
@@ -300,7 +301,7 @@ UxBlbmQ
                                     </userDefinedRuntimeAttributes>
                                 </scrollView>
                                 <segmentedControl verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="ACg-L5-msR">
-                                    <rect key="frame" x="105" y="177" width="309" height="24"/>
+                                    <rect key="frame" x="106" y="177" width="307" height="24"/>
                                     <segmentedCell key="cell" borderStyle="border" alignment="left" segmentDistribution="fillEqually" style="rounded" trackingMode="selectOne" id="1AQ-6u-H7P">
                                         <font key="font" metaFont="system"/>
                                         <segments>
@@ -392,13 +393,13 @@ UxBlbmQ
                             <subviews>
                                 <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="85e-Gl-b47">
                                     <rect key="frame" x="-7" y="-7" width="533" height="32"/>
-                                    <constraints>
-                                        <constraint firstAttribute="height" constant="20" id="R3J-Of-eQa"/>
-                                    </constraints>
                                     <buttonCell key="cell" type="push" title="Quit App" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="1ab-6A-iRc">
                                         <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                         <font key="font" metaFont="system"/>
                                     </buttonCell>
+                                    <constraints>
+                                        <constraint firstAttribute="height" constant="20" id="R3J-Of-eQa"/>
+                                    </constraints>
                                     <connections>
                                         <action selector="clickQuit:" target="-2" id="jjc-Rn-VOG"/>
                                     </connections>
@@ -424,14 +425,14 @@ UxBlbmQ
                                 </textField>
                                 <button translatesAutoresizingMaskIntoConstraints="NO" id="tKF-7c-ZiL">
                                     <rect key="frame" x="439" y="0.0" width="80" height="20"/>
-                                    <constraints>
-                                        <constraint firstAttribute="height" constant="20" id="Ccg-1b-Qdj"/>
-                                        <constraint firstAttribute="width" constant="80" id="JYo-HE-99j"/>
-                                    </constraints>
                                     <buttonCell key="cell" type="square" title="🍗 Donate" bezelStyle="shadowlessSquare" image="ic_expand_more" imagePosition="right" alignment="center" imageScaling="proportionallyUpOrDown" inset="2" id="avo-ce-gC1">
                                         <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                         <font key="font" metaFont="systemSemibold" size="10"/>
                                     </buttonCell>
+                                    <constraints>
+                                        <constraint firstAttribute="height" constant="20" id="Ccg-1b-Qdj"/>
+                                        <constraint firstAttribute="width" constant="80" id="JYo-HE-99j"/>
+                                    </constraints>
                                     <connections>
                                         <action selector="clickDonate:" target="-2" id="zjp-1r-5Kf"/>
                                     </connections>
@@ -464,13 +465,13 @@ UxBlbmQ
                                                 </textField>
                                                 <button translatesAutoresizingMaskIntoConstraints="NO" id="aFh-Hd-WWL">
                                                     <rect key="frame" x="296" y="1" width="30" height="18"/>
-                                                    <constraints>
-                                                        <constraint firstAttribute="width" constant="30" id="1hb-B7-aXB"/>
-                                                    </constraints>
                                                     <buttonCell key="cell" type="square" bezelStyle="shadowlessSquare" image="ic_content_copy" imagePosition="only" alignment="center" imageScaling="proportionallyUpOrDown" inset="2" id="Oy6-GX-kPt">
                                                         <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                                         <font key="font" metaFont="system"/>
                                                     </buttonCell>
+                                                    <constraints>
+                                                        <constraint firstAttribute="width" constant="30" id="1hb-B7-aXB"/>
+                                                    </constraints>
                                                     <connections>
                                                         <action selector="clickCopyDonateAddress:" target="-2" id="d9x-6f-6V7"/>
                                                     </connections>
@@ -497,13 +498,13 @@ UxBlbmQ
                                                 </textField>
                                                 <button translatesAutoresizingMaskIntoConstraints="NO" id="Zkj-SE-r8I">
                                                     <rect key="frame" x="341" y="1" width="30" height="18"/>
-                                                    <constraints>
-                                                        <constraint firstAttribute="width" constant="30" id="cWg-ZY-R2a"/>
-                                                    </constraints>
                                                     <buttonCell key="cell" type="square" bezelStyle="shadowlessSquare" image="ic_content_copy" imagePosition="only" alignment="center" imageScaling="proportionallyUpOrDown" inset="2" id="6Ce-5c-vJL">
                                                         <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                                         <font key="font" metaFont="system"/>
                                                     </buttonCell>
+                                                    <constraints>
+                                                        <constraint firstAttribute="width" constant="30" id="cWg-ZY-R2a"/>
+                                                    </constraints>
                                                     <connections>
                                                         <action selector="clickCopyDonateAddress:" target="-2" id="4fG-nF-8vi"/>
                                                     </connections>
@@ -530,13 +531,13 @@ UxBlbmQ
                                                 </textField>
                                                 <button translatesAutoresizingMaskIntoConstraints="NO" id="kSa-Tt-2oK">
                                                     <rect key="frame" x="293" y="1" width="30" height="18"/>
-                                                    <constraints>
-                                                        <constraint firstAttribute="width" constant="30" id="qF5-IR-f0I"/>
-                                                    </constraints>
                                                     <buttonCell key="cell" type="square" bezelStyle="shadowlessSquare" image="ic_content_copy" imagePosition="only" alignment="center" imageScaling="proportionallyUpOrDown" inset="2" id="LVl-wT-CPf">
                                                         <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                                         <font key="font" metaFont="system"/>
                                                     </buttonCell>
+                                                    <constraints>
+                                                        <constraint firstAttribute="width" constant="30" id="qF5-IR-f0I"/>
+                                                    </constraints>
                                                     <connections>
                                                         <action selector="clickCopyDonateAddress:" target="-2" id="LuE-fi-dug"/>
                                                     </connections>
@@ -563,13 +564,13 @@ UxBlbmQ
                                                 </textField>
                                                 <button translatesAutoresizingMaskIntoConstraints="NO" id="XSN-Yb-97g">
                                                     <rect key="frame" x="380" y="1" width="30" height="18"/>
-                                                    <constraints>
-                                                        <constraint firstAttribute="width" constant="30" id="oK4-Qi-YWv"/>
-                                                    </constraints>
                                                     <buttonCell key="cell" type="square" bezelStyle="shadowlessSquare" image="ic_content_copy" imagePosition="only" alignment="center" imageScaling="proportionallyUpOrDown" inset="2" id="yQP-dv-bfU">
                                                         <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                                         <font key="font" metaFont="system"/>
                                                     </buttonCell>
+                                                    <constraints>
+                                                        <constraint firstAttribute="width" constant="30" id="oK4-Qi-YWv"/>
+                                                    </constraints>
                                                     <connections>
                                                         <action selector="clickCopyDonateAddress:" target="-2" id="N0j-RC-ax9"/>
                                                     </connections>

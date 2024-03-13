@@ -24,6 +24,7 @@ class VCPopover: NSViewController {
     @IBOutlet weak var cbShowMarket: NSButton!
     
     @IBOutlet weak var viewDingMessage: NSView!
+    @IBOutlet weak var viewSendDingMessage: NSView!
     @IBOutlet weak var lbDingMessage: NSTextField!
     
     @IBOutlet weak var viewSelectCoins: NSView!
@@ -571,24 +572,33 @@ class VCPopover: NSViewController {
         if(sender.tag == 0){
             btToggleSendMessage.image = NSImage.init(named: "ic_expand_less")
             cHeightSendMessage.constant = 50
+            // hidden으로 조절하면 포커싱문제가 있어서 투명도로 조정했다
+            viewSendDingMessage.layer?.opacity = 1
+            //tfSendMessage.isEnabled = true
             sender.tag = 1
         }
         else {
             btToggleSendMessage.image = NSImage.init(named: "ic_expand_more")
             cHeightSendMessage.constant = 0
+            viewSendDingMessage.layer?.opacity = 0
+            //tfSendMessage.isEnabled = false
             sender.tag = 0
         }
     }
     
     @IBAction func clickSendMessage(_ sender: NSButton) {
-        realtimeDatabase.child("userMessage").setValue(tfSendMessage.stringValue, withCompletionBlock: { error,_ in
-            self.tfSendMessage.stringValue = ""
-            self.tfSendMessage.placeholderString = error == nil ? "전송 완료!👍" : "전송 실패!😭"
-        
-            DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
-                self.tfSendMessage.placeholderString = "개발자에게 한마디 😎"
-            }
-        })
+        if !tfSendMessage.stringValue.isEmpty {
+            realtimeDatabase.child(Date().todayString(format: "yyyy-MM-dd HH:mm:ss"))
+                .child("userMessage")
+                .setValue(tfSendMessage.stringValue, withCompletionBlock: { error,_ in
+                    self.tfSendMessage.stringValue = ""
+                    self.tfSendMessage.placeholderString = error == nil ? "전송 완료!👍" : "전송 실패!😭"
+                    
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
+                        self.tfSendMessage.placeholderString = "개발자에게 한마디 😎"
+                    }
+                })
+        }
     }
     
     //Click to copy donate address
