@@ -15,7 +15,8 @@ class ItemTick: NSCollectionViewItem {
     @IBOutlet weak var lbPrice: NSTextField!
     @IBOutlet weak var lbUpdateTime: NSTextField!
     @IBOutlet weak var lineBottom: NSTextField!
-    @IBOutlet weak var lineRight: NSTextField!
+    @IBOutlet weak var constraintsPriceRight: NSLayoutConstraint!
+    @IBOutlet weak var btnDelete: NSButton!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -32,11 +33,25 @@ class ItemTick: NSCollectionViewItem {
         lbUpdateTime.stringValue = tick.displayUpdateTime
         
         lbPrice.textColor = tick.changeState.textColor
+        btnDelete.tag = index
+    }
+    
+    @IBAction func clickDelete(_ sender: NSButton) {
+        guard sender.tag != -1 else { return }
         
-        //lineRight.isHidden = index % 2 != 0
-        //lineBottom.isHidden = isLastRow
-        
-        lineRight.isHidden = true
-        //lineBottom.isHidden = true
+        for (index, coin) in MyValue.selectedCoins.enumerated() {
+            if index == sender.tag {
+                MyValue.selectedCoins.remove(at: index)
+                
+                NotificationCenter.default.post(name: NSNotification.Name(rawValue: "VCPopover.updateSelectedCoins"),
+                                                object: nil,
+                                                userInfo: ["coin": coin, "isAdded": false])
+                
+                NotificationCenter.default.post(name: NSNotification.Name(rawValue: "VCPopover.updateCollectionViewCoin"),
+                                                object: nil,
+                                                userInfo: nil)
+                break
+            }
+        }
     }
 }

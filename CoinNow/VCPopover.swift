@@ -86,10 +86,26 @@ class VCPopover: NSViewController {
         
         //MyValue.clear() //For test
         
-        NotificationCenter.default.addObserver(self, selector: #selector(VCPopover.updateSelectedCoins), name: NSNotification.Name(rawValue: "VCPopover.updateSelectedCoins"), object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(VCPopover.finishSetCoins), name: NSNotification.Name(rawValue: "VCPopover.finishSetCoins"), object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(VCPopover.updateTick), name: NSNotification.Name(rawValue: "receiveTick"), object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(VCPopover.updateConnectionStatus), name: NSNotification.Name(rawValue: "updateConnectionStatus"), object: nil)
+        NotificationCenter.default.addObserver(self, 
+                                               selector: #selector(VCPopover.updateSelectedCoins),
+                                               name: NSNotification.Name(rawValue: "VCPopover.updateSelectedCoins"),
+                                               object: nil)
+        NotificationCenter.default.addObserver(self, 
+                                               selector: #selector(VCPopover.finishSetCoins),
+                                               name: NSNotification.Name(rawValue: "VCPopover.finishSetCoins"),
+                                               object: nil)
+        NotificationCenter.default.addObserver(self, 
+                                               selector: #selector(VCPopover.updateTick), 
+                                               name: NSNotification.Name(rawValue: "receiveTick"), 
+                                               object: nil)
+        NotificationCenter.default.addObserver(self,
+                                               selector: #selector(VCPopover.updateConnectionStatus), 
+                                               name: NSNotification.Name(rawValue: "updateConnectionStatus"), 
+                                               object: nil)
+        NotificationCenter.default.addObserver(self,
+                                               selector: #selector(VCPopover.updateCollectionViewCoin), 
+                                               name: NSNotification.Name(rawValue: "VCPopover.updateCollectionViewCoin"), 
+                                               object: nil)
         
         NSRunningApplication.current.activate(options: NSApplication.ActivationOptions.activateIgnoringOtherApps)
         
@@ -319,6 +335,13 @@ class VCPopover: NSViewController {
         }
         
         collectionViewTick.reloadData()
+    }
+    
+    // 전체 코인 선택 컬렉션 뷰 업데이트(즐겨찾기에서 삭제 한 경우 호출됨. 아..스유로하면 깔끔하게 될텐데 오랜만에 UIKit하려니 깝깝하네ㅋㅋ)
+    @objc func updateCollectionViewCoin(_ notification: Notification) {
+        //guard let data = notification.userInfo?["tick"] as? WSocket else { return }
+
+        self.collectionViewCoin.reloadData()
     }
     
     //TODO 생긴게 맘에 안든다

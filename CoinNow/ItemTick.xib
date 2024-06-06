@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="20037" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="32700.99.1234" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
     <dependencies>
         <deployment identifier="macosx"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="20037"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="22689"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
@@ -11,22 +11,22 @@
         <customObject id="-3" userLabel="Application" customClass="NSObject"/>
         <collectionViewItem title="ItemTick" id="Y92-ku-JT2" customClass="ItemTick" customModule="CoinNow" customModuleProvider="target">
             <connections>
+                <outlet property="btnDelete" destination="XA3-VJ-gaF" id="IfA-oi-8aI"/>
                 <outlet property="lbCoin" destination="eaF-L1-UOZ" id="PWh-RT-Hn0"/>
                 <outlet property="lbExchange" destination="Qlb-wM-0tC" id="eIj-Ne-7sk"/>
                 <outlet property="lbMarket" destination="A7i-xk-JKQ" id="Fiz-UK-YUz"/>
                 <outlet property="lbPrice" destination="1xC-2Y-1SY" id="Thp-kA-qKa"/>
                 <outlet property="lbUpdateTime" destination="txo-Lg-ZYo" id="NnK-tG-qGc"/>
                 <outlet property="lineBottom" destination="76L-aa-r5m" id="iIN-PT-Jle"/>
-                <outlet property="lineRight" destination="IyM-bJ-3sI" id="nQv-B6-ois"/>
                 <outlet property="view" destination="jUT-tF-pmk" id="6ON-JK-Z0W"/>
             </connections>
         </collectionViewItem>
-        <customView misplaced="YES" id="jUT-tF-pmk">
+        <customView id="jUT-tF-pmk">
             <rect key="frame" x="0.0" y="0.0" width="229" height="106"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
             <subviews>
                 <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="D35-bd-GV7">
-                    <rect key="frame" x="10" y="8" width="0.0" height="0.0"/>
+                    <rect key="frame" x="10" y="53" width="0.0" height="0.0"/>
                     <constraints>
                         <constraint firstAttribute="width" id="O0Y-I3-RdK"/>
                         <constraint firstAttribute="width" secondItem="D35-bd-GV7" secondAttribute="height" multiplier="1:1" id="V8j-XW-XrY"/>
@@ -59,7 +59,7 @@
                     </textFieldCell>
                 </textField>
                 <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="1xC-2Y-1SY">
-                    <rect key="frame" x="209" y="1" width="12" height="15"/>
+                    <rect key="frame" x="197" y="46" width="12" height="15"/>
                     <textFieldCell key="cell" lineBreakMode="clipping" title="0" id="7DL-LZ-SVS">
                         <font key="font" metaFont="cellTitle"/>
                         <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
@@ -67,7 +67,7 @@
                     </textFieldCell>
                 </textField>
                 <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="txo-Lg-ZYo" userLabel="updateTime">
-                    <rect key="frame" x="186" y="-8" width="35" height="9"/>
+                    <rect key="frame" x="174" y="37" width="35" height="9"/>
                     <textFieldCell key="cell" lineBreakMode="clipping" title="premium" id="UPD-si-dEi">
                         <font key="font" metaFont="system" size="7"/>
                         <color key="textColor" name="tertiaryLabelColor" catalog="System" colorSpace="catalog"/>
@@ -79,48 +79,52 @@
                     <constraints>
                         <constraint firstAttribute="height" constant="1" id="0gd-fb-crC"/>
                     </constraints>
-                    <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Label" drawsBackground="YES" id="ooB-GG-hkP">
+                    <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" drawsBackground="YES" id="ooB-GG-hkP">
                         <font key="font" metaFont="system"/>
                         <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                         <color key="backgroundColor" red="0.55686274509803924" green="0.55686274509803924" blue="0.57647058823529407" alpha="0.20000000000000001" colorSpace="custom" customColorSpace="sRGB"/>
                     </textFieldCell>
                 </textField>
-                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="IyM-bJ-3sI" userLabel="Line">
-                    <rect key="frame" x="228" y="0.0" width="1" height="16"/>
+                <button tag="-1" translatesAutoresizingMaskIntoConstraints="NO" id="XA3-VJ-gaF">
+                    <rect key="frame" x="217" y="43" width="12.5" height="17"/>
+                    <buttonCell key="cell" type="square" bezelStyle="shadowlessSquare" image="NSTouchBarDeleteTemplate" imagePosition="only" alignment="center" imageScaling="proportionallyUpOrDown" inset="2" id="ZBm-lv-kpE">
+                        <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                        <font key="font" metaFont="system"/>
+                    </buttonCell>
+                    <color key="contentTintColor" name="systemGrayColor" catalog="System" colorSpace="catalog"/>
                     <constraints>
-                        <constraint firstAttribute="width" constant="1" id="p7S-2i-yoA"/>
+                        <constraint firstAttribute="height" constant="9" id="3r4-Ek-YNj"/>
+                        <constraint firstAttribute="width" constant="12" id="aEl-2q-SdD"/>
                     </constraints>
-                    <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Label" drawsBackground="YES" id="8Ly-uF-rhn">
-                        <font key="font" metaFont="system"/>
-                        <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
-                        <color key="backgroundColor" red="0.55686274509803924" green="0.55686274509803924" blue="0.57647058823529407" alpha="0.20000000000000001" colorSpace="custom" customColorSpace="sRGB"/>
-                    </textFieldCell>
-                </textField>
+                    <connections>
+                        <action selector="clickDelete:" target="Y92-ku-JT2" id="3TO-Cy-6ZI"/>
+                    </connections>
+                </button>
             </subviews>
             <constraints>
                 <constraint firstItem="A7i-xk-JKQ" firstAttribute="leading" secondItem="Qlb-wM-0tC" secondAttribute="trailing" constant="3" id="12s-wM-NrJ"/>
+                <constraint firstItem="XA3-VJ-gaF" firstAttribute="centerY" secondItem="jUT-tF-pmk" secondAttribute="centerY" constant="3" id="59G-sG-EAd"/>
                 <constraint firstItem="A7i-xk-JKQ" firstAttribute="top" secondItem="eaF-L1-UOZ" secondAttribute="bottom" id="5aJ-ah-mit"/>
                 <constraint firstItem="1xC-2Y-1SY" firstAttribute="centerY" secondItem="jUT-tF-pmk" secondAttribute="centerY" id="MFZ-h7-eQD"/>
                 <constraint firstAttribute="bottom" secondItem="76L-aa-r5m" secondAttribute="bottom" id="Mbo-PF-uin"/>
                 <constraint firstAttribute="bottom" secondItem="Qlb-wM-0tC" secondAttribute="bottom" constant="5" id="P0H-3q-FdI"/>
                 <constraint firstAttribute="trailing" secondItem="76L-aa-r5m" secondAttribute="trailing" constant="10" id="PLx-wc-9Cv"/>
-                <constraint firstAttribute="trailing" secondItem="IyM-bJ-3sI" secondAttribute="trailing" id="Qxz-Ne-e95"/>
                 <constraint firstItem="eaF-L1-UOZ" firstAttribute="leading" secondItem="D35-bd-GV7" secondAttribute="trailing" id="RAc-tY-1Vf"/>
                 <constraint firstItem="D35-bd-GV7" firstAttribute="leading" secondItem="jUT-tF-pmk" secondAttribute="leading" constant="10" id="RWn-Zw-LP6"/>
                 <constraint firstItem="Qlb-wM-0tC" firstAttribute="leading" secondItem="jUT-tF-pmk" secondAttribute="leading" constant="10" id="RsL-Ni-mDl"/>
                 <constraint firstItem="76L-aa-r5m" firstAttribute="leading" secondItem="jUT-tF-pmk" secondAttribute="leading" constant="10" id="SHJ-a4-PnY"/>
+                <constraint firstItem="XA3-VJ-gaF" firstAttribute="leading" secondItem="1xC-2Y-1SY" secondAttribute="trailing" constant="10" id="SZD-3I-eeY"/>
                 <constraint firstItem="D35-bd-GV7" firstAttribute="centerY" secondItem="jUT-tF-pmk" secondAttribute="centerY" id="UA7-ov-dtb"/>
                 <constraint firstAttribute="bottom" secondItem="A7i-xk-JKQ" secondAttribute="bottom" constant="5" id="VgD-J7-SJj"/>
-                <constraint firstAttribute="bottom" secondItem="IyM-bJ-3sI" secondAttribute="bottom" id="ZOC-No-Bi2"/>
-                <constraint firstAttribute="trailing" secondItem="1xC-2Y-1SY" secondAttribute="trailing" constant="10" id="ciY-0o-hma"/>
-                <constraint firstItem="IyM-bJ-3sI" firstAttribute="top" secondItem="jUT-tF-pmk" secondAttribute="top" id="efF-eS-s3F"/>
                 <constraint firstItem="txo-Lg-ZYo" firstAttribute="top" secondItem="1xC-2Y-1SY" secondAttribute="bottom" id="qGY-bM-lf1"/>
+                <constraint firstAttribute="trailing" secondItem="XA3-VJ-gaF" secondAttribute="trailing" id="wc0-4p-iev"/>
                 <constraint firstItem="txo-Lg-ZYo" firstAttribute="trailing" secondItem="1xC-2Y-1SY" secondAttribute="trailing" id="xRS-PM-yL5"/>
             </constraints>
             <point key="canvasLocation" x="13.5" y="-2"/>
         </customView>
     </objects>
     <resources>
+        <image name="NSTouchBarDeleteTemplate" width="19" height="22"/>
         <image name="upbit" width="100" height="100"/>
     </resources>
 </document>
