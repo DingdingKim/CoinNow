@@ -129,6 +129,9 @@ class VCPopover: NSViewController {
         
         updateView()
         
+        if searchText.isEmpty {
+            searchField.window?.makeFirstResponder(nil)
+        }
         NSRunningApplication.current.activate(options: .activateIgnoringOtherApps)
     }
     
@@ -684,7 +687,7 @@ extension VCPopover: NSCollectionViewDataSource {
                                                               for: indexPath) as? HeaderCoin else { return NSView() }
         guard let marketCoins = currentTab?.filteredTicks(searchText: searchText), indexPath.section < marketCoins.count else { return view }
         
-        view.updateView(data: marketCoins[indexPath.section])
+        view.updateView(site: currentTab, data: marketCoins[indexPath.section])
         
         return view
     }

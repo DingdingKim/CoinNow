@@ -135,8 +135,9 @@ class Api {
             guard let resultValue = responseData.result.value else { complete(false, []); return }
             guard let resultCoins = JSON(resultValue)["symbols"].array else { complete(false, []); return }
             
-            //거래 가능만 들고온다
+            //거래 가능만 && delivery(만기일 있는거) 제외 들고온다
             let availableCoins = resultCoins.filter { $0["status"].stringValue == "TRADING" &&
+                                                    $0["contractType"].stringValue == "PERPETUAL" &&
                                                         SiteType.binance.markets.contains($0["quoteAsset"].stringValue)}
             
             for coin in availableCoins {

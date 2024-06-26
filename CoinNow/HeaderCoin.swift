@@ -22,7 +22,12 @@ class HeaderCoin: NSView {
         self.layer?.backgroundColor = NSColor.black.withAlphaComponent(0.3).cgColor
     }
     
-    func updateView(data: (market: String, coins: [Coin])) {
-        lbMarket.stringValue = data.market
+    func updateView(site: Site?, data: (market: String, coins: [Coin])) {
+        if site?.siteType == .binanceF {
+            lbMarket.stringValue = "\(data.market)(Perpetual)"
+        }
+        else {
+            lbMarket.stringValue = data.market
+        }
     }
 }
