@@ -30,6 +30,27 @@ class Site {
     var coins: [Coin] = []
     var marketAndCoins: [(market: String, coins: [Coin])] = []
     
+    func filteredTicks(searchText: String?) -> [(market: String, coins: [Coin])] {
+        guard let searchText = searchText, !searchText.isEmpty else { return marketAndCoins }
+        
+        var filteredMarketAndCoins: [(market: String, coins: [Coin])] = []
+        
+        for marketAndCoin in marketAndCoins {
+            var findCoins: [Coin] = []
+            
+            for coin in marketAndCoin.coins {
+                if coin.code.lowercased().contains(searchText.lowercased()) || coin.name.lowercased().contains(searchText.lowercased()) {
+                    findCoins.append(coin)
+                }
+            }
+            
+            if !findCoins.isEmpty {
+                filteredMarketAndCoins.append((market: marketAndCoin.market, coins: findCoins))
+            }
+        }
+        return filteredMarketAndCoins
+    }
+    
     init(siteType: SiteType) {
         self.siteType = siteType
         

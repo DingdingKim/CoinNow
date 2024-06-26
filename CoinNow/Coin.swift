@@ -11,11 +11,16 @@ import Cocoa
 import SwiftyJSON
 
 struct Coin: Codable {
-    var marketAndCode: String = "" // KRW-BTC
-    var name: String = "" // bitcoin
-    var code: String = "" // btc
-    var market: String = "" // krw
-    var site: SiteType // upbit
+    /// KRW-BTC
+    var marketAndCode: String = ""
+    /// bitcoin
+    var name: String = ""
+    /// btc
+    var code: String = ""
+    /// krw
+    var market: String = ""
+    /// upbit
+    var site: SiteType
     
     var uniqueId: String {
         return "\(self.marketAndCode)/\(self.site.rawValue)"

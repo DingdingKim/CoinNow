@@ -43,6 +43,7 @@ class VCPopover: NSViewController {
     @IBOutlet weak var cHeightTick: NSLayoutConstraint!
     @IBOutlet weak var cHeightSendMessage: NSLayoutConstraint!
     @IBOutlet weak var viewNetworkError: NSView!
+    @IBOutlet weak var searchField: NSSearchField!
     
     var currentTab: Site?
     
@@ -56,6 +57,7 @@ class VCPopover: NSViewController {
     
     var remoteConfig: RemoteConfig!
     var realtimeDatabase: DatabaseReference!
+    var searchText: String = ""
     
     var isSocketConnectedUpbit: Bool = false {
         didSet {
@@ -637,8 +639,8 @@ class VCPopover: NSViewController {
 // MARK: - NSCollectionViewDataSource
 extension VCPopover: NSCollectionViewDataSource {
     func collectionView(_ collectionView: NSCollectionView, numberOfItemsInSection section: Int) -> Int {
-        if collectionView == collectionViewCoin, currentTab?.marketAndCoins.count ?? 0 > 0 {
-            return currentTab?.marketAndCoins[section].coins.count ?? 0
+        if collectionView == collectionViewCoin, currentTab?.filteredTicks(searchText: searchText).count ?? 0 > 0 {
+            return currentTab?.filteredTicks(searchText: searchText)[section].coins.count ?? 0
         }
         else if collectionView == collectionViewTick {
             return ticks.count
@@ -648,17 +650,17 @@ extension VCPopover: NSCollectionViewDataSource {
     }
     
     func numberOfSections(in collectionView: NSCollectionView) -> Int {
-        if collectionView == collectionViewCoin, currentTab?.marketAndCoins.count ?? 0 > 0 {
-            return currentTab?.marketAndCoins.count ?? 1
+        if collectionView == collectionViewCoin, currentTab?.filteredTicks(searchText: searchText).count ?? 0 > 0 {
+            return currentTab?.filteredTicks(searchText: searchText).count ?? 1
         }
-        
+
         return 1
     }
     
     func collectionView(_ collectionView: NSCollectionView, itemForRepresentedObjectAt indexPath: IndexPath) -> NSCollectionViewItem {
         if collectionView == collectionViewCoin {
             let item = collectionView.makeItem(withIdentifier: NSUserInterfaceItemIdentifier(rawValue: "ItemCoin"), for: indexPath) as! ItemCoin
-            guard let coins = currentTab?.marketAndCoins[indexPath.section].coins else { return NSCollectionViewItem() }
+            guard let coins = currentTab?.filteredTicks(searchText: searchText)[indexPath.section].coins else { return NSCollectionViewItem() }
             
             item.data = coins[indexPath.item]
 
@@ -680,7 +682,7 @@ extension VCPopover: NSCollectionViewDataSource {
         guard let view = collectionView.makeSupplementaryView(ofKind: NSCollectionView.elementKindSectionHeader,
                                                               withIdentifier: NSUserInterfaceItemIdentifier(rawValue: "HeaderCoin"),
                                                               for: indexPath) as? HeaderCoin else { return NSView() }
-        guard let marketCoins = currentTab?.marketAndCoins, indexPath.section < marketCoins.count else { return view }
+        guard let marketCoins = currentTab?.filteredTicks(searchText: searchText), indexPath.section < marketCoins.count else { return view }
         
         view.updateView(data: marketCoins[indexPath.section])
         
@@ -794,5 +796,15 @@ extension VCPopover: WebSocketDelegate {
         else {
             print("websocket encountered an error")
         }
+    }
+}
+
+extension VCPopover: NSSearchFieldDelegate {
+    func controlTextDidChange(_ notification : Notification){
+        guard let field = notification.object as? NSSearchField, field == self.searchField else { return }
+
+        searchText = field.stringValue
+        
+        collectionViewCoin.reloadData()
     }
 }

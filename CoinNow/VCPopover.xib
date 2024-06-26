@@ -24,6 +24,7 @@
                 <outlet property="collectionViewCoin" destination="AWs-QX-Vq8" id="8EL-UY-AnC"/>
                 <outlet property="collectionViewTick" destination="y1v-ht-okh" id="lRv-6r-pRa"/>
                 <outlet property="lbDingMessage" destination="fAc-Od-BMc" id="a8U-ma-L5o"/>
+                <outlet property="searchField" destination="w9n-KH-3Cs" id="yl3-cy-O5C"/>
                 <outlet property="segmentCoins" destination="ACg-L5-msR" id="G7Z-jH-14k"/>
                 <outlet property="stackViewRoot" destination="E8k-QV-wP3" id="PBh-Cd-1n5"/>
                 <outlet property="tfSendMessage" destination="fvb-XO-FsR" id="EJE-ox-DCM"/>
@@ -271,36 +272,6 @@ UxBlbmQ
                         <customView translatesAutoresizingMaskIntoConstraints="NO" id="wi7-nI-zqO" userLabel="SelectCoins">
                             <rect key="frame" x="0.0" y="468" width="519" height="200"/>
                             <subviews>
-                                <scrollView wantsLayer="YES" borderType="none" autohidesScrollers="YES" horizontalLineScroll="10" horizontalPageScroll="10" verticalLineScroll="10" verticalPageScroll="10" hasHorizontalScroller="NO" usesPredominantAxisScrolling="NO" translatesAutoresizingMaskIntoConstraints="NO" id="iEr-sg-Pg1">
-                                    <rect key="frame" x="0.0" y="0.0" width="519" height="168"/>
-                                    <clipView key="contentView" drawsBackground="NO" id="TJE-EW-0Kk">
-                                        <rect key="frame" x="0.0" y="0.0" width="519" height="168"/>
-                                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                                        <subviews>
-                                            <collectionView id="AWs-QX-Vq8">
-                                                <rect key="frame" x="0.0" y="0.0" width="519" height="168"/>
-                                                <autoresizingMask key="autoresizingMask" widthSizable="YES"/>
-                                                <collectionViewGridLayout key="collectionViewLayout" id="ffz-ud-mcR"/>
-                                                <color key="primaryBackgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                            </collectionView>
-                                        </subviews>
-                                    </clipView>
-                                    <scroller key="horizontalScroller" hidden="YES" wantsLayer="YES" verticalHuggingPriority="750" horizontal="YES" id="1Cl-21-xfT">
-                                        <rect key="frame" x="-100" y="-100" width="233" height="15"/>
-                                        <autoresizingMask key="autoresizingMask"/>
-                                    </scroller>
-                                    <scroller key="verticalScroller" hidden="YES" wantsLayer="YES" verticalHuggingPriority="750" horizontal="NO" id="4n3-gj-ry2">
-                                        <rect key="frame" x="-100" y="-100" width="15" height="143"/>
-                                        <autoresizingMask key="autoresizingMask"/>
-                                    </scroller>
-                                    <userDefinedRuntimeAttributes>
-                                        <userDefinedRuntimeAttribute type="boolean" keyPath="wantsLayer" value="YES"/>
-                                        <userDefinedRuntimeAttribute type="boolean" keyPath="layer.masksToBounds" value="YES"/>
-                                        <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
-                                            <integer key="value" value="5"/>
-                                        </userDefinedRuntimeAttribute>
-                                    </userDefinedRuntimeAttributes>
-                                </scrollView>
                                 <segmentedControl verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="ACg-L5-msR">
                                     <rect key="frame" x="106" y="177" width="307" height="24"/>
                                     <segmentedCell key="cell" borderStyle="border" alignment="left" segmentDistribution="fillEqually" style="rounded" trackingMode="selectOne" id="1AQ-6u-H7P">
@@ -315,15 +286,59 @@ UxBlbmQ
                                         <action selector="clickSiteTab:" target="-2" id="cRf-pe-N9e"/>
                                     </connections>
                                 </segmentedControl>
+                                <searchField wantsLayer="YES" verticalHuggingPriority="750" textCompletion="NO" translatesAutoresizingMaskIntoConstraints="NO" id="w9n-KH-3Cs">
+                                    <rect key="frame" x="0.0" y="148" width="519" height="22"/>
+                                    <searchFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" borderStyle="bezel" usesSingleLineMode="YES" bezelStyle="round" id="0wl-bG-XVF">
+                                        <font key="font" metaFont="system"/>
+                                        <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                                        <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                    </searchFieldCell>
+                                    <connections>
+                                        <outlet property="delegate" destination="-2" id="ttw-1S-UxB"/>
+                                    </connections>
+                                </searchField>
+                                <scrollView wantsLayer="YES" borderType="none" autohidesScrollers="YES" horizontalLineScroll="10" horizontalPageScroll="10" verticalLineScroll="10" verticalPageScroll="10" hasHorizontalScroller="NO" usesPredominantAxisScrolling="NO" translatesAutoresizingMaskIntoConstraints="NO" id="iEr-sg-Pg1">
+                                    <rect key="frame" x="0.0" y="0.0" width="519" height="140"/>
+                                    <clipView key="contentView" drawsBackground="NO" id="TJE-EW-0Kk">
+                                        <rect key="frame" x="0.0" y="0.0" width="519" height="140"/>
+                                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                        <subviews>
+                                            <collectionView id="AWs-QX-Vq8">
+                                                <rect key="frame" x="0.0" y="0.0" width="519" height="140"/>
+                                                <autoresizingMask key="autoresizingMask" widthSizable="YES"/>
+                                                <collectionViewGridLayout key="collectionViewLayout" id="ffz-ud-mcR"/>
+                                                <color key="primaryBackgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                            </collectionView>
+                                        </subviews>
+                                    </clipView>
+                                    <scroller key="horizontalScroller" hidden="YES" wantsLayer="YES" verticalHuggingPriority="750" horizontal="YES" id="1Cl-21-xfT">
+                                        <rect key="frame" x="-100" y="-100" width="233" height="15"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                    </scroller>
+                                    <scroller key="verticalScroller" hidden="YES" wantsLayer="YES" verticalHuggingPriority="750" horizontal="NO" id="4n3-gj-ry2">
+                                        <rect key="frame" x="503" y="0.0" width="16" height="140"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                    </scroller>
+                                    <userDefinedRuntimeAttributes>
+                                        <userDefinedRuntimeAttribute type="boolean" keyPath="wantsLayer" value="YES"/>
+                                        <userDefinedRuntimeAttribute type="boolean" keyPath="layer.masksToBounds" value="YES"/>
+                                        <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                                            <integer key="value" value="5"/>
+                                        </userDefinedRuntimeAttribute>
+                                    </userDefinedRuntimeAttributes>
+                                </scrollView>
                             </subviews>
                             <constraints>
                                 <constraint firstAttribute="bottom" secondItem="iEr-sg-Pg1" secondAttribute="bottom" id="2Js-75-hBA"/>
                                 <constraint firstAttribute="trailing" secondItem="iEr-sg-Pg1" secondAttribute="trailing" id="Oxd-Ui-0T1"/>
+                                <constraint firstItem="w9n-KH-3Cs" firstAttribute="top" secondItem="ACg-L5-msR" secondAttribute="bottom" constant="8" id="R4f-Mz-FR0"/>
+                                <constraint firstItem="w9n-KH-3Cs" firstAttribute="leading" secondItem="wi7-nI-zqO" secondAttribute="leading" id="RSz-f1-Qyo"/>
                                 <constraint firstItem="ACg-L5-msR" firstAttribute="top" secondItem="wi7-nI-zqO" secondAttribute="top" id="WaY-ax-nHq"/>
-                                <constraint firstItem="iEr-sg-Pg1" firstAttribute="top" secondItem="ACg-L5-msR" secondAttribute="bottom" constant="10" id="fW9-sX-h0l"/>
+                                <constraint firstAttribute="trailing" secondItem="w9n-KH-3Cs" secondAttribute="trailing" id="YHV-Lg-pAX"/>
                                 <constraint firstItem="iEr-sg-Pg1" firstAttribute="leading" secondItem="wi7-nI-zqO" secondAttribute="leading" id="htt-JT-DX7"/>
                                 <constraint firstAttribute="height" constant="200" id="kHl-Hu-RBP"/>
                                 <constraint firstItem="ACg-L5-msR" firstAttribute="centerX" secondItem="wi7-nI-zqO" secondAttribute="centerX" id="qbP-8v-oyG"/>
+                                <constraint firstItem="iEr-sg-Pg1" firstAttribute="top" secondItem="w9n-KH-3Cs" secondAttribute="bottom" constant="8" id="uH1-S1-foi"/>
                             </constraints>
                             <userDefinedRuntimeAttributes>
                                 <userDefinedRuntimeAttribute type="boolean" keyPath="wantsLayer" value="YES"/>
